@@ -26,7 +26,7 @@ class ChatList extends React.Component {
                             <i className="fa fa-arrow-left" aria-hidden="true" onClick={() => this.navigateToChat()}></i>
                         </div>
                         <div className="col-sm-10 col-xs-10 newMessage-title">
-                            New Chat
+                            BACK TO CONTACT
                         </div>
                     </div>
                 </div>
