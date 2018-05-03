@@ -92,6 +92,8 @@ function* start_app() {
         yield take('START_APP')
         const { data: { data }} = yield call(fetchLanguage)
         yield put(languages(data))
+
+        yield put(enterContact())
     }
 }
 
@@ -168,7 +170,8 @@ function* enterContactSaga() {
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
-        start_app()
+        start_app(),
+        enterContactSaga()
     ])
 }
 
