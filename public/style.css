@@ -582,3 +582,11 @@ body {
     font-size: 1.8em !important;
   }
 }
+
+.chat-list-hide {
+  left: -100%
+}
+
+.chat-list-show {
+  left: 0
+}
