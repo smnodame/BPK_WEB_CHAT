@@ -4,35 +4,36 @@ import Contact from '../../components/Contact'
 import ChatList from '../../components/ChatList'
 
 class SideBar extends React.Component {
-  constructor(props) {
-      super(props)
-      this.state = {
-        is_show_chat_list: false
-      }
-  }
+    constructor(props) {
+        super(props)
+        this.state = {
+            is_show_chat_list: false
+        }
+    }
 
-  navigateToChat = () => {
-    this.setState({
-      is_show_chat_list: !this.state.is_show_chat_list
-    })
-  }
+    navigateToChat = () => {
+        this.setState({
+            is_show_chat_list: !this.state.is_show_chat_list
+        })
+    }
 
-  componentDidMount() {
+    componentDidMount() {
 
-  }
-  
-  render = () => {
-    return (
-    <div className="col-sm-4 side">
-      <div className="side-one">
-          <Contact navigateToChat={this.navigateToChat} />
-      </div>
+    }
 
-      <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>
-          <ChatList navigateToChat={this.navigateToChat} />
-      </div>
-    </div>
-  )}
+    render = () => {
+        return (
+            <div className="col-sm-4 side">
+                <div className="side-one">
+                    <Contact navigateToChat={this.navigateToChat} />
+                </div>
+
+                <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>
+                    <ChatList navigateToChat={this.navigateToChat} />
+                </div>
+            </div>
+        )
+    }
 }
 
 export default SideBar
