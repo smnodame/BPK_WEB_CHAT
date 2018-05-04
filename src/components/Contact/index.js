@@ -94,6 +94,8 @@ class Contact extends React.Component {
                                     <div className="col-sm-8 col-xs-8 sideBar-name">
                                         <span className="name-meta">John Doe
                                         </span>
+                                        <span className="status-meta">John Doe
+                                        </span>
                                     </div>
                                     <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
                                         <span className="time-meta pull-right">18:18

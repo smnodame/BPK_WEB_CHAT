@@ -173,7 +173,7 @@ body {
   position: relative;
   padding: 10px !important;
   border-bottom: 1px solid #f7f7f7;
-  height: 72px;
+  height: 77px;
   margin: 0 !important;
   cursor: pointer;
 }
@@ -204,6 +204,8 @@ body {
 
 .sideBar-name {
   padding: 10px !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 .name-meta {
@@ -213,6 +215,15 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #000;
+}
+
+.status-meta {
+  font-size: 95%;
+  padding: 1% !important;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: #777;
 }
 
 .sideBar-time {
@@ -523,6 +534,8 @@ body {
   }
   .sideBar-name {
     padding: 10px 5px !important;
+    display: flex !important;
+    flex-direction: 'column' !important;
   }
   .name-meta {
     font-size: 16px;
