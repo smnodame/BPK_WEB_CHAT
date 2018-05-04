@@ -1,7 +1,7 @@
 import _ from 'lodash'
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
-
+import Friend from '../Friend'
 
 class Contact extends React.Component {
     constructor(props) {
@@ -16,6 +16,12 @@ class Contact extends React.Component {
                 other: 0,
                 group: 0,
                 department: 0
+            },
+            friends: {
+                favorite: [],
+                other: [],
+                group: [],
+                department: []
             }
         }
 
@@ -58,6 +64,22 @@ class Contact extends React.Component {
                 numberOfFriendLists: this.props.data.friend.numberOfFriendLists
             })
         }
+
+        if(_.get(this.props.data, 'friend.friends')) {
+            this.setState({
+                friends: this.props.data.friend.friends
+            })
+        }
+    }
+    
+    renderFriend = (friends) => {
+        return friends.map((friend, key) => {
+            return (
+                <div className="box" key={key}>
+                    <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
+                </div>
+            )
+        })
     }
 
     render = () => {
@@ -97,46 +119,9 @@ class Contact extends React.Component {
                         </div>
                     </div>
                     <div className={this.state.is_show_favorite? 'show': 'hide'}>
-                        <div className="row sideBar-body">
-                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                                <div className="avatar-icon">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" />
-                                </div>
-                            </div>
-                            <div className="col-sm-9 col-xs-9 sideBar-main">
-                                <div className="row">
-                                    <div className="col-sm-8 col-xs-8 sideBar-name">
-                                        <span className="name-meta">John Doe
-                                        </span>
-                                        <span className="status-meta">John Doe
-                                        </span>
-                                    </div>
-                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                        <span className="time-meta pull-right">18:18
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="row sideBar-body">
-                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                                <div className="avatar-icon">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
-                                </div>
-                            </div>
-                            <div className="col-sm-9 col-xs-9 sideBar-main">
-                                <div className="row">
-                                    <div className="col-sm-8 col-xs-8 sideBar-name">
-                                        <span className="name-meta">John Doe
-                                        </span>
-                                    </div>
-                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                        <span className="time-meta pull-right">18:18
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            this.renderFriend(this.state.friends.favorite)
+                        }
                     </div>
 
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
@@ -149,25 +134,9 @@ class Contact extends React.Component {
                         </div>
                     </div>
                     <div className={this.state.is_show_group? 'show': 'hide'}>
-                        <div className="row sideBar-body">
-                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                                <div className="avatar-icon">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
-                                </div>
-                            </div>
-                            <div className="col-sm-9 col-xs-9 sideBar-main">
-                                <div className="row">
-                                    <div className="col-sm-8 col-xs-8 sideBar-name">
-                                        <span className="name-meta">John Doe
-                                        </span>
-                                    </div>
-                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                        <span className="time-meta pull-right">18:18
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            this.renderFriend(this.state.friends.group)
+                        }
                     </div>
                     
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
@@ -180,25 +149,9 @@ class Contact extends React.Component {
                         </div>
                     </div>
                     <div className={this.state.is_show_department? 'show': 'hide'}>
-                        <div className="row sideBar-body">
-                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                                <div className="avatar-icon">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
-                                </div>
-                            </div>
-                            <div className="col-sm-9 col-xs-9 sideBar-main">
-                                <div className="row">
-                                    <div className="col-sm-8 col-xs-8 sideBar-name">
-                                        <span className="name-meta">John Doe
-                                        </span>
-                                    </div>
-                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                        <span className="time-meta pull-right">18:18
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            this.renderFriend(this.state.friends.department)
+                        }
                     </div>
 
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
@@ -211,25 +164,9 @@ class Contact extends React.Component {
                         </div>
                     </div>
                     <div className={this.state.is_show_other? 'show': 'hide'}>
-                        <div className="row sideBar-body">
-                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                                <div className="avatar-icon">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
-                                </div>
-                            </div>
-                            <div className="col-sm-9 col-xs-9 sideBar-main">
-                                <div className="row">
-                                    <div className="col-sm-8 col-xs-8 sideBar-name">
-                                        <span className="name-meta">John Doe
-                                        </span>
-                                    </div>
-                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                        <span className="time-meta pull-right">18:18
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        {
+                            this.renderFriend(this.state.friends.other)
+                        }
                     </div>
                 </div>
             </div>

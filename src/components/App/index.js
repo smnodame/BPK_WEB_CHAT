@@ -17,6 +17,8 @@ class App extends React.Component {
     componentDidMount() {
         store.subscribe(() => {
             const state = store.getState()
+            console.log(' state was updated ')
+            console.log(state)
             this.setState({
                 data: state
             })

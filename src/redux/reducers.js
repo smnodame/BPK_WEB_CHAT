@@ -66,10 +66,10 @@ const system = (state = {
 
 const friend = (state = {
     rangeFriendLists: {
-        favorite: 100,
-        group: 20,
-        department: 20,
-        other: 20
+        favorite: 50,
+        group: 50,
+        department: 50,
+        other: 50
     },
     filter: ''
 }, action) => {
