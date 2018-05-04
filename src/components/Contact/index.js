@@ -6,6 +6,10 @@ class Contact extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            is_show_favorite: true,
+            is_show_group: true,
+            is_show_department: true,
+            is_show_other: true
         }
 
         this.navigateToChat = () => {
@@ -16,6 +20,31 @@ class Contact extends React.Component {
     componentDidMount() {
 
     }
+
+    toggleFavorite = () => {
+        this.setState({
+            is_show_favorite: !this.state.is_show_favorite
+        })
+    }
+
+    toggleGroup = () => {
+        this.setState({
+            is_show_group: !this.state.is_show_group
+        })
+    }
+
+    toggleDepartment = () => {
+        this.setState({
+            is_show_department: !this.state.is_show_department
+        })
+    }
+
+    toggleOther = () => {
+        this.setState({
+            is_show_other: !this.state.is_show_other
+        })
+    }
+    
 
     render = () => {
         return (
@@ -44,123 +73,144 @@ class Contact extends React.Component {
                 </div>
 
                 <div className="row sideBar">
-                    <a className="heading-name-meta" style={{ padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>Favorites</a>
-                    <div className="row sideBar-body">
-                        <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                            <div className="avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" />
-                            </div>
+                    <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
+                        <div className="col-sm-5 col-xs-5 heading-avatar">
+                            <a className="heading-name-meta">Favorites</a>                        
                         </div>
-                        <div className="col-sm-9 col-xs-9 sideBar-main">
-                            <div className="row">
-                                <div className="col-sm-8 col-xs-8 sideBar-name">
-                                    <span className="name-meta">John Doe
-                                    </span>
-                                </div>
-                                <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                    <span className="time-meta pull-right">18:18
-                                    </span>
-                                </div>
-                            </div>
+                        <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
+                            <i className={!this.state.is_show_favorite? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleFavorite()}></i>
+                            <i className={this.state.is_show_favorite? 'fa fa-toggle-up  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleFavorite()}></i>
                         </div>
                     </div>
-                    <div className="row sideBar-body">
-                        <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                            <div className="avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
-                            </div>
-                        </div>
-                        <div className="col-sm-9 col-xs-9 sideBar-main">
-                            <div className="row">
-                                <div className="col-sm-8 col-xs-8 sideBar-name">
-                                    <span className="name-meta">John Doe
-                                    </span>
-                                </div>
-                                <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                    <span className="time-meta pull-right">18:18
-                                    </span>
+                    <div className={this.state.is_show_favorite? 'show': 'hide'}>
+                        <div className="row sideBar-body">
+                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
+                                <div className="avatar-icon">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" />
                                 </div>
                             </div>
-                        </div>
-                    </div>
-
-                    <a className="heading-name-meta" style={{ padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>Groups</a>
-                    <div className="row sideBar-body">
-                        <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                            <div className="avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar1.png" />
-                            </div>
-                        </div>
-                        <div className="col-sm-9 col-xs-9 sideBar-main">
-                            <div className="row">
-                                <div className="col-sm-8 col-xs-8 sideBar-name">
-                                    <span className="name-meta">John Doe
-                                    </span>
-                                </div>
-                                <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                    <span className="time-meta pull-right">18:18
-                                    </span>
+                            <div className="col-sm-9 col-xs-9 sideBar-main">
+                                <div className="row">
+                                    <div className="col-sm-8 col-xs-8 sideBar-name">
+                                        <span className="name-meta">John Doe
+                                        </span>
+                                    </div>
+                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                        <span className="time-meta pull-right">18:18
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="row sideBar-body">
-                        <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                            <div className="avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
-                            </div>
-                        </div>
-                        <div className="col-sm-9 col-xs-9 sideBar-main">
-                            <div className="row">
-                                <div className="col-sm-8 col-xs-8 sideBar-name">
-                                    <span className="name-meta">John Doe
-                                    </span>
+                        <div className="row sideBar-body">
+                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
+                                <div className="avatar-icon">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
                                 </div>
-                                <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                    <span className="time-meta pull-right">18:18
-                                    </span>
+                            </div>
+                            <div className="col-sm-9 col-xs-9 sideBar-main">
+                                <div className="row">
+                                    <div className="col-sm-8 col-xs-8 sideBar-name">
+                                        <span className="name-meta">John Doe
+                                        </span>
+                                    </div>
+                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                        <span className="time-meta pull-right">18:18
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <a className="heading-name-meta" style={{ padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>Departments</a>
-                    <div className="row sideBar-body">
-                        <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                            <div className="avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
+                    <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
+                        <div className="col-sm-5 col-xs-5 heading-avatar">
+                            <a className="heading-name-meta">Groups</a>                        
+                        </div>
+                        <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
+                            <i className={!this.state.is_show_group? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleGroup()}></i>
+                            <i className={this.state.is_show_group? 'fa fa-toggle-up  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleGroup()}></i>
+                        </div>
+                    </div>
+                    <div className={this.state.is_show_group? 'show': 'hide'}>
+                        <div className="row sideBar-body">
+                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
+                                <div className="avatar-icon">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
+                                </div>
+                            </div>
+                            <div className="col-sm-9 col-xs-9 sideBar-main">
+                                <div className="row">
+                                    <div className="col-sm-8 col-xs-8 sideBar-name">
+                                        <span className="name-meta">John Doe
+                                        </span>
+                                    </div>
+                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                        <span className="time-meta pull-right">18:18
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div className="col-sm-9 col-xs-9 sideBar-main">
-                            <div className="row">
-                                <div className="col-sm-8 col-xs-8 sideBar-name">
-                                    <span className="name-meta">John Doe
-                                    </span>
+                    </div>
+                    
+                    <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
+                        <div className="col-sm-5 col-xs-5 heading-avatar">
+                            <a className="heading-name-meta">Departments</a>                        
+                        </div>
+                        <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
+                            <i className={!this.state.is_show_department? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleDepartment()}></i>
+                            <i className={this.state.is_show_department? 'fa fa-toggle-up  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleDepartment()}></i>
+                        </div>
+                    </div>
+                    <div className={this.state.is_show_department? 'show': 'hide'}>
+                        <div className="row sideBar-body">
+                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
+                                <div className="avatar-icon">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
                                 </div>
-                                <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                    <span className="time-meta pull-right">18:18
-                                    </span>
+                            </div>
+                            <div className="col-sm-9 col-xs-9 sideBar-main">
+                                <div className="row">
+                                    <div className="col-sm-8 col-xs-8 sideBar-name">
+                                        <span className="name-meta">John Doe
+                                        </span>
+                                    </div>
+                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                        <span className="time-meta pull-right">18:18
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <a className="heading-name-meta" style={{ padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>Others</a>
-                    <div className="row sideBar-body">
-                        <div className="col-sm-3 col-xs-3 sideBar-avatar">
-                            <div className="avatar-icon">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
-                            </div>
+                    <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
+                        <div className="col-sm-5 col-xs-5 heading-avatar">
+                            <a className="heading-name-meta">Others</a>                        
                         </div>
-                        <div className="col-sm-9 col-xs-9 sideBar-main">
-                            <div className="row">
-                                <div className="col-sm-8 col-xs-8 sideBar-name">
-                                    <span className="name-meta">John Doe
-                                    </span>
+                        <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
+                            <i className={!this.state.is_show_other? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleOther()}></i>
+                            <i className={this.state.is_show_other? 'fa fa-toggle-up  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleOther()}></i>
+                        </div>
+                    </div>
+                    <div className={this.state.is_show_other? 'show': 'hide'}>
+                        <div className="row sideBar-body">
+                            <div className="col-sm-3 col-xs-3 sideBar-avatar">
+                                <div className="avatar-icon">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar4.png" />
                                 </div>
-                                <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
-                                    <span className="time-meta pull-right">18:18
-                                    </span>
+                            </div>
+                            <div className="col-sm-9 col-xs-9 sideBar-main">
+                                <div className="row">
+                                    <div className="col-sm-8 col-xs-8 sideBar-name">
+                                        <span className="name-meta">John Doe
+                                        </span>
+                                    </div>
+                                    <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                        <span className="time-meta pull-right">18:18
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
