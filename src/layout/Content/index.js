@@ -23,7 +23,7 @@ class Content extends React.Component {
                 <div className="row message" id="conversation">
                     <div className="row message-previous">
                         <div className="col-sm-12 previous">
-                            <a onclick="previous(this)" id="ankitjain28" name="20">
+                            <a onclick="previous(this)" name="20">
                                 Show Previous Message!
                             </a>
                         </div>

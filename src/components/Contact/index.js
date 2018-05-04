@@ -122,6 +122,13 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.favorite)
                         }
+                        <div className={this.state.numberOfFriendLists.favorite > this.state.friends.favorite.length? 'row message-previous': 'hide'}>
+                            <div className="col-sm-12 previous">
+                                <a name="20">
+                                    LOAD MORE
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
@@ -137,6 +144,13 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.group)
                         }
+                        <div className={this.state.numberOfFriendLists.group > this.state.friends.group.length? 'row message-previous': 'hide'}>
+                            <div className="col-sm-12 previous">
+                                <a name="20">
+                                    LOAD MORE
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
@@ -152,6 +166,13 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.department)
                         }
+                        <div className={this.state.numberOfFriendLists.department > this.state.friends.department.length? 'row message-previous': 'hide'}>
+                            <div className="col-sm-12 previous">
+                                <a name="20">
+                                    LOAD MORE
+                                </a>
+                            </div>
+                        </div>
                     </div>
 
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
@@ -167,6 +188,13 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.other)
                         }
+                        <div className={this.state.numberOfFriendLists.other > this.state.friends.other.length? 'row message-previous': 'hide'}>
+                            <div className="col-sm-12 previous">
+                                <a name="20">
+                                    LOAD MORE
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
