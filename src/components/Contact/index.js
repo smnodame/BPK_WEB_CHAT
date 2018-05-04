@@ -3,6 +3,9 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Friend from '../Friend'
 
+import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep } from '../../redux/actions.js'
+import { store } from '../../redux'
+
 class Contact extends React.Component {
     constructor(props) {
         super(props)
@@ -72,6 +75,10 @@ class Contact extends React.Component {
         }
     }
     
+    loadmore = (group) => {
+        store.dispatch(onLoadMore(group))
+    }
+
     renderFriend = (friends) => {
         return friends.map((friend, key) => {
             return (
@@ -122,7 +129,7 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.favorite)
                         }
-                        <div className={this.state.numberOfFriendLists.favorite > this.state.friends.favorite.length? 'row message-previous': 'hide'}>
+                        <div onClick={() => this.loadmore('favorite')}  className={this.state.numberOfFriendLists.favorite > this.state.friends.favorite.length? 'row message-previous': 'hide'}>
                             <div className="col-sm-12 previous">
                                 <a name="20">
                                     LOAD MORE
@@ -144,7 +151,7 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.group)
                         }
-                        <div className={this.state.numberOfFriendLists.group > this.state.friends.group.length? 'row message-previous': 'hide'}>
+                        <div onClick={() => this.loadmore('group')} className={this.state.numberOfFriendLists.group > this.state.friends.group.length? 'row message-previous': 'hide'}>
                             <div className="col-sm-12 previous">
                                 <a name="20">
                                     LOAD MORE
@@ -166,7 +173,7 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.department)
                         }
-                        <div className={this.state.numberOfFriendLists.department > this.state.friends.department.length? 'row message-previous': 'hide'}>
+                        <div onClick={() => this.loadmore('department')} className={this.state.numberOfFriendLists.department > this.state.friends.department.length? 'row message-previous': 'hide'}>
                             <div className="col-sm-12 previous">
                                 <a name="20">
                                     LOAD MORE
@@ -188,7 +195,7 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.other)
                         }
-                        <div className={this.state.numberOfFriendLists.other > this.state.friends.other.length? 'row message-previous': 'hide'}>
+                        <div onClick={() => this.loadmore('other')} className={this.state.numberOfFriendLists.other > this.state.friends.other.length? 'row message-previous': 'hide'}>
                             <div className="col-sm-12 previous">
                                 <a name="20">
                                     LOAD MORE

@@ -30,9 +30,9 @@ export const fetchFriendGroups = () => {
     return axios.get('http://itsmartone.com/bpk_connect/api/friend/friend_type_list')
 }
 
-export const fetchFriendLists = (group, range, start = 0, filter = '') => {
+export const fetchFriendLists = (group, range=50, start = 0, filter = '') => {
     return getAuth().then((user_id) => {
-        return axios.get(`http://itsmartone.com/bpk_connect/api/friend/friend_list?token=asdf1234aaa&user_id=${user_id}&start=${start}&limit=50&filter=${filter}&friend_type=${group}`)
+        return axios.get(`http://itsmartone.com/bpk_connect/api/friend/friend_list?token=asdf1234aaa&user_id=${user_id}&start=${start}&limit=${range}&filter=${filter}&friend_type=${group}`)
     })
 }
 

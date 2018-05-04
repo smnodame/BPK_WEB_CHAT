@@ -167,11 +167,38 @@ function* enterContactSaga() {
     }
 }
 
+function* loadmoreSaga() {
+    while (true) {
+        const { payload: { group } } = yield take('ON_LOAD_MORE')
+        try {
+            //get all friends
+            const friendsData = yield select(getFriends)
+            const groupFriends = _.get(friendsData, group, [])
+
+            // get filter
+            const filter = yield select(getFilterFriend)
+
+            // get range for each group
+            const rangeFriendLists = yield select(getRangeOfGroup)
+            const resFetchFriendLists = yield call(fetchFriendLists, group, rangeFriendLists[group], groupFriends.length, filter)
+
+            // add new list in old list
+            friendsData[group] = friendsData[group].concat( _.get(resFetchFriendLists, 'data.data', []))
+
+            // updatet
+            yield put(friends(friendsData))
+        } catch (err) {
+            console.log('[loadmoreSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
         start_app(),
-        enterContactSaga()
+        enterContactSaga(),
+        loadmoreSaga()
     ])
 }
 
