@@ -21,15 +21,19 @@ class SideBar extends React.Component {
 
     }
 
+    componentWillReceiveProps() {
+        
+    }
+
     render = () => {
         return (
             <div className="col-sm-4 side">
                 <div className="side-one">
-                    <Contact navigateToChat={this.navigateToChat} />
+                    <Contact navigateToChat={this.navigateToChat} data={this.props.data} />
                 </div>
 
                 <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>
-                    <ChatList navigateToChat={this.navigateToChat} />
+                    <ChatList navigateToChat={this.navigateToChat} data={this.props.data} />
                 </div>
             </div>
         )

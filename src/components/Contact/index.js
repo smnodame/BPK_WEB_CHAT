@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 
@@ -9,7 +10,13 @@ class Contact extends React.Component {
             is_show_favorite: true,
             is_show_group: true,
             is_show_department: true,
-            is_show_other: true
+            is_show_other: true,
+            numberOfFriendLists: {
+                favorite: 0,
+                other: 0,
+                group: 0,
+                department: 0
+            }
         }
 
         this.navigateToChat = () => {
@@ -45,6 +52,13 @@ class Contact extends React.Component {
         })
     }
     
+    componentWillReceiveProps() {
+        if(_.get(this.props.data, 'friend.numberOfFriendLists')) {
+            this.setState({
+                numberOfFriendLists: this.props.data.friend.numberOfFriendLists
+            })
+        }
+    }
 
     render = () => {
         return (
@@ -75,7 +89,7 @@ class Contact extends React.Component {
                 <div className="row sideBar">
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
                         <div className="col-sm-5 col-xs-5 heading-avatar">
-                            <a className="heading-name-meta">Favorites</a>                        
+                            <a className="heading-name-meta">Favorites ({this.state.numberOfFriendLists.favorite})</a>                        
                         </div>
                         <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
                             <i className={!this.state.is_show_favorite? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleFavorite()}></i>
@@ -127,7 +141,7 @@ class Contact extends React.Component {
 
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
                         <div className="col-sm-5 col-xs-5 heading-avatar">
-                            <a className="heading-name-meta">Groups</a>                        
+                            <a className="heading-name-meta">Groups ({this.state.numberOfFriendLists.group})</a>                        
                         </div>
                         <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
                             <i className={!this.state.is_show_group? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleGroup()}></i>
@@ -158,7 +172,7 @@ class Contact extends React.Component {
                     
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
                         <div className="col-sm-5 col-xs-5 heading-avatar">
-                            <a className="heading-name-meta">Departments</a>                        
+                            <a className="heading-name-meta">Departments ({this.state.numberOfFriendLists.department})</a>                        
                         </div>
                         <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
                             <i className={!this.state.is_show_department? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleDepartment()}></i>
@@ -189,7 +203,7 @@ class Contact extends React.Component {
 
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
                         <div className="col-sm-5 col-xs-5 heading-avatar">
-                            <a className="heading-name-meta">Others</a>                        
+                            <a className="heading-name-meta">Others ({this.state.numberOfFriendLists.other})</a>                        
                         </div>
                         <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
                             <i className={!this.state.is_show_other? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleOther()}></i>
