@@ -193,12 +193,29 @@ function* loadmoreSaga() {
     }
 }
 
+function* onSearchFriendSaga() {
+    while (true) {
+        const { payload: { filter }} = yield take('ON_SEARCH_FRIEND')
+        const groups = yield select(getFriendGroups)
+
+        // fetch initial friend lists
+        const rangeFriendLists = yield select(getRangeOfGroup)
+        const friendsData = yield call(combinedFriends, groups, rangeFriendLists, filter)
+        yield put(friends(friendsData))
+
+        // fetch number of friend lists
+        const numberOfFriend = yield call(fetchNumberOfGroup, filter)
+        yield put(numberOfFriendLists(numberOfFriend))
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
         start_app(),
         enterContactSaga(),
-        loadmoreSaga()
+        loadmoreSaga(),
+        onSearchFriendSaga()
     ])
 }
 

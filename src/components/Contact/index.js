@@ -108,9 +108,11 @@ class Contact extends React.Component {
 
                 <div className="row searchBox">
                     <div className="col-sm-12 searchBox-inner">
-                        <div className="form-group has-feedback">
-                            <input id="searchText" type="text" className="form-control" name="searchText" placeholder="Search" />
-                            <span className="glyphicon glyphicon-search form-control-feedback"></span>
+                        <div className="input-group">
+                            <input type="text" style={{ height: '40px' }} className="form-control" placeholder="Search" value={this.state.filter} aria-describedby="basic-addon1" onChange={(event) => this.setState({filter: event.target.value})} />
+                            <a className="input-group-addon" style={{ cursor: 'pointer' }} onClick={() => store.dispatch(onSearchFriend(this.state.filter)) }>
+                                <i className='fa fa-search' aria-hidden="true"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
