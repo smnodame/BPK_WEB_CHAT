@@ -120,6 +120,7 @@ class Contact extends React.Component {
         this.setState({
             selectedFriend
         })
+        console.log(this.state.numberOfFriendLists)
         store.dispatch(removeFavorite(this.state.user.user_id, this.state.selectedFriend.friend_user_id))
     }
 
@@ -129,11 +130,12 @@ class Contact extends React.Component {
         this.setState({
             selectedFriend
         })
+        console.log(this.state.numberOfFriendLists)
         store.dispatch(addFavorite(this.state.user.user_id, this.state.selectedFriend.friend_user_id, this.state.selectedFriend))
     }
 
     _toggleFavorite = () => {
-        if(this.state.selectedFriend.is_favorite) {
+        if(this.state.selectedFriend.is_favorite == 'T') {
             this._removeFavorite()
         } else {
             this._addFavorite()

@@ -90,10 +90,14 @@ import {
 function* start_app() {
     while (true) {
         yield take('START_APP')
-        const { data: { data }} = yield call(fetchLanguage)
-        yield put(languages(data))
+        try {
+            const { data: { data }} = yield call(fetchLanguage)
+            yield put(languages(data))
 
-        yield put(enterContact())
+            yield put(enterContact())
+        } catch (e) {
+            console.log('err' ,e)
+        }
     }
 }
 
@@ -131,39 +135,44 @@ const combinedFriends = (groups, rangeFriendLists, filter) => {
 function* enterContactSaga() {
     while (true) {
         yield take('ENTER_CONTACT')
-        const filter = ''
-        // fetch groups
-        const resFetchFriendGroups = yield call(fetchFriendGroups)
-        const friendGroupsData = _.get(resFetchFriendGroups, 'data.data')
-        yield put(friendGroups(friendGroupsData))
 
-        // fetch initial friend lists
-        const rangeFriendLists = yield select(getRangeOfGroup)
-        const friendsData = yield call(combinedFriends, friendGroupsData, rangeFriendLists, filter)
-        yield put(friends(friendsData))
+        try {
+            const filter = ''
+            // fetch groups
+            const resFetchFriendGroups = yield call(fetchFriendGroups)
+            const friendGroupsData = _.get(resFetchFriendGroups, 'data.data')
+            yield put(friendGroups(friendGroupsData))
 
-        // fetch user profile
-        const resFetchMyProfile = yield call(fetchMyProfile)
-        yield put(myprofile(_.get(resFetchMyProfile, 'data.data')))
+            // fetch initial friend lists
+            const rangeFriendLists = yield select(getRangeOfGroup)
+            const friendsData = yield call(combinedFriends, friendGroupsData, rangeFriendLists, filter)
+            yield put(friends(friendsData))
 
-        // fetch chat lists
-        const resFetchChatLists = yield call(fetchChatLists)
-        yield put(chatLists(_.get(resFetchChatLists, 'data.data', [])))
+            // fetch user profile
+            const resFetchMyProfile = yield call(fetchMyProfile)
+            yield put(myprofile(_.get(resFetchMyProfile, 'data.data')))
 
-        // fetch number of friend lists
-        const numberOfFriend = yield call(fetchNumberOfGroup, filter)
-        yield put(numberOfFriendLists(numberOfFriend))
+            // fetch chat lists
+            const resFetchChatLists = yield call(fetchChatLists)
+            yield put(chatLists(_.get(resFetchChatLists, 'data.data', [])))
 
-        // const user_id = yield call(getAuth)
+            // fetch number of friend lists
+            const numberOfFriend = yield call(fetchNumberOfGroup, filter)
+            yield put(numberOfFriendLists(numberOfFriend))
 
-        // start socket after enter the contact
-        // start_socket(user_id)
+            // const user_id = yield call(getAuth)
 
-        const resFetchKeepProfile = yield call(fetchKeepProfile)
-        yield put(keepProfile(_.get(resFetchKeepProfile, 'data.data', '')))
+            // start socket after enter the contact
+            // start_socket(user_id)
 
-        // fetch sticker
-        yield put(onSticker())
+            const resFetchKeepProfile = yield call(fetchKeepProfile)
+            yield put(keepProfile(_.get(resFetchKeepProfile, 'data.data', '')))
+
+            // fetch sticker
+            yield put(onSticker())
+        } catch (e) {
+            console.log('err' ,e)
+        }
     }
 }
 
@@ -196,55 +205,84 @@ function* loadmoreSaga() {
 function* onSearchFriendSaga() {
     while (true) {
         const { payload: { filter }} = yield take('ON_SEARCH_FRIEND')
-        const groups = yield select(getFriendGroups)
+        try {
+            const groups = yield select(getFriendGroups)
 
-        // fetch initial friend lists
-        const rangeFriendLists = yield select(getRangeOfGroup)
-        const friendsData = yield call(combinedFriends, groups, rangeFriendLists, filter)
-        yield put(friends(friendsData))
+            // fetch initial friend lists
+            const rangeFriendLists = yield select(getRangeOfGroup)
+            const friendsData = yield call(combinedFriends, groups, rangeFriendLists, filter)
+            yield put(friends(friendsData))
 
-        // fetch number of friend lists
-        const numberOfFriend = yield call(fetchNumberOfGroup, filter)
-        yield put(numberOfFriendLists(numberOfFriend))
+            // fetch number of friend lists
+            const numberOfFriend = yield call(fetchNumberOfGroup, filter)
+            yield put(numberOfFriendLists(numberOfFriend))
+        } catch (e) {
+            console.log('err' ,e)
+        }
     }
 }
 
 function* addFavoriteSaga() {
     while (true) {
         const { payload: { user_id, friend_user_id, friend_data }} = yield take('ADD_FAVORITE')
+        try {
+            // get all friend
+            const friendsData = yield select(getFriends)
 
-        // get all friend
-        const friendsData = yield select(getFriends)
+            // add friend to favorite group
+            friendsData.favorite.push(friend_data)
 
-        // add friend to favorite group
-        friendsData.favorite.push(friend_data)
+            // update in store
+            yield put(friends(friendsData))
 
-        // update in store
-        yield put(friends(friendsData))
-        yield call(addFavoriteApi, user_id, friend_user_id)
+            // get number of group
+            const numberOfGroup = yield select(getNumberOfGroup)
+            numberOfGroup.favorite = numberOfGroup.favorite + 1
+
+            // update number of friend
+            yield put(numberOfFriendLists(numberOfGroup))
+
+            // call api to update in server
+            yield call(addFavoriteApi, user_id, friend_user_id)
+        } catch (e) {
+            console.log('err' ,e)
+        }
     }
 }
 
 function* removeFavoriteSaga() {
     while (true) {
         const { payload: { user_id, friend_user_id }} = yield take('REMOVE_FAVORITE')
-
-        // get all friend
-        const friendsData = yield select(getFriends)
-
-        // get favorite friend
-        const favorite = _.get(friendsData, 'favorite', [])
-
-        // filter for removing friend in favorite
-        const newFavorite = favorite.filter((friend) => {
-            return friend.friend_user_id != friend_user_id
-        })
         
-        friendsData.favorite = newFavorite
+        try {
+            // get all friend
+            const friendsData = yield select(getFriends)
 
-        // update in store
-        yield put(friends(friendsData))
-        yield call(removeFavoriteApi, user_id, friend_user_id)
+            // get favorite friend
+            const favorite = _.get(friendsData, 'favorite', [])
+
+            // filter for removing friend in favorite
+            const newFavorite = favorite.filter((friend) => {
+                return friend.friend_user_id != friend_user_id
+            })
+
+            friendsData.favorite = newFavorite
+
+            // get number of group
+            const numberOfGroup = yield select(getNumberOfGroup)
+            numberOfGroup.favorite = numberOfGroup.favorite - 1
+
+            // update number of friend
+            yield put(numberOfFriendLists(numberOfGroup))
+
+            // update in store
+            yield put(friends(friendsData))
+
+            // call api to update in server
+            yield call(removeFavoriteApi, user_id, friend_user_id)
+        } catch (e) {
+            console.log('err' ,e)
+        }
     }
 }
 
