@@ -111,6 +111,31 @@ class Contact extends React.Component {
                     </div>
                 </div>
 
+
+                <div className="modal-profile">
+                    <div className="container">
+                        <div className="profile-box">
+                            <div className="profile-cover-image">
+                                <img src="http://smnodame.com/public/pictures/13.jpg" />
+                            </div>
+                            <div className="profile-picture">
+                                <img src="http://smnodame.com/public/profile.jpg" />
+                            </div>
+                            <div className="profile-content">
+                                <h1>
+                                    John Doe
+                                </h1>
+                                <p>
+                                    Designer at Doe's Company,<br/>ridiculously skilled.
+                                </p>
+                                <div className="socials">
+                                    <a href="#"><i className="fa fa-dribbble"></i></a><a href="#"><i className="fa fa-twitter"></i></a><a href="#"><i className="fa fa-github"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div className="row searchBox">
                     <form onSubmit={this.onSearchFriend}>
                     <div className="col-sm-12 searchBox-inner">
