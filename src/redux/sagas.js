@@ -239,6 +239,7 @@ function* removeFavoriteSaga() {
         const newFavorite = favorite.filter((friend) => {
             return friend.friend_user_id != friend_user_id
         })
+        
         friendsData.favorite = newFavorite
 
         // update in store

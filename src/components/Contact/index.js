@@ -73,6 +73,12 @@ class Contact extends React.Component {
                 friends: this.props.data.friend.friends
             })
         }
+
+        if(_.get(this.props.data, 'user.user')) {
+            this.setState({
+                user: this.props.data.user.user
+            })
+        }
     }
     
     loadmore = (group) => {
@@ -126,6 +132,14 @@ class Contact extends React.Component {
         store.dispatch(addFavorite(this.state.user.user_id, this.state.selectedFriend.friend_user_id, this.state.selectedFriend))
     }
 
+    _toggleFavorite = () => {
+        if(this.state.selectedFriend.is_favorite) {
+            this._removeFavorite()
+        } else {
+            this._addFavorite()
+        }
+    }
+
     render = () => {
         return (
             <div>
@@ -174,7 +188,7 @@ class Contact extends React.Component {
                                     <a>
                                         <i className="fa fa-comments" style={{ fontSize: '35px' }}></i></a><a>
                                         <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
-                                        <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }}></i>
+                                        <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
                                     </a>
                                 </div>
                                 <div className={ _.get(this.state, 'selectedFriend.chat_room_type') != 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
