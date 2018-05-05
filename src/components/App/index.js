@@ -30,7 +30,15 @@ class App extends React.Component {
             <div className="container app">
                 <div className="row app-one">
                     <SideBar data={this.state.data} />
-                    <Content data={this.state.data} />
+                    {/* <Content data={this.state.data} /> */}
+                    <div className="col-sm-8 conversation">
+                        <div className="row heading">
+                            
+                        </div>
+                        <div>
+                            <p style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)', textAlign: 'center', fontWeight: 'bold' }}>Please select a chat to start messaging</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         )
