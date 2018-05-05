@@ -89,6 +89,11 @@ class Contact extends React.Component {
         })
     }
 
+    onSearchFriend = (e) => {
+        e.preventDefault()
+        store.dispatch(onSearchFriend(this.state.filter))
+    }
+
     render = () => {
         return (
             <div>
@@ -107,14 +112,16 @@ class Contact extends React.Component {
                 </div>
 
                 <div className="row searchBox">
+                    <form onSubmit={this.onSearchFriend}>
                     <div className="col-sm-12 searchBox-inner">
                         <div className="input-group">
                             <input type="text" style={{ height: '40px' }} className="form-control" placeholder="Search" value={this.state.filter} aria-describedby="basic-addon1" onChange={(event) => this.setState({filter: event.target.value})} />
-                            <a className="input-group-addon" style={{ cursor: 'pointer' }} onClick={() => store.dispatch(onSearchFriend(this.state.filter)) }>
+                            <a className="input-group-addon" style={{ cursor: 'pointer' }} onClick={() =>  store.dispatch(onSearchFriend(this.state.filter)) }>
                                 <i className='fa fa-search' aria-hidden="true"></i>
                             </a>
                         </div>
                     </div>
+                    </form>
                 </div>
 
                 <div className="row sideBar">
