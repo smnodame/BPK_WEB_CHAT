@@ -131,11 +131,28 @@ class Contact extends React.Component {
                                 <p style={{ fontSize: '20px' }}>
                                     { _.get(this.state, 'selectedFriend.friend_username') }
                                 </p>
-                                <div className="socials" style={{ marginTop: '30px' }}>
+                                <div className={ _.get(this.state, 'selectedFriend.chat_room_type') == 'C'? 'show': 'hide' } style={{ height: 'auto !important' }}>
+                                    <p style={{ fontSize: '15px' }}>
+                                        Patient Name : { _.get(this.state, 'selectedFriend.c_patient_name') || '-' }
+                                    </p>
+                                    <p style={{ fontSize: '15px' }}>
+                                        HN : { _.get(this.state, 'selectedFriend.c_hn') || '-' }
+                                    </p>
+                                    <p style={{ fontSize: '15px' }}>
+                                        Description : { _.get(this.state, 'selectedFriend.c_description') || '-' }
+                                    </p>
+                                </div>   
+                                <div className={ _.get(this.state, 'selectedFriend.chat_room_type') == 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
                                         <i className="fa fa-comments" style={{ fontSize: '35px' }}></i></a><a>
                                         <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
                                         <i className="fa fa-heart" style={{ fontSize: '35px' }}></i>
+                                    </a>
+                                </div>
+                                <div className={ _.get(this.state, 'selectedFriend.chat_room_type') != 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
+                                    <a>
+                                        <i className="fa fa-comments" style={{ fontSize: '35px' }}></i></a><a>
+                                        <i className="fa fa-cog" style={{ fontSize: '35px' }}></i></a><a>
                                     </a>
                                 </div>
                             </div>
