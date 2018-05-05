@@ -82,7 +82,7 @@ class Contact extends React.Component {
     renderFriend = (friends) => {
         return friends.map((friend, key) => {
             return (
-                <div className="box" key={key} onClick={() => this.setState({ isShowModal: true })}>
+                <div className="box" key={key} onClick={() => this.setState({ selectedFriend: friend, isShowModal: true })}>
                     <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
                 </div>
             )
@@ -92,6 +92,10 @@ class Contact extends React.Component {
     onSearchFriend = (e) => {
         e.preventDefault()
         store.dispatch(onSearchFriend(this.state.filter))
+    }
+
+    protectParentOnclick = (e) => {
+        e.stopPropagation()
     }
 
     render = () => {
@@ -112,23 +116,27 @@ class Contact extends React.Component {
                 </div>
 
                 <div className={this.state.isShowModal? 'modal-profile': 'hide'} onClick={() => this.setState({ isShowModal: false })}>
-                    <div className="container">
+                    <div className="container" onClick={this.protectParentOnclick}>
                         <div className="profile-box">
                             <div className="profile-cover-image">
-                                <img src="http://smnodame.com/public/pictures/13.jpg" />
+                                <img src={ _.get(this.state, 'selectedFriend.wall_pic_url')} />
                             </div>
                             <div className="profile-picture">
-                                <img src="http://smnodame.com/public/profile.jpg" />
+                                <img src={ _.get(this.state, 'selectedFriend.profile_pic_url')} />
                             </div>
                             <div className="profile-content">
-                                <h1>
-                                    John Doe
+                                <h1 style={{ fontSize: '28px' }}>
+                                    { _.get(this.state, 'selectedFriend.display_name')}
                                 </h1>
-                                <p>
-                                    Designer at Doe's Company,<br/>ridiculously skilled.
+                                <p style={{ fontSize: '20px' }}>
+                                    { _.get(this.state, 'selectedFriend.friend_username') }
                                 </p>
-                                <div className="socials">
-                                    <a href="#"><i className="fa fa-dribbble"></i></a><a href="#"><i className="fa fa-twitter"></i></a><a href="#"><i className="fa fa-github"></i></a>
+                                <div className="socials" style={{ marginTop: '30px' }}>
+                                    <a>
+                                        <i className="fa fa-comments" style={{ fontSize: '35px' }}></i></a><a>
+                                        <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
+                                        <i className="fa fa-heart" style={{ fontSize: '35px' }}></i>
+                                    </a>
                                 </div>
                             </div>
                         </div>
