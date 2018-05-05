@@ -209,13 +209,53 @@ function* onSearchFriendSaga() {
     }
 }
 
+function* addFavoriteSaga() {
+    while (true) {
+        const { payload: { user_id, friend_user_id, friend_data }} = yield take('ADD_FAVORITE')
+
+        // get all friend
+        const friendsData = yield select(getFriends)
+
+        // add friend to favorite group
+        friendsData.favorite.push(friend_data)
+
+        // update in store
+        yield put(friends(friendsData))
+        yield call(addFavoriteApi, user_id, friend_user_id)
+    }
+}
+
+function* removeFavoriteSaga() {
+    while (true) {
+        const { payload: { user_id, friend_user_id }} = yield take('REMOVE_FAVORITE')
+
+        // get all friend
+        const friendsData = yield select(getFriends)
+
+        // get favorite friend
+        const favorite = _.get(friendsData, 'favorite', [])
+
+        // filter for removing friend in favorite
+        const newFavorite = favorite.filter((friend) => {
+            return friend.friend_user_id != friend_user_id
+        })
+        friendsData.favorite = newFavorite
+
+        // update in store
+        yield put(friends(friendsData))
+        yield call(removeFavoriteApi, user_id, friend_user_id)
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
         start_app(),
         enterContactSaga(),
         loadmoreSaga(),
-        onSearchFriendSaga()
+        onSearchFriendSaga(),
+        addFavoriteSaga(),
+        removeFavoriteSaga()
     ])
 }
 

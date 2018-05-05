@@ -108,6 +108,24 @@ class Contact extends React.Component {
         return false
     }
     
+    _removeFavorite = () => {
+        const selectedFriend = this.state.selectedFriend
+        selectedFriend.is_favorite = 'F'
+        this.setState({
+            selectedFriend
+        })
+        store.dispatch(removeFavorite(this.state.user.user_id, this.state.selectedFriend.friend_user_id))
+    }
+
+    _addFavorite = () => {
+        const selectedFriend = this.state.selectedFriend
+        selectedFriend.is_favorite = 'T'
+        this.setState({
+            selectedFriend
+        })
+        store.dispatch(addFavorite(this.state.user.user_id, this.state.selectedFriend.friend_user_id, this.state.selectedFriend))
+    }
+
     render = () => {
         return (
             <div>
