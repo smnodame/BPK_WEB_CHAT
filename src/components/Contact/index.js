@@ -82,7 +82,7 @@ class Contact extends React.Component {
     renderFriend = (friends) => {
         return friends.map((friend, key) => {
             return (
-                <div className="box" key={key}>
+                <div className="box" key={key} onClick={() => this.setState({ isShowModal: true })}>
                     <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
                 </div>
             )
@@ -111,8 +111,7 @@ class Contact extends React.Component {
                     </div>
                 </div>
 
-
-                <div className="modal-profile">
+                <div className={this.state.isShowModal? 'modal-profile': 'hide'} onClick={() => this.setState({ isShowModal: false })}>
                     <div className="container">
                         <div className="profile-box">
                             <div className="profile-cover-image">
