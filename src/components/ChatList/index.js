@@ -24,7 +24,8 @@ class ChatList extends React.Component {
     componentWillReceiveProps() {
         if(_.get(this.props.data, 'chat.chatLists')) {
             this.setState({
-                chatLists: this.props.data.chat.chatLists
+                chatLists: this.props.data.chat.chatLists,
+                chatListsClone: this.props.data.chat.chatLists
             })
         }
     }
@@ -60,6 +61,23 @@ class ChatList extends React.Component {
         return chatLists
     }
 
+    onFilter = (event) => {
+        if(event.target.value) {
+            const chatLists = this.state.chatListsClone.filter((info) => {
+                const str = info.display_name
+                return str.includes(event.target.value)
+            })
+    
+            this.setState({
+                chatLists
+            })
+        } else {
+            this.setState({
+                chatLists: this.state.chatListsClone
+            })
+        }
+    }
+
     render = () => {
         return (
             <div style={{ backgroundColor: 'white'}}>
@@ -77,7 +95,7 @@ class ChatList extends React.Component {
                 <div className="row composeBox">
                     <div className="col-sm-12 composeBox-inner">
                         <div className="form-group has-feedback">
-                            <input id="composeText" type="text" className="form-control" name="searchText" placeholder="Search People" />
+                            <input id="composeText" type="text" className="form-control" name="searchText" placeholder="Search" value={this.state.filter} aria-describedby="basic-addon1" onChange={(event) => this.onFilter(event)} />
                             <span className="glyphicon glyphicon-search form-control-feedback"></span>
                         </div>
                     </div>
