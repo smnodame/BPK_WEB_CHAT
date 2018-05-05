@@ -98,6 +98,16 @@ class Contact extends React.Component {
         e.stopPropagation()
     }
 
+    isInFavorite = () => {
+        if(_.get(this.state, 'friends') && _.get(this.state, 'selectedFriend')) {
+            const obj = this.state.friends.favorite.find((friend) => {
+                return friend.friend_user_id == this.state.selectedFriend.friend_user_id
+            })
+            return !!obj
+        }
+        return false
+    }
+    
     render = () => {
         return (
             <div>
@@ -146,7 +156,7 @@ class Contact extends React.Component {
                                     <a>
                                         <i className="fa fa-comments" style={{ fontSize: '35px' }}></i></a><a>
                                         <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
-                                        <i className="fa fa-heart" style={{ fontSize: '35px' }}></i>
+                                        <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }}></i>
                                     </a>
                                 </div>
                                 <div className={ _.get(this.state, 'selectedFriend.chat_room_type') != 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
