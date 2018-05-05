@@ -7,7 +7,7 @@ import App from '../components/App'
 export const makeMainRoutes = () => {
     return (
         <BrowserRouter history={history} >
-            <App />
+            <App history={history} />
         </BrowserRouter>
     )
 }
