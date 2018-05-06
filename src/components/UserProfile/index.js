@@ -4,6 +4,20 @@ import React, { Component } from 'react'
 import { onUpdateProfile } from '../../redux/actions.js'
 import { store } from '../../redux'
 
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        var reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = function () {
+            resolve(reader.result)
+        }
+        reader.onerror = function (error) {
+            resolve(error)
+        }
+    })
+    
+}
+
 class UserProfile extends React.Component {
     constructor(props) {
         super(props)
@@ -66,6 +80,22 @@ class UserProfile extends React.Component {
   
     }
     
+    profileImageChangeHandler = (e) => {
+        getBase64(e.target.files[0]).then(res => {
+            this.setState({
+                profile_pic_base64: res || ''
+            })
+        })
+    }
+
+    coverImageChangeHandler = (e) => {
+        getBase64(e.target.files[0]).then(res => {
+            this.setState({
+                wall_pic_base64: res || ''
+            })
+        })
+    }
+
     render = () => {
         return (
             <div className="col-sm-8 conversation">
@@ -77,17 +107,17 @@ class UserProfile extends React.Component {
                     <form style={{ marginTop: '30px' }} onSubmit={this.saveProfile}>
                         <div className="col-md-12">
                             <div className="col-md-6" style={{ marginBottom: '20px' }}>
-                                <img src={this.state.profile_pic_url} className="img-thumbnail" alt="Profile Image" width="150" height="150" /> 
+                                <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} className="img-thumbnail" alt="Profile Image" width="150" height="150" /> 
                                 <div class="form-group">
                                     <label style={{ marginTop: '5px'}}>Profile</label>
-                                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
+                                    <input type="file" className="form-control-file" onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
                                 </div>
                             </div>
                             <div className="col-md-6" style={{ marginBottom: '20px' }}>
-                                <img src={this.state.wall_pic_url} className="img-thumbnail" alt="Cover Image" width="150" height="150" /> 
+                                <img src={this.state.wall_pic_base64 || this.state.wall_pic_url} className="img-thumbnail" alt="Cover Image" width="150" height="150" /> 
                                 <div class="form-group">
                                     <label style={{ marginTop: '5px'}}>Cover</label>
-                                    <input type="file" className="form-control-file" id="exampleInputFile" aria-describedby="fileHelp" />
+                                    <input type="file" className="form-control-file" onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
                                 </div>
                             </div>
                         </div>
