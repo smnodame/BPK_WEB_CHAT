@@ -25,8 +25,12 @@ class UserProfile extends React.Component {
             
         }
     }
+    
+    componentDidMount() {
+        this.load_data()
+    }
 
-    componentWillReceiveProps() {
+    load_data = () => {
         if(_.get(this.props.data, 'user.user')) {
             this.setState({
                 display_name: _.get(this.props.data, 'user.user.display_name', ''),
@@ -38,6 +42,10 @@ class UserProfile extends React.Component {
                 user_id: _.get(this.props.data, 'user.user.user_id', '')
             })
         }
+    }
+
+    componentWillReceiveProps() {
+        this.load_data()
     }
 
     saveProfile = (e) => {
@@ -121,11 +129,6 @@ class UserProfile extends React.Component {
                                 </div>
                             </div>
                         </div>
-                        
-                        {/* <div className=" col-md-12">
-                            <p style={{ color: 'gray' }}>Information</p>
-                            <hr style={{ marginTop: '10px', marginBottom: '10px' }} />
-                        </div> */}
                         <div className="form-row">
                             <div className="form-group col-md-6">
                                 <label>Display Name</label>
