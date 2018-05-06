@@ -29,11 +29,11 @@ class SideBar extends React.Component {
         return (
             <div className="col-sm-4 side">
                 <div className="side-one">
-                    <Contact navigateToChat={this.navigateToChat} data={this.props.data} />
+                    <Contact navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
                 </div>
 
                 <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>
-                    <ChatList navigateToChat={this.navigateToChat} data={this.props.data}  />
+                    <ChatList navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
                 </div>
             </div>
         )

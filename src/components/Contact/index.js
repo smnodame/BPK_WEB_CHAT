@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Friend from '../Friend'
 
 import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep } from '../../redux/actions.js'
@@ -158,7 +158,6 @@ class Contact extends React.Component {
                         <i className="fa fa-comments fa-2x  pull-right" aria-hidden="true" onClick={() => this.navigateToChat()}></i>
                     </div>
                 </div>
-
                 <div className={this.state.isShowModal? 'modal-profile': 'hide'} onClick={() => this.setState({ isShowModal: false })}>
                     <div className="container" onClick={this.protectParentOnclick}>
                         <div className="profile-box">
@@ -188,7 +187,7 @@ class Contact extends React.Component {
                                 </div>   
                                 <div className={ _.get(this.state, 'selectedFriend.chat_room_type') == 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
-                                        <i className="fa fa-comments" style={{ fontSize: '35px' }}></i></a><a>
+                                        <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => this.props.history.push('/he')}></i></a><a>
                                         <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
                                         <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
                                     </a>

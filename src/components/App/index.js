@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route, Redirect, BrowserRouter as Router, Link, browserHistory } from 'react-router-dom'
 
 import Header from '../../layout/Header'
 import SideBar from '../../layout/SideBar'
@@ -42,7 +42,9 @@ class App extends React.Component {
         return (
             <div className="container app">
                 <div className="row app-one">
-                    <SideBar data={this.state.data} />
+                    <Switch>
+                        <Route path="/" render={routeProps => <SideBar {...routeProps} data={this.state.data}/>} />
+                    </Switch>
                     <Switch>
                         <Route path='/:id' component={Content} data={this.state.data}/>
                         <Route exact path='/' component={DefaultPage}/>
