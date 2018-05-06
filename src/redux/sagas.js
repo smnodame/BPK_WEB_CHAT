@@ -1,6 +1,7 @@
 
 import _ from "lodash"
 import axios from 'axios'
+import { ToastContainer, toast } from 'react-toastify'
 
 import { all, call, put, takeEvery, takeLatest, take, select, delay } from 'redux-saga/effects'
 import {
@@ -291,7 +292,7 @@ function* updateProfileSaga() {
         const { payload: { profile, pic_base64 }} = yield take('ON_UPDATE_PROFILE')
         try {
             const userInfo = yield select(getUserInfo)
-
+            
             // update profile with api
             yield call(updateProfile, profile)
 
@@ -306,6 +307,10 @@ function* updateProfileSaga() {
             if(_.get(pic_base64, 'profile_pic_base64', false) || _.get(pic_base64, 'wall_pic_base64', false)) {
                 yield call(updatePictureAuth, pic_base64)
             }
+
+            toast.info("UPDATE PROFILE SUCCESSFULLY !", {
+                position: toast.POSITION.TOP_RIGHT
+            })
 
             // fetch user profile
             const resFetchMyProfile = yield call(fetchMyProfile)

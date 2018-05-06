@@ -787,3 +787,11 @@ body {
   color: #aaa;
   transform: translateY(0);
 }
+
+.toast-custom {
+  height: auto !important
+}
+
+.toast-custom div {
+  height: auto !important
+}

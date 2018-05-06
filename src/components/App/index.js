@@ -9,6 +9,7 @@ import UserProfile from '../UserProfile'
 import { store } from '../../redux'
 import { start_app  } from '../../redux/actions.js'
 
+import { ToastContainer, toast } from 'react-toastify'
 
 const DefaultPage = () => {
     return (
@@ -43,6 +44,9 @@ class App extends React.Component {
         return (
             <div className="container app">
                 <div className="row app-one">
+                    <div className="toast-custom">
+                        <ToastContainer autoClose={3000} />
+                    </div>
                     <Switch>
                         <Route path="/" render={routeProps => <SideBar {...routeProps} data={this.state.data}/>} />
                     </Switch>
