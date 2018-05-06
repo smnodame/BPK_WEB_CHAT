@@ -47,7 +47,7 @@ class App extends React.Component {
                         <Route path="/" render={routeProps => <SideBar {...routeProps} data={this.state.data}/>} />
                     </Switch>
                     <Switch>
-                        <Route exact path='/user-profile' component={UserProfile} />
+                        <Route exact path='/user-profile' render={routeProps => <UserProfile {...routeProps} data={this.state.data}/>}/>
                         <Route path='/:id' component={Content} data={this.state.data} />
                         <Route exact path='/' component={DefaultPage} />
                     </Switch>
