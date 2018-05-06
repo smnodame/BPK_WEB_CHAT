@@ -286,6 +286,36 @@ function* removeFavoriteSaga() {
     }
 }
 
+function* updateProfileSaga() {
+    while (true) {
+        const { payload: { profile, pic_base64 }} = yield take('ON_UPDATE_PROFILE')
+        try {
+            const userInfo = yield select(getUserInfo)
+
+            // update profile with api
+            yield call(updateProfile, profile)
+
+            // update picture profile
+            if(!_.get(pic_base64, 'profile_pic_base64', false)) {
+                delete pic_base64.profile_pic_base64
+            }
+            if(!_.get(pic_base64, 'wall_pic_base64', false)) {
+                delete pic_base64.wall_pic_base64
+            }
+
+            if(_.get(pic_base64, 'profile_pic_base64', false) || _.get(pic_base64, 'wall_pic_base64', false)) {
+                yield call(updatePictureAuth, pic_base64)
+            }
+
+            // fetch user profile
+            const resFetchMyProfile = yield call(fetchMyProfile)
+            yield put(myprofile(_.get(resFetchMyProfile, 'data.data')))
+        } catch (err) {
+            console.log('[updateProfileSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -294,7 +324,8 @@ export default function* rootSaga() {
         loadmoreSaga(),
         onSearchFriendSaga(),
         addFavoriteSaga(),
-        removeFavoriteSaga()
+        removeFavoriteSaga(),
+        updateProfileSaga()
     ])
 }
 
