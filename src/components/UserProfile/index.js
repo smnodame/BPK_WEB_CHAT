@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import $ from 'jquery'
 import React, { Component } from 'react'
 
 import { onUpdateProfile } from '../../redux/actions.js'
@@ -117,15 +118,28 @@ class UserProfile extends React.Component {
                             <div className="setting-profile">
                                 <div className="container">
                                     <div className="profile-box">
-                                        <div className="profile-cover-image">
-                                            <img src={this.state.wall_pic_base64 || this.state.wall_pic_url} />
+                                        <div className="profile-cover-image" >
+                                            <button type="button" className="btn btn-default" style={{ right: '5px',
+                                                position: 'absolute',
+                                                top: '5px',
+                                                backgroundColor: '#FFFD'}} 
+                                                onClick={() => {
+                                                    $('#cover-image').trigger('click')
+                                            }}>
+                                                    Change Cover Image
+                                            </button>
+                                            <img src={this.state.wall_pic_base64 || this.state.wall_pic_url} onClick={() => {
+                                                $('#cover-image').trigger('click')
+                                            }} />
                                         </div>
                                         <div className="profile-picture">
-                                            <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} />
+                                            <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} onClick={() => {
+                                                $('#profile-image').trigger('click')
+                                            }} />
                                         </div>
                                         <div className="profile-content">
                                             <h1 style={{ fontSize: '28px' }}>
-                                            {this.state.display_name}
+                                                {this.state.display_name}
                                             </h1>  
                                         </div>
                                     </div>
@@ -136,13 +150,13 @@ class UserProfile extends React.Component {
                             <div className="col-md-6" style={{ marginBottom: '20px' }}>
                                 <div class="form-group">
                                     <label style={{ marginTop: '5px'}}>Profile</label>
-                                    <input type="file" className="form-control-file" onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
+                                    <input id="profile-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
                                 </div>
                             </div>
                             <div className="col-md-6" style={{ marginBottom: '20px' }}>
                                 <div class="form-group">
                                     <label style={{ marginTop: '5px'}}>Cover</label>
-                                    <input type="file" className="form-control-file" onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
+                                    <input id="cover-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
                                 </div>
                             </div>
                         </div>
