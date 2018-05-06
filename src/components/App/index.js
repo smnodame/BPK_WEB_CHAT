@@ -42,7 +42,7 @@ class App extends React.Component {
         return (
             <div className="container app">
                 <div className="row app-one">
-                    <SideBar data={this.state.data} history={this.props.history} />
+                    <SideBar data={this.state.data} />
                     <Switch>
                         <Route path='/:id' component={Content} data={this.state.data}/>
                         <Route exact path='/' component={DefaultPage}/>
