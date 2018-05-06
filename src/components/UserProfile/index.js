@@ -111,18 +111,35 @@ class UserProfile extends React.Component {
                     <a className="heading-name-meta">USER PROFILE
                     </a>
                 </div>
-                <div>
-                    <form style={{ marginTop: '30px' }} onSubmit={this.saveProfile}>
+                <div style={{ overflowY: 'scroll' }}>
+                    <form onSubmit={this.saveProfile}>
+                        <div className="col-md-12">
+                            <div className="setting-profile">
+                                <div className="container">
+                                    <div className="profile-box">
+                                        <div className="profile-cover-image">
+                                            <img src={this.state.wall_pic_base64 || this.state.wall_pic_url} />
+                                        </div>
+                                        <div className="profile-picture">
+                                            <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} />
+                                        </div>
+                                        <div className="profile-content">
+                                            <h1 style={{ fontSize: '28px' }}>
+                                            {this.state.display_name}
+                                            </h1>  
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div className="col-md-12">
                             <div className="col-md-6" style={{ marginBottom: '20px' }}>
-                                <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} className="img-thumbnail" alt="Profile Image" width="150" height="150" /> 
                                 <div class="form-group">
                                     <label style={{ marginTop: '5px'}}>Profile</label>
                                     <input type="file" className="form-control-file" onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
                                 </div>
                             </div>
                             <div className="col-md-6" style={{ marginBottom: '20px' }}>
-                                <img src={this.state.wall_pic_base64 || this.state.wall_pic_url} className="img-thumbnail" alt="Cover Image" width="150" height="150" /> 
                                 <div class="form-group">
                                     <label style={{ marginTop: '5px'}}>Cover</label>
                                     <input type="file" className="form-control-file" onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />

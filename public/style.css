@@ -618,7 +618,7 @@ body {
 }
 
 
-
+/* modal friend */
 
 .modal-profile {
   position: fixed;
@@ -707,6 +707,83 @@ body {
 }
 
 .modal-profile .profile-content .socials a:hover {
+  color: #aaa;
+  transform: translateY(0);
+}
+
+/* profile setting */
+
+.setting-profile .container {
+  margin: 50px auto;
+  width: 400px;
+}
+
+.setting-profile .container div {
+  height: auto !important;
+}
+
+.setting-profile a {
+  display: inline-block;
+  transition: all ease 0.3s;
+}
+
+.setting-profile .profile-box {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.50);
+  position: relative;
+  overflow: hidden;
+}
+
+.setting-profile .profile-box .profile-picture {
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  margin-left: -55px;
+}
+
+.setting-profile .profile-box .profile-picture img {
+  border: 5px solid #fff;
+  border-radius: 100%;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
+  width: 100px;
+  height: 100px;
+}
+
+.setting-profile .profile-cover-image {
+  height: 260px !important;
+  overflow: hidden;
+}
+
+.setting-profile .profile-cover-image img {
+    width: 100%;
+    height: 260px !important;
+}
+
+.setting-profile .profile-content {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.setting-profile .profile-content h1 {
+  font-weight: normal;
+  margin-bottom: 0.2em;
+}
+
+.setting-profile .profile-content p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  color: #d2d2d2;
+}
+
+.setting-profile .profile-content .socials a {
+  color: #d2d2d2;
+  margin: 0 15px;
+  font-size: 1.6em;
+  transform: translateY(4px);
+}
+
+.setting-profile .profile-content .socials a:hover {
   color: #aaa;
   transform: translateY(0);
 }
