@@ -33,7 +33,9 @@ class ChatList extends React.Component {
     renderChatLists = () => {
         const chatLists = this.state.chatLists.map((info) => {
             return (
-                <div key={info.chat_room_id} className="row compose-sideBar">
+                <div key={info.chat_room_id} className="row compose-sideBar" onClick={() => 
+                        this.props.history.push('/' + info.chat_room_id)
+                }>
                     <div className="row sideBar-body">
                         <div className="col-sm-3 col-xs-3 sideBar-avatar">
                             <div className="avatar-icon">

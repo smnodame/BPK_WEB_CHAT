@@ -187,7 +187,13 @@ class Contact extends React.Component {
                                 </div>   
                                 <div className={ _.get(this.state, 'selectedFriend.chat_room_type') == 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
-                                        <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => this.props.history.push('/he')}></i></a><a>
+                                        <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => {
+                                            this.setState({
+                                                isShowModal: false
+                                            }, () => {
+                                                this.props.history.push('/' + this.state.selectedFriend.chat_room_id)
+                                            })
+                                        }}></i></a><a>
                                         <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
                                         <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
                                     </a>
