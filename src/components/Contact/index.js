@@ -147,7 +147,7 @@ class Contact extends React.Component {
             <div>
                 <div className="row heading">
                     <div className="col-sm-3 col-xs-3 heading-avatar">
-                        <div className="heading-avatar-icon">
+                        <div className="heading-avatar-icon" onClick={() => this.props.history.push('/user-profile') }>
                             <img src="https://bootdey.com/img/Content/avatar/avatar1.png" />
                         </div>
                     </div>
