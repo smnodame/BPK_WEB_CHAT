@@ -33,7 +33,7 @@ class GroupSetting extends React.Component {
     }
 
     load_data = () => {
-        
+
         if(_.get(this.props.history, 'location.state.selectedFriend') && this.pathname != _.get(this.props.history, 'location.pathname', 'default')) {
             const group = this.props.history.location.state.selectedFriend
             this.setState({
@@ -48,6 +48,9 @@ class GroupSetting extends React.Component {
             })
 
             this.pathname = _.get(this.props.history, 'location.pathname')
+        } 
+        if (!_.get(this.props.history, 'location.state.selectedFriend')) {
+            this.props.history.push('/')
         }
     }
 
