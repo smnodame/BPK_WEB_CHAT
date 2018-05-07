@@ -33,7 +33,8 @@ class GroupSetting extends React.Component {
     }
 
     load_data = () => {
-        if(_.get(this.props.history, 'location.state.selectedFriend')) {
+        
+        if(_.get(this.props.history, 'location.state.selectedFriend') && this.pathname != _.get(this.props.history, 'location.pathname', 'default')) {
             const group = this.props.history.location.state.selectedFriend
             this.setState({
                 display_name: _.get(group, 'display_name', ''),
@@ -45,6 +46,8 @@ class GroupSetting extends React.Component {
                 chat_room_id: _.get(group, 'chat_room_id', ''),
                 chat_room_type: _.get(group, 'chat_room_type', 'Z')
             })
+
+            this.pathname = _.get(this.props.history, 'location.pathname')
         }
     }
 
@@ -83,7 +86,7 @@ class GroupSetting extends React.Component {
             }
             const resUpdatePicture = await updatePicture(data)
         }
-  
+
         const groupData = {
             chat_room_id: this.state.chat_room_id,
             display_name: this.state.display_name,

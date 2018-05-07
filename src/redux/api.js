@@ -94,7 +94,11 @@ export const createNewAccount = (id, password, display_name, mobile_no, language
 }
 
 export const updatePicture = (data) => {
-    return  axios.post("http://itsmartone.com/bpk_connect/api/group/update_picture?token=asdf1234aaa", data)
+    return  axios.post("http://itsmartone.com/bpk_connect/api/group/update_picture?token=asdf1234aaa", data).then((res) => {
+        return res
+    }, (err) => {
+        return err
+    })
 }
 
 export const updateGroupSetting = (data) => {
@@ -102,11 +106,12 @@ export const updateGroupSetting = (data) => {
         toast.info("UPDATE SUCCESSFULLY !", {
             position: toast.POSITION.TOP_RIGHT
         })
+        return res
     }, (err) => {
         toast.warning("UPDATE ERROR !", {
             position: toast.POSITION.TOP_RIGHT
         })
-        console.log(err)
+        return err
     })
 }
 
