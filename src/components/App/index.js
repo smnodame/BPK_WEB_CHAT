@@ -5,6 +5,7 @@ import Header from '../../layout/Header'
 import SideBar from '../../layout/SideBar'
 import Content from '../../layout/Content'
 import UserProfile from '../UserProfile'
+import GroupSetting from '../GroupSetting'
 
 import { store } from '../../redux'
 import { start_app  } from '../../redux/actions.js'
@@ -51,7 +52,8 @@ class App extends React.Component {
                         <Route path="/" render={routeProps => <SideBar {...routeProps} data={this.state.data}/>} />
                     </Switch>
                     <Switch>
-                        <Route exact path='/user-profile' render={routeProps => <UserProfile {...routeProps} data={this.state.data}/>}/>
+                        <Route exact path='/user-profile' render={routeProps => <UserProfile {...routeProps} data={this.state.data} />}/>
+                        <Route exact path='/group-setting/:id' render={routeProps => <GroupSetting {...routeProps} data={this.state.data} />}/>
                         <Route path='/:id' component={Content} data={this.state.data} />
                         <Route exact path='/' component={DefaultPage} />
                     </Switch>

@@ -1,5 +1,6 @@
 import axios from "axios"
 import React from 'react'
+import { ToastContainer, toast } from 'react-toastify'
 
 export const getAuth = () => {
     return new Promise(function(resolve, reject) {
@@ -98,8 +99,13 @@ export const updatePicture = (data) => {
 
 export const updateGroupSetting = (data) => {
     return axios.post("http://itsmartone.com/bpk_connect/api/group/update_setting?token=asdf1234aaa", data).then((res) => {
-        console.log(res)
+        toast.info("UPDATE SUCCESSFULLY !", {
+            position: toast.POSITION.TOP_RIGHT
+        })
     }, (err) => {
+        toast.warning("UPDATE ERROR !", {
+            position: toast.POSITION.TOP_RIGHT
+        })
         console.log(err)
     })
 }

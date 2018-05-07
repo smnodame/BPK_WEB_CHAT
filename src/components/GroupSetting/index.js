@@ -2,7 +2,8 @@ import _ from 'lodash'
 import $ from 'jquery'
 import React, { Component } from 'react'
 
-import { onUpdateProfile } from '../../redux/actions.js'
+import { updatePicture, updateGroupSetting } from '../../redux/api'
+import { onUpdateGroupLists, onUpdateGroupSetting } from '../../redux/actions'
 import { store } from '../../redux'
 
 function getBase64(file) {
@@ -19,7 +20,7 @@ function getBase64(file) {
     
 }
 
-class UserProfile extends React.Component {
+class GroupSetting extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -32,15 +33,17 @@ class UserProfile extends React.Component {
     }
 
     load_data = () => {
-        if(_.get(this.props.data, 'user.user')) {
+        if(_.get(this.props.history, 'location.state.selectedFriend')) {
+            const group = this.props.history.location.state.selectedFriend
             this.setState({
-                display_name: _.get(this.props.data, 'user.user.display_name', ''),
-                username: _.get(this.props.data, 'user.user.username', ''),
-                hn: _.get(this.props.data, 'user.user.hn', ''),
-                status_quote: _.get(this.props.data, 'user.user.status_quote', ''),
-                wall_pic_url: _.get(this.props.data, 'user.user.wall_pic_url', ''),
-                profile_pic_url: _.get(this.props.data, 'user.user.profile_pic_url', ''),
-                user_id: _.get(this.props.data, 'user.user.user_id', '')
+                display_name: _.get(group, 'display_name', ''),
+                wall_pic_url: _.get(group, 'wall_pic_url', ''),
+                profile_pic_url: _.get(group, 'profile_pic_url', ''),
+                patient_name: _.get(group, 'c_patient_name', ''),
+                hn: _.get(group, 'c_hn', ''),
+                description: _.get(group, 'c_description', ''),
+                chat_room_id: _.get(group, 'chat_room_id', ''),
+                chat_room_type: _.get(group, 'chat_room_type', 'Z')
             })
         }
     }
@@ -49,7 +52,7 @@ class UserProfile extends React.Component {
         this.load_data()
     }
 
-    saveProfile = (e) => {
+    saveProfile = async (e) => {
         if(e) {
             e.preventDefault()            
         }
@@ -57,41 +60,56 @@ class UserProfile extends React.Component {
         this.setState({
             errorMessage: ''
         })
-
-        const profile = {
-            user_id: this.state.user_id,
-            display_name: this.state.display_name,
-            status_quote: this.state.status_quote,
-            hn: this.state.hn,
-            password: this.state.newPassword
-        }
         
-        if(this.state.newPassword === this.state.confirmPassword) {
-            if(!_.get(this.state, 'newPassword') || _.get(this.state, 'newPassword.length', 0) >= 6) {
-                store.dispatch(onUpdateProfile(
-                    profile,
-                    {
-                        user_id: this.state.user_id,
-                        wall_pic_base64: this.state.wall_pic_base64,
-                        profile_pic_base64: this.state.profile_pic_base64
-                    }
-                ))
-            } else {
-                this.setState({
-                    errorMessage: '* Password should has at least 6 charactors'
-                })
-            }
-        } else {
+        if(!this.state.display_name) {
             this.setState({
-                errorMessage: '* Password is not matched'
+                errorMessage: '* Display name should not be empty'
             })
         }
+        
+        const oldSetting = this.props.history.location.state.selectedFriend
+        if (
+            this.props.history.location.state.selectedFriend.wall_pic_url != this.state.wall_pic_url ||
+            this.props.history.location.state.selectedFriend.profile_pic_url != this.state.profile_pic_url
+        ) {
+            const data = {
+                chat_room_id: this.state.chat_room_id
+            }
+            if(this.state.profile_pic_base64) {
+                data.profile_pic_base64 = this.state.profile_pic_base64
+            }
+            if(this.state.wall_pic_base64) {
+                data.wall_pic_base64 = this.state.wall_pic_base64
+            }
+            const resUpdatePicture = await updatePicture(data)
+        }
   
+        const groupData = {
+            chat_room_id: this.state.chat_room_id,
+            display_name: this.state.display_name,
+            patient_name: this.state.patient_name,
+            hn: this.state.hn,
+            description: this.state.description
+        }
+  
+        await updateGroupSetting(groupData)
+
+        store.dispatch(onUpdateGroupSetting({
+            wall_pic_url: this.state.wall_pic_url,
+            profile_pic_url: this.state.profile_pic_url,
+            hn: this.state.hn,
+            patient_name: this.state.patient_name,
+            description: this.state.description,
+            display_name: this.state.display_name,
+            chat_room_id: this.state.chat_room_id,
+            chat_room_type: this.state.chat_room_type
+        }))
     }
     
     profileImageChangeHandler = (e) => {
         getBase64(e.target.files[0]).then(res => {
             this.setState({
+                profile_pic_url: res,
                 profile_pic_base64: res || ''
             })
         })
@@ -100,6 +118,7 @@ class UserProfile extends React.Component {
     coverImageChangeHandler = (e) => {
         getBase64(e.target.files[0]).then(res => {
             this.setState({
+                wall_pic_url: res,
                 wall_pic_base64: res || ''
             })
         })
@@ -109,7 +128,7 @@ class UserProfile extends React.Component {
         return (
             <div className="col-sm-8 conversation">
                 <div className="row heading">
-                    <a className="heading-name-meta">USER PROFILE
+                    <a className="heading-name-meta">GROUP SETTING
                     </a>
                 </div>
                 <div style={{ overflowY: 'scroll' }}>
@@ -159,31 +178,27 @@ class UserProfile extends React.Component {
                             </div>
                         </div>
                         <div className="form-row">
-                            <div className="form-group col-md-6">
+                            <div className="form-group col-md-12">
                                 <label>Display Name</label>
                                 <input type="text" className="form-control" placeholder="Display Name" value={this.state.display_name}  onChange={(event) => this.setState({display_name: event.target.value})} />
+                            </div>
+                        </div>
+                        <div className={this.state.chat_room_type=='C'? 'form-row' : 'hide'}>
+                            <div className="form-group col-md-6">
+                                <label>Patient Name</label>
+                                <input type="text" className="form-control" placeholder="Patient Name" value={this.state.patient_name}  onChange={(event) => this.setState({patient_name: event.target.value})} />
                             </div>
                             <div className="form-group col-md-6">
                                 <label>HN</label>
                                 <input type="text" className="form-control"  placeholder="HN" value={this.state.hn}  onChange={(event) => this.setState({hn: event.target.value})} />
                             </div>
-                        </div>
-                        <div className="form-group col-md-12">
-                            <label>Status</label>
-                            <input type="text" className="form-control" placeholder="Status"  value={this.state.status_quote}  onChange={(event) => this.setState({status_quote: event.target.value})} />
-                        </div>
-                        <div className="form-row">
                             <div className="form-group col-md-6">
-                                <label>Password</label>
-                                <input type="password" className="form-control" placeholder="Password" value={this.state.newPassword}  onChange={(event) => this.setState({newPassword: event.target.value})} />
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label>Confirm Password</label>
-                                <input type="password" className="form-control"  placeholder="Confirm Password" value={this.state.confirmPassword}  onChange={(event) => this.setState({confirmPassword: event.target.value})} />
+                                <label>Description</label>
+                                <input type="text" className="form-control"  placeholder="Description" value={this.state.description}  onChange={(event) => this.setState({description: event.target.value})} />
                             </div>
                         </div>
                         <div className="col-md-12" style={{ marginBottom: '10px' }}>
-                            <small  className="form-text text-muted" > { this.state.errorMessage || '* leave the passwords empty, if you do not want to change' }</small>
+                            <small  className="form-text text-muted" > { this.state.errorMessage || '' }</small>
                         </div>
                         <div className="col-md-6">
                             <button type="submit" className="btn btn-primary" onClick={() => this.saveProfile()}>Save</button>
@@ -195,4 +210,4 @@ class UserProfile extends React.Component {
     }
 }
 
-export default UserProfile
+export default GroupSetting

@@ -142,6 +142,17 @@ class Contact extends React.Component {
         }
     }
 
+    _go_to_group_setting = () => {
+        this.setState({
+            isShowModal: false
+        }, () => {
+            this.props.history.push({
+                pathname: '/group-setting/' + this.state.selectedFriend.chat_room_id,
+                state: { selectedFriend: this.state.selectedFriend }
+            })
+        })
+    }
+
     render = () => {
         return (
             <div>
@@ -201,7 +212,7 @@ class Contact extends React.Component {
                                 <div className={ _.get(this.state, 'selectedFriend.chat_room_type') != 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
                                         <i className="fa fa-comments" style={{ fontSize: '35px' }}></i></a><a>
-                                        <i className="fa fa-cog" style={{ fontSize: '35px' }}></i></a><a>
+                                        <i className="fa fa-cog" style={{ fontSize: '35px' }} onClick={() => this._go_to_group_setting() }></i></a><a>
                                     </a>
                                 </div>
                             </div>
