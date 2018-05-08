@@ -378,11 +378,10 @@ body {
 
 .message-time {
   margin: 0 !important;
-  margin-left: 50px !important;
   font-size: 12px;
   text-align: right;
   color: #9a9a9a;
-
+  margin-top: 5px !important;
 }
 
 .receiver {

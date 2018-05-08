@@ -43,6 +43,34 @@ class Content extends React.Component {
                     </div>
 
                     <div className="row message-body">
+                        <div className="col-sm-12 message-main-receiver">
+                            <div className="receiver">
+                                <img src="http://smnodame.com/public/profile.jpg" style={{ width: '200px' }}  />
+                                <span className="message-time pull-right">
+                                    Sun
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row message-body">
+                        <div className="col-sm-12 message-main-receiver">
+                            <div className="receiver">
+                                <div style={{ display: 'flex' }}>
+                                    <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '8px', width: '69px', borderRadius: '50%' }}></i>
+                                    <div style={{     paddingLeft: '12px' }}>
+                                        <p style={{ margin: '0px', fontWeight: 'bold', color: '#3a6d99' }}>Hello world</p>
+                                        <p style={{ margin: '0px', color: '#3a6d99' }}>Download</p>
+                                    </div>
+                                </div>
+                                <span className="message-time pull-right">
+                                    Sun
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="row message-body">
                         <div className="col-sm-12 message-main-sender">
                             <div className="sender">
                                 <div className="message-text">
