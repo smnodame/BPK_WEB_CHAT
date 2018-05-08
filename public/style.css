@@ -407,6 +407,9 @@ body {
   word-wrap: break-word;
 }
 
+.sticker {
+  background: #FFF0 !important;
+}
 
 /*Reply*/
 

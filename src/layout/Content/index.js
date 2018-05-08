@@ -105,6 +105,17 @@ class Content extends React.Component {
                             </div>
                         </div>
                     </div>
+
+                    <div className="row message-body">
+                        <div className="col-sm-12 message-main-sender">
+                            <div className="sender sticker">
+                                <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '150px' }}  />
+                                <span className="message-time pull-right">
+                                    Sun
+                                </span>
+                            </div>
+                        </div>
+                    </div>
                     
                     <div className="row message-body">
                         <div className="col-sm-12 message-main-sender">
