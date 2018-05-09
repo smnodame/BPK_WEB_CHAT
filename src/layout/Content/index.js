@@ -201,8 +201,8 @@ class Content extends React.Component {
                     </div>
                     
                 </div>
-                <div style={{ overflowY: 'scroll', height: '200px' }}>
-                    <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'white', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
+                <div style={{ overflowY: 'scroll', height: '200px', backgroundColor: 'white' }}>
+                    <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'rgb(251, 251, 251)', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
                         {
                             this.render_sticker_collection()
                         }
