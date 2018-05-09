@@ -54,7 +54,7 @@ class App extends React.Component {
                     <Switch>
                         <Route exact path='/user-profile' render={routeProps => <UserProfile {...routeProps} data={this.state.data} />}/>
                         <Route exact path='/group-setting/:id' render={routeProps => <GroupSetting {...routeProps} data={this.state.data} />}/>
-                        <Route path='/:id' component={Content} data={this.state.data} />
+                        <Route path='/:id' render={routeProps => <Content {...routeProps} data={this.state.data} />} />
                         <Route exact path='/' component={DefaultPage} />
                     </Switch>
                 </div>

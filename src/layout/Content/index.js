@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import React from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 
@@ -5,8 +6,37 @@ class Content extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            is_show_chat_list: false
+            sticker: [],
+            collectionKeySelected: 0
         }
+    }
+
+    componentWillReceiveProps() {
+        if(_.get(this.props.data, 'chat.sticker')) {
+            this.setState({
+                sticker: this.props.data.chat.sticker || []
+            })
+        }
+    }
+    
+    render_sticker_collection = () => {
+        return this.state.sticker.map((item) => {
+            return (
+                <img src={item.collection_image_url} style={{ width: '90px', padding: '15px', height: '80px', cursor: 'pointer' }}  onClick={() => {
+                    this.setState({
+                        collectionKeySelected: item.key
+                    })
+                }} />
+            )
+        })
+    }
+
+    render_sticker = () => {
+        return _.get(this.state.sticker, `${this.state.collectionKeySelected}.sticker_lists`, []).map((item) => {
+            return (
+                <img src={item.url} style={{ width: '145px', padding: '15px', cursor: 'pointer' }}  />
+            )
+        })
     }
 
     render() {
@@ -172,16 +202,14 @@ class Content extends React.Component {
                     
                 </div>
                 <div style={{ overflowY: 'scroll', height: '200px' }}>
-                    <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'white', borderTop: '1px solid #ccc',
-    borderBottom: '1px solid #ccc'}}>
-                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '90px', padding: '15px', height: '80px' }}  />
+                    <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'white', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
+                        {
+                            this.render_sticker_collection()
+                        }
                     </div>
-                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
-                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
-                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
-                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
-                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
-                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
+                    {
+                        this.render_sticker()
+                    }
                 </div>
             </div>
         )
