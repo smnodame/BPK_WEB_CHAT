@@ -149,17 +149,13 @@ class Content extends React.Component {
                 </div>
                 
                 <div className="row reply">
-                    <div className="col-sm-1 col-xs-1 reply-emojis">
-                        <i className="fa fa-smile-o fa-2x"></i>
-                    </div>
-                    <div className="col-sm-9 col-xs-9 reply-main">
-                        <textarea className="form-control" rows="1" id="comment"></textarea>
-                    </div>
-                    <div className="col-sm-1 col-xs-1 reply-recording">
-                        <i className="fa fa-microphone fa-2x" aria-hidden="true"></i>
-                    </div>
-                    <div className="col-sm-1 col-xs-1 reply-send">
-                        <i className="fa fa-send fa-2x" aria-hidden="true"></i>
+                    <div style={{ display: 'flex' }}>
+                        <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <i className="fa fa-file-image-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <i className="fa fa-file-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <textarea className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
+                        <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
                     </div>
                 </div>
             </div>
