@@ -312,6 +312,9 @@ body {
 }
 
 /*Conversation*/
+.header-chat:hover {
+  background-color: #DFDFDF;
+}
 
 .conversation {
   padding: 0 !important;

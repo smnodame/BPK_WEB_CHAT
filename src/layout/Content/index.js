@@ -1,4 +1,6 @@
 import _ from 'lodash'
+import $ from 'jquery'
+
 import React from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 
@@ -39,10 +41,18 @@ class Content extends React.Component {
         })
     }
 
+    _image_upload_handler = (e) => {
+        console.log(e)
+    }
+
+    _file_upload_handler = (e) => {
+        console.log(e)
+    }
+
     render() {
         return (
             <div className="col-sm-8 conversation">
-                <div className="row heading">
+                <div className="row heading header-chat">
                     <div className="col-sm-2 col-md-1 col-xs-3 heading-avatar">
                         <div className="heading-avatar-icon">
                             <img src="https://bootdey.com/img/Content/avatar/avatar6.png" />
@@ -54,7 +64,7 @@ class Content extends React.Component {
                         <span className="heading-online">Online</span>
                     </div>
                     <div className="col-sm-1 col-xs-1  heading-dot pull-right">
-                        <i className="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+                        <i className="fa fa-search fa-2x  pull-right" aria-hidden="true"></i>
                     </div>
                 </div>
 
@@ -157,7 +167,7 @@ class Content extends React.Component {
                     <div className="row message-body">
                         <div className="col-sm-12 message-main-sender">
                             <div className="sender">
-                                <div style={{ display: 'flex' }}>
+                                <div style={{ display: 'flex', cursor: 'pointer' }}>
                                     <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '8px', width: '69px', borderRadius: '50%' }}></i>
                                     <div style={{     paddingLeft: '12px' }}>
                                         <p style={{ margin: '0px', fontWeight: 'bold', color: '#3a6d99' }}>Hello world</p>
@@ -184,7 +194,8 @@ class Content extends React.Component {
                         </div>
                     </div>
                 </div>
-                
+                <input id="image-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._image_upload_handler} aria-describedby="fileHelp" />
+                <input id="file-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._file_upload_handler} aria-describedby="fileHelp" />
 
                 <div className="row reply">
                     <div style={{ display: 'flex' }}>
@@ -193,8 +204,16 @@ class Content extends React.Component {
                                 show_addi_footer: !this.state.show_addi_footer
                             })
                         }}></i>
-                        <i className="fa fa-file-image-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
-                        <i className="fa fa-file-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <i className="fa fa-file-image-o fa-2x" style={{ padding: '10px', color: '#93918f' }} 
+                            onClick={() => {
+                                $('#image-upload').trigger('click')
+                            }}
+                        ></i>
+                        <i className="fa fa-file-o fa-2x" style={{ padding: '10px', color: '#93918f' }}
+                            onClick={() => {
+                                $('#file-upload').trigger('click')
+                            }}
+                        ></i>
                         <textarea className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
                         <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
                         <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
