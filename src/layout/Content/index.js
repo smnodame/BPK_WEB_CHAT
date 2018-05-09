@@ -2,6 +2,13 @@ import React from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 
 class Content extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            is_show_chat_list: false
+        }
+    }
+
     render() {
         return (
             <div className="col-sm-8 conversation">
@@ -21,7 +28,7 @@ class Content extends React.Component {
                     </div>
                 </div>
 
-                <div className="row message" id="conversation">
+                <div className={!!this.state.show_addi_footer? 'row message message-small': 'row message' }>
                     <div className="row message-previous">
                         <div className="col-sm-12 previous">
                             <a onclick="previous(this)" name="20">
@@ -148,9 +155,14 @@ class Content extends React.Component {
                     </div>
                 </div>
                 
+
                 <div className="row reply">
                     <div style={{ display: 'flex' }}>
-                        <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
+                            this.setState({
+                                show_addi_footer: !this.state.show_addi_footer
+                            })
+                        }}></i>
                         <i className="fa fa-file-image-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
                         <i className="fa fa-file-o fa-2x" style={{ padding: '10px', color: '#93918f' }}></i>
                         <textarea className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>

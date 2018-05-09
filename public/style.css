@@ -331,6 +331,11 @@ body {
   border: 1px solid #f7f7f7;
   height: calc(100% - 120px);
 }
+
+.message-small {
+  height: calc(100% - 320px) !important;
+}
+
 .message-previous {
   margin : 0 !important;
   padding: 0 !important;
