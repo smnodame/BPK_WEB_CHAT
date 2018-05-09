@@ -1,6 +1,6 @@
 import _ from 'lodash'
 import $ from 'jquery'
-
+import { ReactMic } from 'react-mic'
 import React from 'react'
 import AudioPlayer from '../../components/AudioPlayer'
 
@@ -47,6 +47,56 @@ class Content extends React.Component {
 
     _file_upload_handler = (e) => {
         console.log(e)
+    }
+
+    startRecording = () => {
+        this.setState({
+            record: true
+        })
+    }
+
+    stopRecording = () => {
+        this.setState({
+            record: false
+        })
+    }
+    
+    onData(recordedBlob) {
+        console.log('chunk of real-time data is: ', recordedBlob);
+    }
+    
+    onStop(recordedBlob) {
+        console.log('recordedBlob is: ', recordedBlob);
+    }
+
+    render_addi_footer = () => {
+        if(this.state.footer_selected == 'sticker') {
+            return (
+                <div style={{ height: 'auto !important' }}>
+                <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'rgb(251, 251, 251)', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
+                    {
+                        this.render_sticker_collection()
+                    }
+                </div>
+                {
+                    this.render_sticker()
+                }
+                </div>
+            )
+        } else {
+            return (
+                <div style={{ height: 'auto !important' }}>
+                    <ReactMic
+                        record={this.state.record}
+                        className="sound-wave"
+                        onStop={this.onStop}
+                        strokeColor="#000000"
+                        backgroundColor="#FF4081" />
+                    <button onClick={this.startRecording} type="button">Start</button>
+                    <button onClick={this.stopRecording} type="button">Stop</button>
+                </div>
+            )
+        }
     }
 
     render() {
@@ -201,7 +251,8 @@ class Content extends React.Component {
                     <div style={{ display: 'flex' }}>
                         <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
-                                show_addi_footer: !this.state.show_addi_footer
+                                show_addi_footer: !this.state.show_addi_footer,
+                                footer_selected: 'sticker'
                             })
                         }}></i>
                         <i className="fa fa-file-image-o fa-2x" style={{ padding: '10px', color: '#93918f' }} 
@@ -215,19 +266,19 @@ class Content extends React.Component {
                             }}
                         ></i>
                         <textarea className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
-                        <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
+                            this.setState({
+                                show_addi_footer: !this.state.show_addi_footer,
+                                footer_selected: 'mic'
+                            })
+                        }}></i>
                         <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
                     </div>
                     
                 </div>
                 <div style={{ overflowY: 'scroll', height: '200px', backgroundColor: 'white' }}>
-                    <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'rgb(251, 251, 251)', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
-                        {
-                            this.render_sticker_collection()
-                        }
-                    </div>
                     {
-                        this.render_sticker()
+                        this.render_addi_footer()
                     }
                 </div>
             </div>
