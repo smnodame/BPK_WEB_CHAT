@@ -169,6 +169,19 @@ class Content extends React.Component {
                         <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
                         <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
                     </div>
+                    
+                </div>
+                <div style={{ overflowY: 'scroll', height: '200px' }}>
+                    <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'white', borderTop: '1px solid #ccc',
+    borderBottom: '1px solid #ccc'}}>
+                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '90px', padding: '15px', height: '80px' }}  />
+                    </div>
+                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
+                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
+                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
+                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
+                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
+                    <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '145px', padding: '15px' }}  />
                 </div>
             </div>
         )

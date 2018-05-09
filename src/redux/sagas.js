@@ -177,6 +177,37 @@ function* enterContactSaga() {
     }
 }
 
+function* onStickerSaga() {
+    while (true) {
+        yield take('ON_STICKER')
+
+        const stickerData = yield call(fetchSticker)
+
+        const sticker_base_url = _.get(stickerData, 'data.sticker_base_url')
+        const collections = _.get(stickerData, 'data.data', [])
+
+        const collectionsLists = collections.map((c, index) => {
+            const stickerLists = c.sticker_file_list.split(',')
+            const stickerObj = stickerLists.map((s) => {
+                return {
+                    url: `${sticker_base_url}/${c.sticker_folder}/${s}`,
+                    file: s,
+                    path: `${c.sticker_folder}/${s}`
+                }
+            })
+            return {
+                sticker_collection_id: c.sticker_collection_id,
+                collection_image_url: `${sticker_base_url}/${c.sticker_folder}/${stickerLists[0]}`,
+                sticker_collection_name: c.sticker_collection_name,
+                sticker_lists: stickerObj,
+                key: index
+            }
+        })
+
+        yield put(sticker(collectionsLists))
+    }
+}
+
 function* loadmoreSaga() {
     while (true) {
         const { payload: { group } } = yield take('ON_LOAD_MORE')
@@ -375,7 +406,8 @@ export default function* rootSaga() {
         addFavoriteSaga(),
         removeFavoriteSaga(),
         updateProfileSaga(),
-        onUpdateGroupSettingSaga()
+        onUpdateGroupSettingSaga(),
+        onStickerSaga()
     ])
 }
 
