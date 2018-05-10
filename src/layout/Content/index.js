@@ -1,8 +1,13 @@
 import _ from 'lodash'
 import $ from 'jquery'
-import { ReactMic } from 'react-mic'
 import React from 'react'
+
+import { ReactMic } from 'react-mic'
 import AudioPlayer from '../../components/AudioPlayer'
+
+import { fetchChatInfo } from '../../redux/api.js'
+import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep } from '../../redux/actions.js'
+import { store } from '../../redux'
 
 class Content extends React.Component {
     constructor(props) {
@@ -14,10 +19,35 @@ class Content extends React.Component {
         }
     }
 
+    load_chat = () => {
+        const chat_id = location.pathname.replace('/chat/','')
+        fetchChatInfo(chat_id).then((res) => {
+            store.dispatch(selectChat(res.data.data))
+        })
+    }
+
+    componentDidMount() {
+        // start load chat
+        this.load_chat()
+        this.props.history.listen((location, action) => {
+            this.load_chat()
+        })
+    }
+
+    componentWillReceiveProps() {
+        
+    }
+
     componentWillReceiveProps() {
         if(_.get(this.props.data, 'chat.sticker')) {
             this.setState({
                 sticker: this.props.data.chat.sticker || []
+            })
+        }
+
+        if(_.get(this.props.data, 'chat.chat')) {
+            this.setState({
+                chat: this.props.data.chat.chat
             })
         }
     }

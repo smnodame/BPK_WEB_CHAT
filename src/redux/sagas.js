@@ -395,6 +395,40 @@ function* onUpdateGroupSettingSaga() {
     }
 }
 
+function* selectChatSaga() {
+    while (true) {
+        const { payload: { chatInfo }} = yield take('SELECT_CHAT')
+        // fetch chat list from userID
+        try {
+            
+            if(!chatInfo.chat_room_id) {
+                const resCreateNewRoom = yield call(createNewRoom, chatInfo.friend_user_id)
+                chatInfo.chat_room_id = resCreateNewRoom.data.data.chat_room_id
+            }
+
+            const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, '', '', '')
+            const chatData = _.get(resFetchChat, 'data.data', [])
+
+            // store last id
+            yield put(lastMessageID(chatData.length != 0? chatData[0].chat_message_id : '0'))
+
+            // store data in store redux
+            yield put(selectedChatInfo(chatInfo))
+            yield put(chat(chatData))
+
+            // subscribe socket io
+            // emit_subscribe(chatInfo.chat_room_id)
+
+            // call set as setAsSeen
+            if(chatData.length != 0) {
+                yield call(setAsSeen, chatInfo.chat_room_id)
+                // emit_as_seen(chatInfo.chat_room_id)
+            }
+        } catch (err) {
+            console.log('[selectChatSaga] ', err)
+        }
+    }
+}
 
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
@@ -407,7 +441,8 @@ export default function* rootSaga() {
         removeFavoriteSaga(),
         updateProfileSaga(),
         onUpdateGroupSettingSaga(),
-        onStickerSaga()
+        onStickerSaga(),
+        selectChatSaga()
     ])
 }
 
