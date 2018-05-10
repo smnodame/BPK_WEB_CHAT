@@ -202,7 +202,7 @@ class Contact extends React.Component {
                                             this.setState({
                                                 isShowModal: false
                                             }, () => {
-                                                this.props.history.push('/' + this.state.selectedFriend.chat_room_id)
+                                                this.props.history.push('/chat/' + this.state.selectedFriend.chat_room_id)
                                             })
                                         }}></i></a><a>
                                         <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
@@ -215,7 +215,7 @@ class Contact extends React.Component {
                                             this.setState({
                                                 isShowModal: false
                                             }, () => {
-                                                this.props.history.push('/' + this.state.selectedFriend.chat_room_id)
+                                                this.props.history.push('/chat/'  + this.state.selectedFriend.chat_room_id)
                                             })
                                         }}></i></a><a>
                                         <i className="fa fa-cog" style={{ fontSize: '35px' }} onClick={() => this._go_to_group_setting() }></i></a><a>
