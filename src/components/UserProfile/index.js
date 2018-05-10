@@ -112,7 +112,7 @@ class UserProfile extends React.Component {
                     <a className="heading-name-meta">USER PROFILE
                     </a>
                 </div>
-                <div style={{ overflowY: 'scroll' }}>
+                <div style={{ overflowY: 'scroll', background: 'rgb(251, 251, 251)' }}>
                     <form onSubmit={this.saveProfile}>
                         <div className="col-md-12">
                             <div className="setting-profile">

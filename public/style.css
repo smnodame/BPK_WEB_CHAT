@@ -392,6 +392,10 @@ body {
   margin-top: 5px !important;
 }
 
+.sound-wave {
+  display: none;
+}
+
 .receiver {
   width: auto !important;
   padding: 4px 10px 7px !important;

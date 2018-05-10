@@ -9,7 +9,8 @@ class Content extends React.Component {
         super(props)
         this.state = {
             sticker: [],
-            collectionKeySelected: 0
+            collectionKeySelected: 0,
+            currentTime: 0.0
         }
     }
 
@@ -59,6 +60,8 @@ class Content extends React.Component {
         this.setState({
             record: false
         })
+
+        this.setState({stoppedRecording: true, recording: false, paused: false})
     }
     
     onData(recordedBlob) {
@@ -67,12 +70,15 @@ class Content extends React.Component {
     
     onStop(recordedBlob) {
         console.log('recordedBlob is: ', recordedBlob);
+        this.setState({
+            roundRecording: this.state.roundRecording + 1
+        })
     }
 
     render_addi_footer = () => {
         if(this.state.footer_selected == 'sticker') {
             return (
-                <div style={{ height: 'auto !important' }}>
+                <div style={{ height: 'auto !important', overflowY: 'scroll' }}>
                 <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'rgb(251, 251, 251)', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
                     {
                         this.render_sticker_collection()
@@ -85,15 +91,15 @@ class Content extends React.Component {
             )
         } else {
             return (
-                <div style={{ height: 'auto !important' }}>
+                <div style={{ height: 'auto !important', overflowY: 'scroll', background: 'rgb(251, 251, 251)' }}>
                     <ReactMic
                         record={this.state.record}
                         className="sound-wave"
                         onStop={this.onStop}
                         strokeColor="#000000"
                         backgroundColor="#FF4081" />
-                    <button onClick={this.startRecording} type="button">Start</button>
-                    <button onClick={this.stopRecording} type="button">Stop</button>
+                    <button onClick={this.startRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', position: 'relative',top: '50%',left: '50%', marginRight: '-50%', transform: 'translate(-50%, -50%)'  }} type="button">Start</button>
+                    <button onClick={this.stopRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', position: 'relative',top: '50%',left: '50%', marginRight: '-50%', transform: 'translate(-50%, -50%)'  }} type="button">Stop</button>
                 </div>
             )
         }
@@ -276,7 +282,7 @@ class Content extends React.Component {
                     </div>
                     
                 </div>
-                <div style={{ overflowY: 'scroll', height: '200px', backgroundColor: 'white' }}>
+                <div style={{ height: '200px', backgroundColor: 'white' }}>
                     {
                         this.render_addi_footer()
                     }
