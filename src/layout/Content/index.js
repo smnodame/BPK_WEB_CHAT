@@ -1,6 +1,7 @@
 import _ from 'lodash'
 import $ from 'jquery'
 import React from 'react'
+import moment from 'moment'
 
 import { ReactMic } from 'react-mic'
 import AudioPlayer from '../../components/AudioPlayer'
@@ -47,7 +48,13 @@ class Content extends React.Component {
 
         if(_.get(this.props.data, 'chat.chat')) {
             this.setState({
-                chat: this.props.data.chat.chat
+                chat: this.props.data.chat.chat || []
+            })
+        }
+
+        if(_.get(this.props.data, 'user.user')) {
+            this.setState({
+                user: this.props.data.user.user
             })
         }
     }
@@ -104,7 +111,7 @@ class Content extends React.Component {
             roundRecording: this.state.roundRecording + 1
         })
     }
-
+    
     render_addi_footer = () => {
         if(this.state.footer_selected == 'sticker') {
             return (
@@ -134,6 +141,93 @@ class Content extends React.Component {
             )
         }
     }
+    
+    render_message = () => {
+        return _.get(this.state, 'chat', []).map((chat) => {
+            if(chat.message_type == '3') {
+                return (
+                    <div className="row message-body">
+                        <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                                <AudioPlayer src={chat.object_url} />
+                                <span className="message-time pull-right">
+                                    { `${moment(chat.create_date).fromNow()}` }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            if(chat.message_type == '1') {
+                return (
+                    <div className="row message-body">
+                        <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                                <div className="message-text">
+                                    { chat.content }
+                                </div>
+                                <span className="message-time pull-right">
+                                    { `${moment(chat.create_date).fromNow()}` }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            if(chat.message_type == '2') {
+                return (
+                    <div className="row message-body">
+                        <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                                <img src={ chat.object_url } style={{ width: '200px' }}  />
+                                <span className="message-time pull-right">
+                                    { `${moment(chat.create_date).fromNow()}` }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            if(chat.message_type == '4') {
+                return (
+                    <div className="row message-body">
+                        <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender sticker": "receiver sticker" }>
+                                <img src={ chat.object_url } style={{ width: '150px' }}  />
+                                <span className="message-time pull-right">
+                                    { `${moment(chat.create_date).fromNow()}` }
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+
+            if(chat.message_type == '5') {
+                return (
+                    <div className="row message-body">
+                        <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                                <div style={{ display: 'flex', cursor: 'pointer' }}>
+                                    <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '8px', width: '69px', borderRadius: '50%' }}></i>
+                                    <div style={{     paddingLeft: '12px' }}>
+                                        <p style={{ margin: '0px', fontWeight: 'bold', color: '#3a6d99' }}>{ chat.file_name }</p>
+                                        <p style={{ margin: '0px', color: '#3a6d99' }}>Download</p>
+                                    </div>
+                                </div>
+                                <p className="message-time pull-right">
+                                    { `${moment(chat.create_date).fromNow()}` }
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            }
+        })
+    }
 
     render() {
         return (
@@ -162,123 +256,9 @@ class Content extends React.Component {
                             </a>
                         </div>
                     </div>
-
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-receiver">
-                            <div className="receiver">
-                                <div className="message-text">
-                                    Hi, what are you doing?!
-                                </div>
-                                <span className="message-time pull-right">
-                                    Sun
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-receiver">
-                            <div className="receiver">
-                                <img src="http://smnodame.com/public/profile.jpg" style={{ width: '200px' }}  />
-                                <span className="message-time pull-right">
-                                    Sun
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-receiver">
-                            <div className="receiver">
-                                <div style={{ display: 'flex' }}>
-                                    <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '8px', width: '69px', borderRadius: '50%' }}></i>
-                                    <div style={{     paddingLeft: '12px' }}>
-                                        <p style={{ margin: '0px', fontWeight: 'bold', color: '#3a6d99' }}>Hello world</p>
-                                        <p style={{ margin: '0px', color: '#3a6d99' }}>Download</p>
-                                    </div>
-                                </div>
-                                <p className="message-time pull-right">
-                                    Sun
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-sender">
-                            <div className="sender">
-                                <AudioPlayer />
-                                <span className="message-time pull-right">
-                                    Sun
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-sender">
-                            <div className="sender">
-                                <div className="message-text">
-                                    Hi, what are you doing?!
-                                </div>
-                                <span className="message-time pull-right">
-                                    Sun
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-sender">
-                            <div className="sender">
-                                <img src="http://smnodame.com/public/profile.jpg" style={{ width: '200px' }}  />
-                                <span className="message-time pull-right">
-                                    Sun
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-sender">
-                            <div className="sender sticker">
-                                <img src="http://itsmartone.com/bpk_connect/upload_chat_sticker/BPK/1.png" style={{ width: '150px' }}  />
-                                <span className="message-time pull-right">
-                                    Sun
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-sender">
-                            <div className="sender">
-                                <div style={{ display: 'flex', cursor: 'pointer' }}>
-                                    <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '8px', width: '69px', borderRadius: '50%' }}></i>
-                                    <div style={{     paddingLeft: '12px' }}>
-                                        <p style={{ margin: '0px', fontWeight: 'bold', color: '#3a6d99' }}>Hello world</p>
-                                        <p style={{ margin: '0px', color: '#3a6d99' }}>Download</p>
-                                    </div>
-                                </div>
-                                <p className="message-time pull-right">
-                                    Sun
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="row message-body">
-                        <div className="col-sm-12 message-main-sender">
-                            <div className="sender">
-                                <div className="message-text">
-                                    I am doing nothing man!
-                                </div>
-                                <span className="message-time pull-right">
-                                    Sun
-                                </span>
-                            </div>
-                        </div>
-                    </div>
+                    {
+                        this.render_message()
+                    }
                 </div>
                 <input id="image-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._image_upload_handler} aria-describedby="fileHelp" />
                 <input id="file-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._file_upload_handler} aria-describedby="fileHelp" />

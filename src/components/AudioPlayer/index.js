@@ -11,7 +11,7 @@ class AudioPlayer extends React.Component {
     render() {
         return (
             <audio controls className="player" preload="false">
-                <source src="http://www.nihilus.net/soundtracks/Static%20Memories.mp3" />
+                <source src={this.props.src} />
             </audio>
         )
     }
