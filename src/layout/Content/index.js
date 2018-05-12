@@ -172,7 +172,7 @@ class Content extends React.Component {
             /* text message */
             if(chat.message_type == '1') {
                 return (
-                    <div className="row message-body" style={{ marginRight: '10px' }}>
+                    <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }}>
                        
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
@@ -196,7 +196,7 @@ class Content extends React.Component {
              /* image message */
             if(chat.message_type == '2') {
                 return (
-                    <div className="row message-body">
+                    <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
@@ -217,8 +217,7 @@ class Content extends React.Component {
             /* audio player message */
             if(chat.message_type == '3') {
                 return (
-                    <div className="row message-body">
-                        
+                    <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
@@ -240,7 +239,7 @@ class Content extends React.Component {
              /* sticker message */
             if(chat.message_type == '4') {
                 return (
-                    <div className="row message-body">
+                    <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
@@ -261,7 +260,7 @@ class Content extends React.Component {
              /* file message */
             if(chat.message_type == '5') {
                 return (
-                    <div className="row message-body">
+                    <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
