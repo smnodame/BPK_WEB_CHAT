@@ -2,6 +2,7 @@ import _ from 'lodash'
 import $ from 'jquery'
 import React from 'react'
 import moment from 'moment'
+import download from 'downloadjs'
 
 import { ReactMic } from 'react-mic'
 import AudioPlayer from '../../components/AudioPlayer'
@@ -171,7 +172,20 @@ class Content extends React.Component {
             )
         }
     }
-    
+
+    download_file = () => {
+        $.ajax({
+            url: "http://smnodame.com/public/pictures/11.jpg", 
+            type: 'GET',
+            headers: {  'Access-Control-Allow-Origin': 'http://localhost:3000' },
+            success: () => {
+                console.log('=============')
+                console.log(download)
+                download.bind(true, "jpg", "file_name.html")
+            }
+        })
+    }
+
     render_message = () => {
         return _.get(this.state, 'chat', []).map((chat) => {
 
@@ -285,7 +299,7 @@ class Content extends React.Component {
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }}>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }} onClick={() => this.download_file() }>
                                
                                 <div style={{ display: 'flex', cursor: 'pointer' }}>
                                     <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '11px', width: '69px', borderRadius: '50%' }}></i>
