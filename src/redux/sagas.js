@@ -441,12 +441,40 @@ function* onFetchMessageListsSaga() {
 
             const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, '', '', filterMessage)
 
-            const chatData = _.get(resFetchChat, 'data.data', [])
+            const chatData = _.get(resFetchChat, 'data.data', []).reverse()
 
             // store data in store redux
             yield put(chat(chatData))
         } catch (err) {
             console.log('[onFetchMessageListsSaga] ', err)
+        }
+    }
+}
+
+function* onLoadMoreMessageListsSaga() {
+    while (true) {
+        try {
+            const { payload: { filterMessage }} = yield take('ON_LOAD_MORE_MESSAGE_LIST')
+
+            const chatInfo = yield select(getChatInfo)
+            const messageLists = yield select(getMessageLists)
+
+            const topChatMessageId = _.get(messageLists[0], 'chat_message_id', '0')
+
+            if(topChatMessageId != 0) {
+                console.log(topChatMessageId)
+                const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, topChatMessageId, '', filterMessage)
+                const chatData = _.get(resFetchChat, 'data.data', []).reverse()
+
+                const newMessageLists = [
+                    ...chatData,
+                    ...messageLists
+                ]
+
+                yield put(chat(newMessageLists))
+            }
+        } catch (err) {
+            console.log('[onLoadMoreMessageListsSaga] ', err)
         }
     }
 }
@@ -464,7 +492,8 @@ export default function* rootSaga() {
         onUpdateGroupSettingSaga(),
         onStickerSaga(),
         selectChatSaga(),
-        onFetchMessageListsSaga()
+        onFetchMessageListsSaga(),
+        onLoadMoreMessageListsSaga()
     ])
 }
 
