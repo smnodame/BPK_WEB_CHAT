@@ -40,9 +40,9 @@ class Content extends React.Component {
     }
 
     componentDidUpdate() {
-        setTimeout(function(){ 
-            this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight
-        }, 1000)
+        // setTimeout(function(){ 
+        //     this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight
+        // }, 1000)
     }
     componentWillReceiveProps() {
         
@@ -158,7 +158,7 @@ class Content extends React.Component {
 
             let seenMessage = ''
             const reader = chat.who_read.filter((id) => {
-                return id != this.state.user.user_id
+                return id != _.get(this.state.user, 'user_id')
             })
             if((this.state.chatInfo.chat_room_type == 'G' || this.state.chatInfo.chat_room_type == 'C') && reader.length != 0) {
                 seenMessage = `seen by ${reader.length}`
