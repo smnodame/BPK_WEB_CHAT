@@ -362,19 +362,25 @@ body {
   padding: 0 !important;
   width: auto;
   height: auto;
-  margin-top: 5px !important;
-  margin-bottom: 5px !important;
+  margin-top: 15px !important;
+  margin-bottom: 15px !important;
 }
 
 .message-main-receiver {
   /*padding: 10px 20px;*/
   max-width: 60%;
+  text-align: left;
+  display: flex;
+  justify-content: flex-start;
 }
 
 .message-main-sender {
   padding: 3px 20px !important;
   margin-left: 40% !important;
   max-width: 60%;
+  text-align: right;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .message-text {
@@ -392,6 +398,8 @@ body {
   text-align: right;
   color: #9a9a9a;
   margin-top: 5px !important;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
 }
 
 .sound-wave {
