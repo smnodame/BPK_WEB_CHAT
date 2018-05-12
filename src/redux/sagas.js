@@ -433,6 +433,24 @@ function* selectChatSaga() {
     }
 }
 
+function* onFetchMessageListsSaga() {
+    while (true) {
+        const { payload: { filterMessage }} = yield take('ON_FETCH_MESSAGE_LISTS')
+        try {
+            const chatInfo = yield select(getChatInfo)
+
+            const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, '', '', filterMessage)
+
+            const chatData = _.get(resFetchChat, 'data.data', [])
+
+            // store data in store redux
+            yield put(chat(chatData))
+        } catch (err) {
+            console.log('[onFetchMessageListsSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -445,7 +463,8 @@ export default function* rootSaga() {
         updateProfileSaga(),
         onUpdateGroupSettingSaga(),
         onStickerSaga(),
-        selectChatSaga()
+        selectChatSaga(),
+        onFetchMessageListsSaga()
     ])
 }
 
