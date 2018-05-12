@@ -362,6 +362,8 @@ body {
   padding: 0 !important;
   width: auto;
   height: auto;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
 }
 
 .message-main-receiver {
@@ -419,10 +421,25 @@ body {
   word-wrap: break-word;
 }
 
-.sticker {
+.background-transparent {
   background: #FFF0 !important;
 }
 
+.sticker-left {
+  margin-left: -30px;
+}
+
+.sticker-right {
+  margin-right: -30px;
+}
+
+.audio-left {
+  margin-left: -10px;
+}
+
+.audio-right {
+  margin-right: -10px;
+}
 /*Reply*/
 
 .reply {

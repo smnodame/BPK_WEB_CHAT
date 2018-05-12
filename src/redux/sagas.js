@@ -407,7 +407,7 @@ function* selectChatSaga() {
             }
 
             const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, '', '', '')
-            const chatData = _.get(resFetchChat, 'data.data', [])
+            const chatData = _.get(resFetchChat, 'data.data', []).reverse()
 
             // store last id
             yield put(lastMessageID(chatData.length != 0? chatData[0].chat_message_id : '0'))

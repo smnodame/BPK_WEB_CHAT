@@ -23,6 +23,9 @@ class Content extends React.Component {
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
         fetchChatInfo(chat_id).then((res) => {
+            this.setState({
+                chatInfo: res.data.data
+            })
             store.dispatch(selectChat(res.data.data))
         })
     }
@@ -33,8 +36,14 @@ class Content extends React.Component {
         this.props.history.listen((location, action) => {
             this.load_chat()
         })
+        
     }
 
+    componentDidUpdate() {
+        setTimeout(function(){ 
+            this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight
+        }, 1000)
+    }
     componentWillReceiveProps() {
         
     }
@@ -49,6 +58,8 @@ class Content extends React.Component {
         if(_.get(this.props.data, 'chat.chat')) {
             this.setState({
                 chat: this.props.data.chat.chat || []
+            }, () => {
+                this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight
             })
         }
 
@@ -148,11 +159,8 @@ class Content extends React.Component {
                 return (
                     <div className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender background-transparent audio-right": "receiver background-transparent audio-left" }>
                                 <AudioPlayer src={chat.object_url} />
-                                <span className="message-time pull-right">
-                                    { `${moment(chat.create_date).fromNow()}` }
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -161,15 +169,12 @@ class Content extends React.Component {
 
             if(chat.message_type == '1') {
                 return (
-                    <div className="row message-body">
+                    <div className="row message-body" style={{ marginRight: '10px' }}>
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
                                 <div className="message-text">
                                     { chat.content }
                                 </div>
-                                <span className="message-time pull-right">
-                                    { `${moment(chat.create_date).fromNow()}` }
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -180,11 +185,8 @@ class Content extends React.Component {
                 return (
                     <div className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender background-transparent": "receiver background-transparent" }>
                                 <img src={ chat.object_url } style={{ width: '200px' }}  />
-                                <span className="message-time pull-right">
-                                    { `${moment(chat.create_date).fromNow()}` }
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -195,11 +197,8 @@ class Content extends React.Component {
                 return (
                     <div className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
-                            <div className={ this.state.user.username == chat.username ? "sender sticker": "receiver sticker" }>
+                            <div className={ this.state.user.username == chat.username ? "sender background-transparent sticker-right": "receiver background-transparent sticker-left" }>
                                 <img src={ chat.object_url } style={{ width: '150px' }}  />
-                                <span className="message-time pull-right">
-                                    { `${moment(chat.create_date).fromNow()}` }
-                                </span>
                             </div>
                         </div>
                     </div>
@@ -210,17 +209,14 @@ class Content extends React.Component {
                 return (
                     <div className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }}>
                                 <div style={{ display: 'flex', cursor: 'pointer' }}>
-                                    <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '8px', width: '69px', borderRadius: '50%' }}></i>
+                                    <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '11px', width: '69px', borderRadius: '50%' }}></i>
                                     <div style={{     paddingLeft: '12px' }}>
                                         <p style={{ margin: '0px', fontWeight: 'bold', color: '#3a6d99' }}>{ chat.file_name }</p>
                                         <p style={{ margin: '0px', color: '#3a6d99' }}>Download</p>
                                     </div>
                                 </div>
-                                <p className="message-time pull-right">
-                                    { `${moment(chat.create_date).fromNow()}` }
-                                </p>
                             </div>
                         </div>
                     </div>
@@ -235,11 +231,11 @@ class Content extends React.Component {
                 <div className="row heading header-chat">
                     <div className="col-sm-2 col-md-1 col-xs-3 heading-avatar">
                         <div className="heading-avatar-icon">
-                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" />
+                            <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } />
                         </div>
                     </div>
                     <div className="col-sm-8 col-xs-7 heading-name">
-                        <a className="heading-name-meta">John Doe
+                        <a className="heading-name-meta">{ _.get(this.state.chatInfo, 'display_name') }
                         </a>
                         <span className="heading-online">Online</span>
                     </div>
@@ -248,7 +244,7 @@ class Content extends React.Component {
                     </div>
                 </div>
 
-                <div className={!!this.state.show_addi_footer? 'row message message-small': 'row message' }>
+                <div className={!!this.state.show_addi_footer? 'row message message-small': 'row message' } ref={(el) => { this.messagesEnd = el }}>
                     <div className="row message-previous">
                         <div className="col-sm-12 previous">
                             <a onclick="previous(this)" name="20">
