@@ -453,9 +453,9 @@ class Content extends React.Component {
                     }
                 </div>
 
-                <div id="myModal" className={ this.state.selected_image? 'modal show' : 'hide' }>
+                <div id="myModal" className={ this.state.selected_image? 'modal-photo show' : 'hide' }>
                     <span className="close" onClick={() => this.setState({ selected_image: '' }) }>&times;</span>
-                        <img className="modal-content" id="img01" src={ this.state.selected_image } style={{ width: '300px' }}/>
+                        <img className="modal-photo-content" id="img01" src={ this.state.selected_image } style={{ width: '300px' }}/>
                     <div id="caption"></div>
                 </div>
             </div>
