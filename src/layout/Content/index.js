@@ -252,7 +252,7 @@ class Content extends React.Component {
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender background-transparent": "receiver background-transparent" }>
-                                <img src={ chat.object_url } style={{ width: '200px' }}  />
+                                <img src={ chat.object_url } style={{ width: '200px' }} onClick={() => this.setState({ selected_image: chat.object_url })}  />
                             </div>
                             <span className={ this.state.user.username != chat.username ? "message-time" : "hide" } style={{ width: '75px', textAlign: 'left' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
@@ -435,6 +435,12 @@ class Content extends React.Component {
                     {
                         this.render_addi_footer()
                     }
+                </div>
+
+                <div id="myModal" className={ this.state.selected_image? 'modal show' : 'hide' }>
+                    <span className="close" onClick={() => this.setState({ selected_image: '' }) }>&times;</span>
+                        <img className="modal-content" id="img01" src={ this.state.selected_image } style={{ width: '300px' }}/>
+                    <div id="caption"></div>
                 </div>
             </div>
         )
