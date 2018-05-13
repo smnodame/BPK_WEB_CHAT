@@ -209,6 +209,7 @@ class Content extends React.Component {
             const reader = chat.who_read.filter((id) => {
                 return id != _.get(this.state.user, 'user_id')
             })
+            const is_show_avatar = (this.state.chatInfo.chat_room_type == 'G' || this.state.chatInfo.chat_room_type == 'C') && _.get(this.state.user, 'username') != chat.username
             if((this.state.chatInfo.chat_room_type == 'G' || this.state.chatInfo.chat_room_type == 'C') && reader.length != 0) {
                 seenMessage = `seen by ${reader.length}`
             } else if(reader.length != 0){
@@ -224,6 +225,9 @@ class Content extends React.Component {
                     <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }}>
                        
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
+                                <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
+                            </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                     { `${moment(chat.create_date).fromNow()}` }
                                     <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
@@ -247,6 +251,9 @@ class Content extends React.Component {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
+                                <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
+                            </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
@@ -268,6 +275,9 @@ class Content extends React.Component {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
+                                <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
+                            </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
@@ -290,6 +300,9 @@ class Content extends React.Component {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
+                                <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
+                            </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
@@ -311,6 +324,9 @@ class Content extends React.Component {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
+                                <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
+                            </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
