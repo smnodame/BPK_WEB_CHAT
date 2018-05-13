@@ -36,7 +36,9 @@ class Content extends React.Component {
         this.state = {
             sticker: [],
             collectionKeySelected: 0,
-            currentTime: 0.0
+            currentTime: 0.0,
+            roundRecording: 0,
+            timer: 0
         }
     }
 
@@ -122,21 +124,27 @@ class Content extends React.Component {
         this.setState({
             record: true
         })
+        this.timer = setInterval(() => { 
+            this.setState({
+                timer: this.state.timer + 1
+            })
+        }, 1000)
     }
 
     stopRecording = () => {
         this.setState({
-            record: false
+            record: false,
+            timer: 0
         })
-
+        clearInterval(this.timer)
         this.setState({stoppedRecording: true, recording: false, paused: false})
     }
     
-    onData(recordedBlob) {
+    onData = (recordedBlob) => {
         console.log('chunk of real-time data is: ', recordedBlob);
     }
     
-    onStop(recordedBlob) {
+    onStop = (recordedBlob) => {
         console.log('recordedBlob is: ', recordedBlob);
         this.setState({
             roundRecording: this.state.roundRecording + 1
@@ -147,27 +155,35 @@ class Content extends React.Component {
         if(this.state.footer_selected == 'sticker') {
             return (
                 <div style={{ height: 'auto !important', overflowY: 'scroll' }}>
-                <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'rgb(251, 251, 251)', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
+                    <div style={{ overflowX: 'auto', display: 'flex', height: '80px', backgroundColor: 'rgb(251, 251, 251)', borderTop: '1px solid #ccc', borderBottom: '1px solid #ccc'}}>
+                        {
+                            this.render_sticker_collection()
+                        }
+                    </div>
                     {
-                        this.render_sticker_collection()
+                        this.render_sticker()
                     }
                 </div>
-                {
-                    this.render_sticker()
-                }
-                </div>
             )
-        } else {
+        } else if(this.state.footer_selected == 'record') {
             return (
-                <div style={{ height: 'auto !important', overflowY: 'scroll', background: 'rgb(251, 251, 251)' }}>
+                <div style={{ height: 'auto !important', textAlign: 'center', paddingTop: '40px', background: 'rgb(251, 251, 251)' }}>
                     <ReactMic
                         record={this.state.record}
                         className="sound-wave"
                         onStop={this.onStop}
                         strokeColor="#000000"
                         backgroundColor="#FF4081" />
-                    <button onClick={this.startRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', position: 'relative',top: '50%',left: '50%', marginRight: '-50%', transform: 'translate(-50%, -50%)'  }} type="button">Start</button>
-                    <button onClick={this.stopRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', position: 'relative',top: '50%',left: '50%', marginRight: '-50%', transform: 'translate(-50%, -50%)'  }} type="button">Stop</button>
+                    <button className={ (!this.state.record && this.state.roundRecording == 0) ? 'show' : 'hide' } onClick={this.startRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px' }} type="button">START</button>
+                    <button className={ this.state.record ? 'show' : 'hide' } onClick={this.stopRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px' }} type="button">
+                        STOP <br /> { this.state.timer }
+                    </button>
+                    <div className={ (!this.state.record && this.state.roundRecording != 0) ? 'show' : 'hide' }>
+                        <button onClick={this.startRecording} style={{ backgroundColor: '#edb730', width: '100px', height: '100px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', margin: '10px'  }} type="button">
+                            <i className="fa fa-undo" aria-hidden="true" style={{ fontSize: '30px' }}></i>
+                        </button>
+                        <button onClick={this.stopRecording} style={{ backgroundColor: '#ff6666', width: '100px', height: '100px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', margin: '10px'  }} type="button">SEND</button>
+                    </div>
                 </div>
             )
         }
@@ -197,7 +213,7 @@ class Content extends React.Component {
                 seenMessage = `seen by ${reader.length}`
             } else if(reader.length != 0){
                 seenMessage = `seen`
-                if(this.state.user.username != chat.username) {
+                if(_.get(this.state.user, 'username') != chat.username) {
                     seenMessage = ''
                 }
             }
@@ -370,7 +386,7 @@ class Content extends React.Component {
                     </div>
                 </div>
 
-                <div className={!!this.state.show_addi_footer? 'row message message-small': 'row message' } ref={(el) => { this.messagesEnd = el }}>
+                <div onClick={() => this.setState({ footer_selected: '' })} className={!!this.state.footer_selected? 'row message message-small': 'row message' } ref={(el) => { this.messagesEnd = el }}>
                     <div className="row message-previous">
                         <div className="col-sm-12 previous">
                             <a onClick={() => store.dispatch(onLoadMoreMessageLists(this.state.filter))}>
@@ -389,7 +405,6 @@ class Content extends React.Component {
                     <div style={{ display: 'flex' }}>
                         <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
-                                show_addi_footer: !this.state.show_addi_footer,
                                 footer_selected: 'sticker'
                             })
                         }}></i>
@@ -403,11 +418,13 @@ class Content extends React.Component {
                                 $('#file-upload').trigger('click')
                             }}
                         ></i>
+                        <i className="fa fa-camera fa-2x" style={{ padding: '10px', color: '#93918f' }}
+                            
+                        ></i>
                         <textarea className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
                         <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
-                                show_addi_footer: !this.state.show_addi_footer,
-                                footer_selected: 'mic'
+                                footer_selected: 'record'
                             })
                         }}></i>
                         <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
