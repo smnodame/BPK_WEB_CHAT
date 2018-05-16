@@ -196,8 +196,6 @@ class Content extends React.Component {
             type: 'GET',
             headers: {  'Access-Control-Allow-Origin': 'http://localhost:3000' },
             success: () => {
-                console.log('=============')
-                console.log(download)
                 download.bind(true, "jpg", "file_name.html")
             }
         })
@@ -371,6 +369,29 @@ class Content extends React.Component {
         })
     }
 
+    openCamera = () => {
+        var video = document.getElementById('video')
+        
+        // Get access to the camera!
+        if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+            // Not adding `{ audio: true }` since we only want video now
+            navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+                video.src = window.URL.createObjectURL(stream)
+                video.play()
+            })
+        }
+    }
+    
+    takePhoto = () => {
+        var canvas = document.getElementById('canvas')
+        var context = canvas.getContext('2d')
+        var video = document.getElementById('video')
+        context.drawImage(video, 0, 0, 640, 480)
+        this.setState({
+            alreadyTaken: true
+        })
+    }
+
     render() {
         return (
             <div className="col-sm-8 conversation">
@@ -436,7 +457,13 @@ class Content extends React.Component {
                             }}
                         ></i>
                         <i className="fa fa-camera fa-2x" style={{ padding: '10px', color: '#93918f' }}
-                            
+                            onClick={() => {
+                                this.setState({
+                                    showCamera: true
+                                }, () => {
+                                    this.openCamera()
+                                })
+                            }}
                         ></i>
                         <textarea className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
                         <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
@@ -460,18 +487,56 @@ class Content extends React.Component {
                     <div id="caption"></div>
                 </div>
                 <div className="static-modal">
-                    <Modal.Dialog>
+                    <Modal show={this.state.showCamera} onHide={() => {
+                            this.setState({
+                                showCamera: false,
+                                alreadyTaken: false
+                            })
+                        }}>
                         <Modal.Header>
-                            <Modal.Title>Modal title</Modal.Title>
+                            <Modal.Title>Take a photo</Modal.Title>
                         </Modal.Header>
 
-                            <Modal.Body>One fine body...</Modal.Body>
-
+                            <video id="video" className={ !this.state.alreadyTaken? 'show' : 'hide' } width="640" height="480" autoplay></video>
+                            <canvas id="canvas" className={ this.state.alreadyTaken? 'show' : 'hide' } width="640" height="480"></canvas>
+                            
                         <Modal.Footer>
-                            <Button>Close</Button>
-                            <Button bsStyle="primary">Save changes</Button>
+                            <Button onClick={() => {
+                                this.setState({
+                                    showCamera: false,
+                                    alreadyTaken: false
+                                })
+                            }}>Close</Button>
+                            {
+                                this.state.alreadyTaken && <Button bsStyle="warning" 
+                                    onClick={() => {
+                                        this.setState({
+                                            alreadyTaken: false
+                                        })
+                                    }}
+                                >
+                                    <i className="fa fa-undo" aria-hidden="true"></i>
+                                </Button>
+                            }
+                            {
+                                this.state.alreadyTaken && <Button bsStyle="success" 
+                                    onClick={() => {
+                                        this.setState({
+                                            alreadyTaken: false,
+                                            showCamera: false
+                                        })
+                                    }}
+                                >Send</Button>
+                            }
+                            {
+                                !this.state.alreadyTaken && <Button bsStyle="primary" 
+                                    onClick={() => {
+                                        this.takePhoto()
+                                    }}
+                                >Snapshot</Button>
+                            }
                         </Modal.Footer>
-                    </Modal.Dialog>
+                    </Modal>
                 </div>
             </div>
         )
