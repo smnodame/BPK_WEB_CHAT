@@ -508,6 +508,15 @@ class Content extends React.Component {
                                     showCamera: false,
                                     alreadyTaken: false
                                 })
+                                navigator.getUserMedia({audio: false, video: true},
+                                    function(stream) {
+                                    // can also use getAudioTracks() or getVideoTracks()
+                                    var track = stream.getTracks()[0]  // if only one media track
+                                    track.stop()
+                                },
+                                function(error){
+                                    console.log('getUserMedia() error', error)
+                                })
                             }}>Close</Button>
                             {
                                 this.state.alreadyTaken && <Button bsStyle="warning" 
