@@ -5,6 +5,7 @@ import moment from 'moment'
 import download from 'downloadjs'
 
 import { ReactMic } from 'react-mic'
+import { Modal, Button } from 'react-bootstrap'
 import AudioPlayer from '../../components/AudioPlayer'
 
 import { store } from '../../redux'
@@ -457,6 +458,20 @@ class Content extends React.Component {
                     <span className="close" onClick={() => this.setState({ selected_image: '' }) }>&times;</span>
                         <img className="modal-photo-content" id="img01" src={ this.state.selected_image } style={{ width: '300px' }}/>
                     <div id="caption"></div>
+                </div>
+                <div className="static-modal">
+                    <Modal.Dialog>
+                        <Modal.Header>
+                            <Modal.Title>Modal title</Modal.Title>
+                        </Modal.Header>
+
+                            <Modal.Body>One fine body...</Modal.Body>
+
+                        <Modal.Footer>
+                            <Button>Close</Button>
+                            <Button bsStyle="primary">Save changes</Button>
+                        </Modal.Footer>
+                    </Modal.Dialog>
                 </div>
             </div>
         )

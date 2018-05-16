@@ -834,3 +834,7 @@ body {
 .toast-custom div {
   height: auto !important
 }
+
+.modal-dialog div {
+  height: auto !important
+}
