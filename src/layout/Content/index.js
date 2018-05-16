@@ -389,6 +389,8 @@ class Content extends React.Component {
         context.drawImage(video, 0, 0, 640, 480)
         this.setState({
             alreadyTaken: true
+        }, () => {
+            this.base64 = canvas.toDataURL("image/jpeg")
         })
     }
 
