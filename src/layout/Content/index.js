@@ -549,6 +549,73 @@ class Content extends React.Component {
                         </Modal.Footer>
                     </Modal>
                 </div>
+                <div className="static-modal">
+                    <Modal show={true}>
+                        <Modal.Header style={{ backgroundColor: '#eee' }}>
+                            <Modal.Title>Contact info</Modal.Title>
+                        </Modal.Header>
+                        <div style={{ display: 'flex', backgroundColor: '#eee' }}>
+                            <div className='avatar-icon' style={{ width: '100px', margin: '20px' }}>
+                                <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '80px', height: '80px' }} />
+                            </div>
+                            <span style={{ fontSize: '23px', fontWeight: '200', padding: '20px', marginTop: '20px' }}>{ _.get(this.state.chatInfo, 'display_name') }</span>
+                        </div>
+                        {/* <div style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} /> */}
+                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                            <div style={{ width: '200px', textAlign: 'center'  }}>
+                                <i className="fa fa-user fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                            </div>
+                            <div>
+                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Invite</p>
+                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
+                                <div style={{ borderBottom: '1px solid #dfdfdf', marginTop: '10px' }} />
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                            <div style={{ width: '200px', textAlign: 'center'  }}>
+                                <i className="fa fa-bars fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                            </div>
+                            <div>
+                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
+                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Hide chat</p>
+                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
+                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Delete chat</p>
+                            </div>
+                        </div>
+                        <div style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} />
+                        <div>
+                            
+                        </div>
+                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                            <div style={{ width: '200px', textAlign: 'center'  }}>
+                                <i className="fa fa-users fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                            </div>
+                            <div>
+                                <div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
+                                    <div className='avatar-icon'  style={{ width: '60px' }}>
+                                        <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
+                                    </div>
+                                    <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>boonprakit chaikaew</p>
+                                </div>
+                                <div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
+                                    <div className='avatar-icon'  style={{ width: '60px' }}>
+                                        <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
+                                    </div>
+                                    <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>boonprakit chaikaew</p>
+                                </div>
+                                <div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
+                                    <div className='avatar-icon'  style={{ width: '60px' }}>
+                                        <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
+                                    </div>
+                                    <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>boonprakit chaikaew</p>
+                                </div>
+                            </div>
+                        </div>
+                        <Modal.Footer>
+                            <Button>Close</Button>
+                        </Modal.Footer>
+                    </Modal>
+                </div>
             </div>
         )
     }
