@@ -73,6 +73,14 @@ class Content extends React.Component {
         
     }
 
+    isBlocked = () => {
+        return _.get(this.state.chatInfo, 'is_blocked', '0') == '1'
+    }
+
+    isMute = () => {
+        return _.get(this.state.chatInfo, 'is_mute', '0') == '1'
+    }
+
     componentWillReceiveProps() {
         if(_.get(this.props.data, 'chat.sticker')) {
             this.setState({
@@ -592,9 +600,38 @@ class Content extends React.Component {
                                     <i className="fa fa-bars fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                 </div>
                                 <div>
-                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
                                     <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Hide chat</p>
-                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
+
+                                    { !this.isMute() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                        this.setState({
+                                            chatInfo: Object.assign({}, this.state.chatInfo, {
+                                                is_mute: '1'
+                                            })
+                                        })
+                                    }}>Mute chat</p> }
+                                    { this.isMute() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                        this.setState({
+                                            chatInfo: Object.assign({}, this.state.chatInfo, {
+                                                is_mute: '0'
+                                            })
+                                        })
+                                    }}>Unmute chat</p> }
+
+                                    { !this.isBlocked() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                        this.setState({
+                                            chatInfo: Object.assign({}, this.state.chatInfo, {
+                                                is_blocked: '1'
+                                            })
+                                        })
+                                    }}>Block chat</p> }
+                                    { this.isBlocked() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                        this.setState({
+                                            chatInfo: Object.assign({}, this.state.chatInfo, {
+                                                is_blocked: '0'
+                                            })
+                                        })
+                                    }}>Unblock chat</p> }
+                                    
                                     <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Delete chat</p>
                                 </div>
                             </div>
