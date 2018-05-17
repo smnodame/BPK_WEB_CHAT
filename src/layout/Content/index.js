@@ -50,6 +50,7 @@ class Content extends React.Component {
                 chatInfo: res.data.data
             })
             store.dispatch(selectChat(res.data.data))
+            store.dispatch(onFetchFriendInGroup(chat_id))            
         })
     }
 

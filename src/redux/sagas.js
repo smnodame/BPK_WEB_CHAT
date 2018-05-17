@@ -32,7 +32,8 @@ import {
     onUpdateGroupLists,
     keepProfile,
     isLoading,
-    lastMessageID
+    lastMessageID,
+    onFetchFriendInGroup
 } from './actions'
 import {
     fetchMyProfile,
@@ -421,10 +422,10 @@ function* selectChatSaga() {
 
             // subscribe socket io
             // emit_subscribe(chatInfo.chat_room_id)
-
+            
             // call set as setAsSeen
             if(chatData.length != 0) {
-                yield call(setAsSeen, chatInfo.chat_room_id)
+                // yield call(setAsSeen, chatInfo.chat_room_id)
                 // emit_as_seen(chatInfo.chat_room_id)
             }
         } catch (err) {
@@ -479,6 +480,22 @@ function* onLoadMoreMessageListsSaga() {
     }
 }
 
+function* onFetchFriendInGroupSaga() {
+    while (true) {
+        const { payload: { chat_id } } = yield take('ON_FETCH_FRIEND_IN_GROUP')
+        try {
+            // clear friend in member from store
+            yield put(memberInGroup([]))
+
+            const resFriendInGroup = yield call(friendInGroup, chat_id, 0, 9999, '')
+
+            yield put(memberInGroup(_.get(resFriendInGroup, 'data.data', [])))
+        } catch (err) {
+            console.log('[onFetchFriendInGroupSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -493,7 +510,8 @@ export default function* rootSaga() {
         onStickerSaga(),
         selectChatSaga(),
         onFetchMessageListsSaga(),
-        onLoadMoreMessageListsSaga()
+        onLoadMoreMessageListsSaga(),
+        onFetchFriendInGroupSaga()
     ])
 }
 

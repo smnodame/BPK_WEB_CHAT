@@ -34,7 +34,7 @@ class Contact extends React.Component {
     }
 
     componentDidMount() {
-
+        
     }
 
     toggleFavorite = () => {
@@ -77,6 +77,12 @@ class Contact extends React.Component {
         if(_.get(this.props.data, 'user.user')) {
             this.setState({
                 user: this.props.data.user.user
+            })
+        }
+
+        if(_.get(this.props.data, 'chat.memberInGroup.data')) {
+            this.setState({
+                member: _.get(this.props.data, 'chat.memberInGroup.data', []),
             })
         }
     }

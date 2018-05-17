@@ -282,10 +282,10 @@ export const signin = (username, password) => ({
       }
   })
   
-  export const onFetchFriendInGroup = (query) => ({
+  export const onFetchFriendInGroup = (chat_id) => ({
       type: 'ON_FETCH_FRIEND_IN_GROUP',
       payload: {
-          query
+        chat_id
       }
   })
   

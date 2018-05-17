@@ -270,7 +270,7 @@ export const exitTheGroup = (chat_room_id) => {
     })
 }
 
-export const friendInGroup = (chat_room_id, start=0, limit=20, filter='') => {
+export const friendInGroup = (chat_room_id, start=0, limit=9999, filter='') => {
     return getAuth().then((user_id) => {
         return axios.get(`http://itsmartone.com/bpk_connect/api/group/friend_list_for_remove?token=asdf1234aaa&chat_room_id=${chat_room_id}&user_id=${user_id}&start=${start}&limit=${limit}&filter=${filter}`)
     })
