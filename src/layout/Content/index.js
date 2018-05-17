@@ -39,7 +39,8 @@ class Content extends React.Component {
             collectionKeySelected: 0,
             currentTime: 0.0,
             roundRecording: 0,
-            timer: 0
+            timer: 0,
+            member: []
         }
     }
 
@@ -90,6 +91,12 @@ class Content extends React.Component {
         if(_.get(this.props.data, 'user.user')) {
             this.setState({
                 user: this.props.data.user.user
+            })
+        }
+
+        if(_.get(this.props.data, 'chat.memberInGroup.data')) {
+            this.setState({
+                member: _.get(this.props.data, 'chat.memberInGroup.data', []),
             })
         }
     }
@@ -404,7 +411,11 @@ class Content extends React.Component {
                             <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } />
                         </div>
                     </div>
-                    <div className="col-sm-5 col-md-5 col-xs-5 heading-name">
+                    <div className="col-sm-5 col-md-5 col-xs-5 heading-name" onClick={() => {
+                        this.setState({
+                            showContactInfo: true
+                        })
+                    }}>
                         <a className="heading-name-meta">{ _.get(this.state.chatInfo, 'display_name') }
                         </a>
                         <span className="heading-online">Online</span>
@@ -551,69 +562,68 @@ class Content extends React.Component {
                     </Modal>
                 </div>
                 <div className="static-modal">
-                    <Modal show={true}>
+                    <Modal show={this.state.showContactInfo} onHide={() => {
+                            this.setState({
+                                showContactInfo: false
+                            })
+                        }}>
                         <Modal.Header style={{ backgroundColor: '#eee' }}>
                             <Modal.Title>Contact info</Modal.Title>
                         </Modal.Header>
-                        <div style={{ display: 'flex', backgroundColor: '#eee' }}>
-                            <div className='avatar-icon' style={{ width: '100px', margin: '20px' }}>
-                                <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '80px', height: '80px' }} />
-                            </div>
-                            <span style={{ fontSize: '23px', fontWeight: '200', padding: '20px', marginTop: '20px' }}>{ _.get(this.state.chatInfo, 'display_name') }</span>
-                        </div>
-                        {/* <div style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} /> */}
-                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
-                            <div style={{ width: '200px', textAlign: 'center'  }}>
-                                <i className="fa fa-user fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
-                            </div>
-                            <div>
-                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Invite</p>
-                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
-                                <div style={{ borderBottom: '1px solid #dfdfdf', marginTop: '10px' }} />
-                            </div>
-                        </div>
-                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
-                            <div style={{ width: '200px', textAlign: 'center'  }}>
-                                <i className="fa fa-bars fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
-                            </div>
-                            <div>
-                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
-                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Hide chat</p>
-                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
-                                <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Delete chat</p>
-                            </div>
-                        </div>
-                        <div style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} />
                         <div>
-                            
-                        </div>
-                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
-                            <div style={{ width: '200px', textAlign: 'center'  }}>
-                                <i className="fa fa-users fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                            <div style={{ display: 'flex', backgroundColor: '#eee' }}>
+                                <div className='avatar-icon' style={{ width: '100px', margin: '20px' }}>
+                                    <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '80px', height: '80px' }} />
+                                </div>
+                                <span style={{ fontSize: '23px', fontWeight: '200', padding: '20px', marginTop: '20px' }}>{ _.get(this.state.chatInfo, 'display_name') }</span>
                             </div>
+                            <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                                <div style={{ width: '200px', textAlign: 'center'  }}>
+                                    <i className="fa fa-user fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                                </div>
+                                <div>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Invite</p>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
+                                    <div style={{ borderBottom: '1px solid #dfdfdf', marginTop: '10px' }} />
+                                </div>
+                            </div>
+                            <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                                <div style={{ width: '200px', textAlign: 'center'  }}>
+                                    <i className="fa fa-bars fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                                </div>
+                                <div>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Hide chat</p>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Block chat</p>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Delete chat</p>
+                                </div>
+                            </div>
+                            <div style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} />
                             <div>
-                                <div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
-                                    <div className='avatar-icon'  style={{ width: '60px' }}>
-                                        <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
-                                    </div>
-                                    <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>boonprakit chaikaew</p>
+                                
+                            </div>
+                            <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                                <div style={{ width: '200px', textAlign: 'center'  }}>
+                                    <i className="fa fa-users fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                 </div>
-                                <div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
-                                    <div className='avatar-icon'  style={{ width: '60px' }}>
-                                        <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
-                                    </div>
-                                    <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>boonprakit chaikaew</p>
-                                </div>
-                                <div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
-                                    <div className='avatar-icon'  style={{ width: '60px' }}>
-                                        <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
-                                    </div>
-                                    <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>boonprakit chaikaew</p>
+                                <div>
+                                    {
+                                        this.state.member.map((member) => (<div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
+                                            <div className='avatar-icon'  style={{ width: '60px' }}>
+                                                <img src={ _.get(member, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
+                                            </div>
+                                            <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>{ member.display_name }</p>
+                                        </div>))
+                                    }
                                 </div>
                             </div>
                         </div>
                         <Modal.Footer>
-                            <Button>Close</Button>
+                            <Button onClick={() => {
+                                this.setState({
+                                    showContactInfo: false
+                                })
+                            }}>Close</Button>
                         </Modal.Footer>
                     </Modal>
                 </div>

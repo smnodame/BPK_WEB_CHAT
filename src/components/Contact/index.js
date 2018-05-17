@@ -79,12 +79,6 @@ class Contact extends React.Component {
                 user: this.props.data.user.user
             })
         }
-
-        if(_.get(this.props.data, 'chat.memberInGroup.data')) {
-            this.setState({
-                member: _.get(this.props.data, 'chat.memberInGroup.data', []),
-            })
-        }
     }
     
     loadmore = (group) => {
