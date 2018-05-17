@@ -496,6 +496,103 @@ function* onFetchFriendInGroupSaga() {
     }
 }
 
+function* onMuteChatSaga() {
+    while (true) {
+        yield take('ON_MUTE_CHAT')        
+        try {
+            const chatInfo = yield select(getChatInfo)
+            const resMuteChat = yield call(muteChat, chatInfo.chat_room_id)
+            console.log(`[onMuteChatSaga] mute chat room id ${chatInfo.chat_room_id}`)
+        } catch (err) {
+            console.log('[onMuteChatSaga] ', err)
+        }
+    }
+}
+
+function* onUnmuteChatSaga() {
+    while (true) {
+        yield take('ON_UNMUTE_CHAT')
+        try {
+            const chatInfo = yield select(getChatInfo)
+            const resUnMuteChat = yield call(unmuteChat, chatInfo.chat_room_id)
+            console.log(`[onUnMuteChatSaga] unmute chat room id ${chatInfo.chat_room_id}`)
+        } catch (err) {
+            console.log('[onUnmuteChatSaga] ', err)
+        }
+    }
+}
+
+function* onHideChatSaga() {
+    while (true) {
+        try {
+            yield take('ON_HIDE_CHAT')
+            const chatInfo = yield select(getChatInfo)
+            const resHideChat = yield call(hideChat, chatInfo.chat_room_id)
+
+            console.log(`[onHideChatSaga] hide chat room id ${chatInfo.chat_room_id}`)
+
+            const chatListsFromStore = yield select(getChatLists)
+
+            const chatListsFilterHide = chatListsFromStore.filter((chat) => {
+                return chatInfo.chat_room_id != chat.chat_room_id
+            })
+            yield put(chatLists(chatListsFilterHide))
+        } catch (err) {
+            console.log('[onHideChatSaga] ', err)
+        }
+    }
+}
+
+function* onBlockChatSaga() {
+    while (true) {
+        yield take('ON_BLOCK_CHAT')
+        try {
+            const chatInfo = yield select(getChatInfo)
+            const resBlockChat = yield call(blockChat, chatInfo.chat_room_id)
+
+            console.log(`[onBlockChatSaga] block chat room id ${chatInfo.chat_room_id}`)
+        } catch (err) {
+            console.log('[onBlockChatSaga] ', err)
+        }
+    }
+}
+
+function* onUnblockChatSaga() {
+    while (true) {
+        yield take('ON_UNBLOCK_CHAT')
+        try {
+            const chatInfo = yield select(getChatInfo)
+            const resUnBlockChat = yield call(unblockChat, chatInfo.chat_room_id)
+
+            console.log(`[onUnblockChatSaga] unblock chat room id ${chatInfo.chat_room_id}`)
+        } catch (err) {
+            console.log('[onUnblockChatSaga] ', err)
+        }
+    }
+}
+
+function* onDeleteChatSaga() {
+    while (true) {
+        yield take('ON_DELETE_CHAT')
+        try {
+            const chatInfo = yield select(getChatInfo)
+            const resDeleteChat = yield call(deleteChat, chatInfo.chat_room_id)
+
+            console.log(`[onDeleteChatSaga] delete chat room id ${chatInfo.chat_room_id}`)
+
+            const chatListsFromStore = yield select(getChatLists)
+
+            const chatListsFilterHide = chatListsFromStore.filter((chat) => {
+                return chatInfo.chat_room_id != chat.chat_room_id
+            })
+            yield put(chat([]))
+            yield put(chatLists(chatListsFilterHide))
+        } catch (err) {
+            console.log('[onDeleteChatSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -511,7 +608,13 @@ export default function* rootSaga() {
         selectChatSaga(),
         onFetchMessageListsSaga(),
         onLoadMoreMessageListsSaga(),
-        onFetchFriendInGroupSaga()
+        onFetchFriendInGroupSaga(),
+        onMuteChatSaga(),
+        onHideChatSaga(),
+        onBlockChatSaga(),
+        onDeleteChatSaga(),
+        onUnblockChatSaga(),
+        onUnmuteChatSaga()
     ])
 }
 

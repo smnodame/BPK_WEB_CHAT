@@ -27,7 +27,13 @@ import {
     onForward,
     inviteFriends,
     chat,
-    selectChat
+    selectChat,
+    onMuteChat, 
+    onHideChat, 
+    onBlockChat, 
+    onDeleteChat, 
+    onUnblockChat, 
+    onUnmuteChat
 } from '../../redux/actions'
 import {sendTheMessage, fetchFriendProfile, saveInKeep, sendFileMessage, fetchChatInfo } from '../../redux/api'
 
@@ -600,13 +606,17 @@ class Content extends React.Component {
                                     <i className="fa fa-bars fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                 </div>
                                 <div>
-                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Hide chat</p>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                        store.dispatch(onHideChat())
+                                    }}>Hide chat</p>
 
                                     { !this.isMute() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
                                         this.setState({
                                             chatInfo: Object.assign({}, this.state.chatInfo, {
                                                 is_mute: '1'
                                             })
+                                        }, () => {
+                                            store.dispatch(onMuteChat())
                                         })
                                     }}>Mute chat</p> }
                                     { this.isMute() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
@@ -614,6 +624,8 @@ class Content extends React.Component {
                                             chatInfo: Object.assign({}, this.state.chatInfo, {
                                                 is_mute: '0'
                                             })
+                                        }, () => {
+                                            store.dispatch(onUnmuteChat())
                                         })
                                     }}>Unmute chat</p> }
 
@@ -622,6 +634,8 @@ class Content extends React.Component {
                                             chatInfo: Object.assign({}, this.state.chatInfo, {
                                                 is_blocked: '1'
                                             })
+                                        }, () => {
+                                            store.dispatch(onBlockChat())
                                         })
                                     }}>Block chat</p> }
                                     { this.isBlocked() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
@@ -629,10 +643,14 @@ class Content extends React.Component {
                                             chatInfo: Object.assign({}, this.state.chatInfo, {
                                                 is_blocked: '0'
                                             })
+                                        }, () => {
+                                            store.dispatch(onUnblockChat())
                                         })
                                     }}>Unblock chat</p> }
                                     
-                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Delete chat</p>
+                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                        store.dispatch(onDeleteChat())
+                                    }}>Delete chat</p>
                                 </div>
                             </div>
                             <div style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} />
