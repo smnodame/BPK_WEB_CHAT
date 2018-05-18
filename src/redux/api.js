@@ -103,14 +103,8 @@ export const updatePicture = (data) => {
 
 export const updateGroupSetting = (data) => {
     return axios.post("http://itsmartone.com/bpk_connect/api/group/update_setting?token=asdf1234aaa", data).then((res) => {
-        toast.info("UPDATE SUCCESSFULLY !", {
-            position: toast.POSITION.TOP_RIGHT
-        })
         return res
     }, (err) => {
-        toast.warning("UPDATE ERROR !", {
-            position: toast.POSITION.TOP_RIGHT
-        })
         return err
     })
 }

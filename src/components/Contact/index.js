@@ -3,7 +3,7 @@ import React from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Friend from '../Friend'
 
-import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, isShowUserProfile, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
+import { enterContacts, removeFavorite, addFavorite, isShowGroupSetting, selectedFriend, showOrHideFriendLists, onLoadMore, isShowUserProfile, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
 import { store } from '../../redux'
 
 class Contact extends React.Component {
@@ -88,7 +88,9 @@ class Contact extends React.Component {
     renderFriend = (friends) => {
         return friends.map((friend, key) => {
             return (
-                <div className="box" key={key} onClick={() => this.setState({ selectedFriend: friend, isShowModal: true })}>
+                <div className="box" key={key} onClick={() => this.setState({ selectedFriend: friend, isShowModal: true }, () => {
+                    store.dispatch(selectedFriend(friend))
+                })}>
                     <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
                 </div>
             )
@@ -146,10 +148,11 @@ class Contact extends React.Component {
         this.setState({
             isShowModal: false
         }, () => {
-            this.props.history.push({
-                pathname: '/group-setting/' + this.state.selectedFriend.chat_room_id,
-                state: { selectedFriend: this.state.selectedFriend }
-            })
+            store.dispatch(isShowGroupSetting(true))
+            // this.props.history.push({
+            //     pathname: '/group-setting/' + this.state.selectedFriend.chat_room_id,
+            //     state: { selectedFriend: this.state.selectedFriend }
+            // })
         })
     }
 

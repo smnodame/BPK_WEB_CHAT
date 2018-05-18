@@ -35,8 +35,8 @@ class GroupSetting extends React.Component {
 
     load_data = () => {
 
-        if(_.get(this.props.history, 'location.state.selectedFriend') && this.pathname != _.get(this.props.history, 'location.pathname', 'default')) {
-            const group = this.props.history.location.state.selectedFriend
+        if(_.get(this.props.data, 'friend.selectedFriend')) {
+            const group = this.props.data.friend.selectedFriend
             this.setState({
                 display_name: _.get(group, 'display_name', ''),
                 wall_pic_url: _.get(group, 'wall_pic_url', ''),
@@ -47,11 +47,13 @@ class GroupSetting extends React.Component {
                 chat_room_id: _.get(group, 'chat_room_id', ''),
                 chat_room_type: _.get(group, 'chat_room_type', 'Z')
             })
+        }
 
-            this.pathname = _.get(this.props.history, 'location.pathname')
-        } 
-        if (!_.get(this.props.history, 'location.state.selectedFriend')) {
-            this.props.history.push('/')
+
+        if(_.get(this.props.data, 'system')) {
+            this.setState({
+                isShowGroupSetting: _.get(this.props.data, 'system.isShowGroupSetting')
+            })
         }
     }
 
@@ -74,10 +76,10 @@ class GroupSetting extends React.Component {
             })
         }
         
-        const oldSetting = this.props.history.location.state.selectedFriend
+        const oldSetting = _.get(this.props.data, 'friend.selectedFriend')
         if (
-            this.props.history.location.state.selectedFriend.wall_pic_url != this.state.wall_pic_url ||
-            this.props.history.location.state.selectedFriend.profile_pic_url != this.state.profile_pic_url
+            oldSetting.wall_pic_url != this.state.wall_pic_url ||
+            oldSetting.profile_pic_url != this.state.profile_pic_url
         ) {
             const data = {
                 chat_room_id: this.state.chat_room_id
@@ -173,7 +175,7 @@ class GroupSetting extends React.Component {
                                 <div style={{ borderBottom: '1px solid #dfdfdf', marginTop: '10px' }} />
                             </div>
                         </div>
-                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                        <div className={this.state.chat_room_type=='C'? '' : 'hide' } style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                             <div style={{ width: '200px', textAlign: 'center'  }}>
                                 <i className="fa fa-lock fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                             </div>

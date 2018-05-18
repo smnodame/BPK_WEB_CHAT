@@ -423,3 +423,10 @@ export const signin = (username, password) => ({
         isShowGroupSetting: _isShowGroupSetting
       }
   })
+
+  export const selectedFriend = (_selectedFriend) => ({
+      type: 'SELECTED_FRIEND',
+      payload: {
+        selectedFriend: _selectedFriend
+      }
+  })

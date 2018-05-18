@@ -34,7 +34,8 @@ import {
     isLoading,
     lastMessageID,
     onFetchFriendInGroup,
-    isShowUserProfile
+    isShowUserProfile,
+    isShowGroupSetting
 } from './actions'
 import {
     fetchMyProfile,
@@ -344,10 +345,6 @@ function* updateProfileSaga() {
                 yield call(updatePictureAuth, pic_base64)
             }
 
-            // toast.info("UPDATE PROFILE SUCCESSFULLY !", {
-            //     position: toast.POSITION.TOP_RIGHT
-            // })
-
             // fetch user profile
             const resFetchMyProfile = yield call(fetchMyProfile)
             yield put(myprofile(_.get(resFetchMyProfile, 'data.data')))
@@ -397,6 +394,8 @@ function* onUpdateGroupSettingSaga() {
 
             yield put(chatLists(chatListsForSaveToStore))
 
+            // hide group setting modal after save
+            yield put(isShowGroupSetting(false))
         } catch (err) {
             console.log('[onUpdateGroupSettingSaga] ', err)
         }

@@ -98,6 +98,10 @@ const friend = (state = {
             return Object.assign(state, {
                 filter: action.payload.filter
             })
+        case 'SELECTED_FRIEND':
+            return Object.assign(state, {
+                selectedFriend: action.payload.selectedFriend
+            })
         default:
             return state
     }
