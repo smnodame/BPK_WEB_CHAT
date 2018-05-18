@@ -616,7 +616,7 @@ function* onExitTheGroupSaga() {
     while (true) {
         const { payload: { chat_room_id }} = yield take('ON_EXIT_THE_GROUP')
         try {
-            // yield call(exitTheGroup, chat_room_id)
+            yield call(exitTheGroup, chat_room_id)
 
             const userInfo = yield select(getUserInfo)
 

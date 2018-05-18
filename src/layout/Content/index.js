@@ -604,6 +604,7 @@ class Content extends React.Component {
                                     <p className={ this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
                                     <p className={ this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
                                         store.dispatch(onExitTheGroup(_.get(this.state.chatInfo, 'chat_room_id')))
+                                        this.props.history.push('/')
                                     }}>Leave group</p>
                                     <div style={{ borderBottom: '1px solid #dfdfdf', marginTop: '10px' }} />
                                 </div>
@@ -615,6 +616,7 @@ class Content extends React.Component {
                                 <div>
                                     <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
                                         store.dispatch(onHideChat())
+                                        this.props.history.push('/')
                                     }}>Hide chat</p>
 
                                     { !this.isMute() && <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
@@ -657,6 +659,7 @@ class Content extends React.Component {
                                     
                                     <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
                                         store.dispatch(onDeleteChat())
+                                        this.props.history.push('/')
                                     }}>Delete chat</p>
                                 </div>
                             </div>
