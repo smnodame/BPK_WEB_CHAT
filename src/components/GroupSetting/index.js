@@ -45,7 +45,9 @@ class GroupSetting extends React.Component {
                 hn: _.get(group, 'c_hn', ''),
                 description: _.get(group, 'c_description', ''),
                 chat_room_id: _.get(group, 'chat_room_id', ''),
-                chat_room_type: _.get(group, 'chat_room_type', 'Z')
+                chat_room_type: _.get(group, 'chat_room_type', 'Z'),
+                profile_pic_base64: '',
+                wall_pic_base64: ''
             })
         }
 
