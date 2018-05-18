@@ -223,6 +223,10 @@ class Content extends React.Component {
         })
     }
 
+    is_group = () => {
+        return _.get(this.state.chatInfo, 'chat_room_type') == 'G' || _.get(this.state.chatInfo, 'chat_room_type') == 'C'
+    }
+
     render_message = () => {
         return _.get(this.state, 'chat', []).map((chat) => {
 
@@ -597,7 +601,7 @@ class Content extends React.Component {
                                 </div>
                                 <div>
                                     <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Invite</p>
-                                    <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
+                                    <p className={ this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
                                     <div style={{ borderBottom: '1px solid #dfdfdf', marginTop: '10px' }} />
                                 </div>
                             </div>
@@ -653,11 +657,8 @@ class Content extends React.Component {
                                     }}>Delete chat</p>
                                 </div>
                             </div>
-                            <div style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} />
-                            <div>
-                                
-                            </div>
-                            <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                            <div className={ this.is_group()? '' : 'hide' } style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} />
+                            <div className={ this.is_group()? '' : 'hide' } style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                                 <div style={{ width: '200px', textAlign: 'center'  }}>
                                     <i className="fa fa-users fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                 </div>
