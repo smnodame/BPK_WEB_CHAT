@@ -612,6 +612,51 @@ function* onDeleteChatSaga() {
     }
 }
 
+function* onExitTheGroupSaga() {
+    while (true) {
+        const { payload: { chat_room_id }} = yield take('ON_EXIT_THE_GROUP')
+        try {
+            // yield call(exitTheGroup, chat_room_id)
+
+            const userInfo = yield select(getUserInfo)
+
+            // delete chat in redux
+            const chatListsFromStore = yield select(getChatLists)
+            const chatListsFilter = chatListsFromStore.filter((chat) => {
+                return chat_room_id!= chat.chat_room_id
+            })
+            
+            // clear chat that we delete in chat list
+            yield put(chatLists(chatListsFilter))
+
+            // update friend groups
+            yield put(onUpdateGroupLists())
+        } catch (err) {
+            console.log('[onExitTheGroupSaga] ', err)
+        }
+    }
+}
+
+function* onUpdateGroupListsSaga() {
+    while (true) {
+        yield take('ON_UPDATE_GROUP_LISTS')
+        try {
+            const friendLists = yield select(getFriends)
+            const friendInGroup = yield call(fetchFriendLists, 'group', friendLists.group.length, 0, '')
+            friendLists.group = _.get(friendInGroup, 'data.data', [])
+
+            yield put(friends(friendLists))
+
+            // fetch number of friend lists
+            const numberOfFriend = yield call(fetchNumberOfGroup, '')
+            yield put(numberOfFriendLists(numberOfFriend))
+        } catch (err) {
+            console.log('[onUpdateGroupListsSaga] ', err)
+        }
+    }
+}
+
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -633,7 +678,9 @@ export default function* rootSaga() {
         onBlockChatSaga(),
         onDeleteChatSaga(),
         onUnblockChatSaga(),
-        onUnmuteChatSaga()
+        onUnmuteChatSaga(),
+        onUpdateGroupListsSaga(),
+        onExitTheGroupSaga()
     ])
 }
 
