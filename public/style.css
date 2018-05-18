@@ -838,3 +838,11 @@ body {
 .modal-dialog div {
   height: auto !important
 }
+
+.modal-dialog {
+  height: auto !important
+}
+
+.height-auto div {
+  height: auto !important
+}
