@@ -501,6 +501,8 @@ function* onMuteChatSaga() {
         yield take('ON_MUTE_CHAT')        
         try {
             const chatInfo = yield select(getChatInfo)
+
+            // mute chat in server
             const resMuteChat = yield call(muteChat, chatInfo.chat_room_id)
             console.log(`[onMuteChatSaga] mute chat room id ${chatInfo.chat_room_id}`)
         } catch (err) {
@@ -514,6 +516,8 @@ function* onUnmuteChatSaga() {
         yield take('ON_UNMUTE_CHAT')
         try {
             const chatInfo = yield select(getChatInfo)
+
+            // unmute chat in server
             const resUnMuteChat = yield call(unmuteChat, chatInfo.chat_room_id)
             console.log(`[onUnMuteChatSaga] unmute chat room id ${chatInfo.chat_room_id}`)
         } catch (err) {
@@ -527,15 +531,20 @@ function* onHideChatSaga() {
         try {
             yield take('ON_HIDE_CHAT')
             const chatInfo = yield select(getChatInfo)
+
+            // hide chat in server
             const resHideChat = yield call(hideChat, chatInfo.chat_room_id)
 
             console.log(`[onHideChatSaga] hide chat room id ${chatInfo.chat_room_id}`)
 
             const chatListsFromStore = yield select(getChatLists)
 
+            // filter chat that hide from chat list
             const chatListsFilterHide = chatListsFromStore.filter((chat) => {
                 return chatInfo.chat_room_id != chat.chat_room_id
             })
+
+            // update in store
             yield put(chatLists(chatListsFilterHide))
         } catch (err) {
             console.log('[onHideChatSaga] ', err)
@@ -548,6 +557,8 @@ function* onBlockChatSaga() {
         yield take('ON_BLOCK_CHAT')
         try {
             const chatInfo = yield select(getChatInfo)
+
+            // block chat in server
             const resBlockChat = yield call(blockChat, chatInfo.chat_room_id)
 
             console.log(`[onBlockChatSaga] block chat room id ${chatInfo.chat_room_id}`)
@@ -562,6 +573,8 @@ function* onUnblockChatSaga() {
         yield take('ON_UNBLOCK_CHAT')
         try {
             const chatInfo = yield select(getChatInfo)
+
+            // unblock chat in server
             const resUnBlockChat = yield call(unblockChat, chatInfo.chat_room_id)
 
             console.log(`[onUnblockChatSaga] unblock chat room id ${chatInfo.chat_room_id}`)
@@ -576,17 +589,23 @@ function* onDeleteChatSaga() {
         yield take('ON_DELETE_CHAT')
         try {
             const chatInfo = yield select(getChatInfo)
+
+            // delete chat in server
             const resDeleteChat = yield call(deleteChat, chatInfo.chat_room_id)
 
             console.log(`[onDeleteChatSaga] delete chat room id ${chatInfo.chat_room_id}`)
 
+            // delete chat in redux
             const chatListsFromStore = yield select(getChatLists)
-
             const chatListsFilterHide = chatListsFromStore.filter((chat) => {
                 return chatInfo.chat_room_id != chat.chat_room_id
             })
-            yield put(chat([]))
+            
+            // clear chat that we delete in chat list
             yield put(chatLists(chatListsFilterHide))
+            
+            // clear message in message list
+            yield put(chat([]))
         } catch (err) {
             console.log('[onDeleteChatSaga] ', err)
         }
