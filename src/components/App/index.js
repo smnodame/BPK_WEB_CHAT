@@ -52,12 +52,13 @@ class App extends React.Component {
                         <Route path="/" render={routeProps => <SideBar {...routeProps} data={this.state.data}/>} />
                     </Switch>
                     <Switch>
-                        <Route exact path='/user-profile' render={routeProps => <UserProfile {...routeProps} data={this.state.data} />}/>
                         <Route exact path='/group-setting/:id' render={routeProps => <GroupSetting {...routeProps} data={this.state.data} />}/>
                         <Route path='/chat/:id' render={routeProps => <Content {...routeProps} data={this.state.data} />} />
                         <Route exact path='/' component={DefaultPage} />
                     </Switch>
                 </div>
+                <UserProfile data={this.state.data} />
+                
             </div>
         )
     }

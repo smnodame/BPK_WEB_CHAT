@@ -409,3 +409,10 @@ export const signin = (username, password) => ({
         chatInfo
       }
   })
+
+  export const isShowUserProfile = (_isShowUserProfile) => ({
+      type: 'IS_SHOW_USER_PROFILE',
+      payload: {
+        isShowUserProfile: _isShowUserProfile
+      }
+  })

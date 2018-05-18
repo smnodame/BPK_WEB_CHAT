@@ -2,7 +2,7 @@ import _ from 'lodash'
 import $ from 'jquery'
 import React, { Component } from 'react'
 
-import { onUpdateProfile } from '../../redux/actions.js'
+import { onUpdateProfile, isShowUserProfile } from '../../redux/actions.js'
 import { store } from '../../redux'
 import { Modal, Button } from 'react-bootstrap'
 
@@ -42,6 +42,12 @@ class UserProfile extends React.Component {
                 wall_pic_url: _.get(this.props.data, 'user.user.wall_pic_url', ''),
                 profile_pic_url: _.get(this.props.data, 'user.user.profile_pic_url', ''),
                 user_id: _.get(this.props.data, 'user.user.user_id', '')
+            })
+        }
+
+        if(_.get(this.props.data, 'system')) {
+            this.setState({
+                isShowUserProfile: _.get(this.props.data, 'system.isShowUserProfile')
             })
         }
     }
@@ -109,8 +115,8 @@ class UserProfile extends React.Component {
     render = () => {
         return (
             <div className="static-modal">
-            <Modal show={true} onHide={() => {
-                
+            <Modal show={this.state.isShowUserProfile} onHide={() => {
+                    store.dispatch(isShowUserProfile(false))
                 }}>
                 <Modal.Header style={{ backgroundColor: '#eee' }}>
                     <Modal.Title>User Profile</Modal.Title>
@@ -134,7 +140,7 @@ class UserProfile extends React.Component {
                                 $('#profile-image').trigger('click')
                             }} />
                         </div>
-                        <span style={{ fontSize: '19px', fontWeight: '200', padding: '20px', marginTop: '20px', backgroundColor: '#fff8', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
+                        <span style={{ fontSize: '19px', fontWeight: 'bold', padding: '20px', marginTop: '20px', backgroundColor: '#fff8', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
                     </div>
                     <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                         <div style={{ width: '200px', textAlign: 'center'  }}>
@@ -178,7 +184,7 @@ class UserProfile extends React.Component {
                     <small  className="form-text text-muted" style={{ marginRight: '15px' }}> { this.state.errorMessage || '* leave the passwords empty, if you do not want to change' }</small>
                     
                     <Button onClick={() => {
-                        
+                        store.dispatch(isShowUserProfile(false))
                     }}>Close</Button>
                     <Button className="btn btn-primary" onClick={() => {
                         this.saveProfile()

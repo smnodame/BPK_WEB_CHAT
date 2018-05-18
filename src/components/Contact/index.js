@@ -3,7 +3,7 @@ import React from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Friend from '../Friend'
 
-import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
+import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, isShowUserProfile, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
 import { store } from '../../redux'
 
 class Contact extends React.Component {
@@ -158,7 +158,7 @@ class Contact extends React.Component {
             <div>
                 <div className="row heading">
                     <div className="col-sm-2 col-xs-2 heading-avatar">
-                        <div className="heading-avatar-icon" onClick={() => this.props.history.push('/user-profile') }>
+                        <div className="heading-avatar-icon" onClick={() => store.dispatch(isShowUserProfile(true)) }>
                             <img src={ _.get(this.state, 'user.profile_pic_url') } />
                         </div>
                     </div>

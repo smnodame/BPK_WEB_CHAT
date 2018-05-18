@@ -59,6 +59,10 @@ const system = (state = {
             return Object.assign(state, {
                 isLoading: action.payload.loading
             })
+        case 'IS_SHOW_USER_PROFILE':
+            return Object.assign(state, {
+                isShowUserProfile: action.payload.isShowUserProfile
+            })
         default:
             return state
     }

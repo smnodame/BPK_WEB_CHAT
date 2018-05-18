@@ -33,7 +33,8 @@ import {
     keepProfile,
     isLoading,
     lastMessageID,
-    onFetchFriendInGroup
+    onFetchFriendInGroup,
+    isShowUserProfile
 } from './actions'
 import {
     fetchMyProfile,
@@ -343,13 +344,16 @@ function* updateProfileSaga() {
                 yield call(updatePictureAuth, pic_base64)
             }
 
-            toast.info("UPDATE PROFILE SUCCESSFULLY !", {
-                position: toast.POSITION.TOP_RIGHT
-            })
+            // toast.info("UPDATE PROFILE SUCCESSFULLY !", {
+            //     position: toast.POSITION.TOP_RIGHT
+            // })
 
             // fetch user profile
             const resFetchMyProfile = yield call(fetchMyProfile)
             yield put(myprofile(_.get(resFetchMyProfile, 'data.data')))
+
+            // hide user profile modal after save
+            yield put(isShowUserProfile(false))
         } catch (err) {
             console.log('[updateProfileSaga] ', err)
         }
