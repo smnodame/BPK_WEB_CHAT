@@ -179,7 +179,7 @@ class GroupSetting extends React.Component {
                         </div>
                         <div className={this.state.chat_room_type=='C'? '' : 'hide' } style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                             <div style={{ width: '200px', textAlign: 'center'  }}>
-                                <i className="fa fa-lock fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                                <i className="fa fa-address-card fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                             </div>
                             <div>
                                 <div className={this.state.chat_room_type=='C'? 'form-row' : 'hide'}>
