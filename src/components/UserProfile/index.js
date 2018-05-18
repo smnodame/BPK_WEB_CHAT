@@ -41,7 +41,9 @@ class UserProfile extends React.Component {
                 status_quote: _.get(this.props.data, 'user.user.status_quote', ''),
                 wall_pic_url: _.get(this.props.data, 'user.user.wall_pic_url', ''),
                 profile_pic_url: _.get(this.props.data, 'user.user.profile_pic_url', ''),
-                user_id: _.get(this.props.data, 'user.user.user_id', '')
+                user_id: _.get(this.props.data, 'user.user.user_id', ''),
+                profile_pic_base64: '',
+                wall_pic_base64: ''
             })
         }
 
