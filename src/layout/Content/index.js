@@ -65,7 +65,9 @@ class Content extends React.Component {
         // start load chat
         this.load_chat()
         this.props.history.listen((location, action) => {
-            this.load_chat()
+            if(location.pathname.indexOf('/chat/') >= 0) {
+                this.load_chat()                
+            }
         })
         
     }
@@ -229,7 +231,9 @@ class Content extends React.Component {
 
     render_message = () => {
         return _.get(this.state, 'chat', []).map((chat) => {
-
+            if(!this.state.user) {
+                return
+            }
             let seenMessage = ''
             const reader = chat.who_read.filter((id) => {
                 return id != _.get(this.state.user, 'user_id')
