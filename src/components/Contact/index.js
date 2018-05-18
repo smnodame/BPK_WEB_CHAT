@@ -3,7 +3,7 @@ import React from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Friend from '../Friend'
 
-import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep } from '../../redux/actions.js'
+import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep, navigate } from '../../redux/actions.js'
 import { store } from '../../redux'
 
 class Contact extends React.Component {
@@ -34,7 +34,7 @@ class Contact extends React.Component {
     }
 
     componentDidMount() {
-        
+        store.dispatch(navigate(this.props.history))
     }
 
     toggleFavorite = () => {
