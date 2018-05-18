@@ -3,7 +3,7 @@ import React from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Friend from '../Friend'
 
-import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep, navigate } from '../../redux/actions.js'
+import { enterContacts, removeFavorite, addFavorite, showOrHideFriendLists, onLoadMore, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
 import { store } from '../../redux'
 
 class Contact extends React.Component {
@@ -207,7 +207,7 @@ class Contact extends React.Component {
                                             this.setState({
                                                 isShowModal: false
                                             }, () => {
-                                                this.props.history.push('/chat/' + this.state.selectedFriend.chat_room_id)
+                                                store.dispatch(onClickChat(_.get(this.state, 'selectedFriend')))
                                             })
                                         }}></i></a><a>
                                         <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
@@ -220,7 +220,7 @@ class Contact extends React.Component {
                                             this.setState({
                                                 isShowModal: false
                                             }, () => {
-                                                this.props.history.push('/chat/'  + this.state.selectedFriend.chat_room_id)
+                                                store.dispatch(onClickChat(_.get(this.state, 'selectedFriend')))
                                             })
                                         }}></i></a><a>
                                         <i className="fa fa-cog" style={{ fontSize: '35px' }} onClick={() => this._go_to_group_setting() }></i></a><a>

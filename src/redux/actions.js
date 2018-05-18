@@ -403,3 +403,9 @@ export const signin = (username, password) => ({
       }
   })
   
+  export const onClickChat = (chatInfo) => ({
+      type: 'ON_CLICK_CHAT',
+      payload: {
+        chatInfo
+      }
+  })

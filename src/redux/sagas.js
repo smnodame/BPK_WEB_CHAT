@@ -406,8 +406,7 @@ function* selectChatSaga() {
         try {
             
             if(!chatInfo.chat_room_id) {
-                const resCreateNewRoom = yield call(createNewRoom, chatInfo.friend_user_id)
-                chatInfo.chat_room_id = resCreateNewRoom.data.data.chat_room_id
+                continue
             }
 
             const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, '', '', '')
@@ -656,6 +655,21 @@ function* onUpdateGroupListsSaga() {
     }
 }
 
+function* onClickChatSaga() {
+    while (true) {
+        const { payload: { chatInfo }} = yield take('ON_CLICK_CHAT')
+        try {
+            if(!chatInfo.chat_room_id) {
+                const resCreateNewRoom = yield call(createNewRoom, chatInfo.friend_user_id)
+                chatInfo.chat_room_id = resCreateNewRoom.data.data.chat_room_id
+            }
+            const navigate = yield select(navigateSelector)
+            navigate.push('/chat/' + chatInfo.chat_room_id)
+        } catch (err) {
+            console.log('[onClickChatSaga] ', err)
+        }
+    }
+}
 
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
@@ -680,7 +694,8 @@ export default function* rootSaga() {
         onUnblockChatSaga(),
         onUnmuteChatSaga(),
         onUpdateGroupListsSaga(),
-        onExitTheGroupSaga()
+        onExitTheGroupSaga(),
+        onClickChatSaga()
     ])
 }
 
