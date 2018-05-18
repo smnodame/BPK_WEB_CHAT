@@ -523,7 +523,6 @@ body {
   }
   .heading {
     height: 70px;
-    background-color: #009688;
   }
   .fa-2x {
     font-size: 2.3em !important;
@@ -548,7 +547,6 @@ body {
     margin-left: 10px !important;
   }
   .heading-dot i {
-    color: #fff;
     cursor: pointer;
   }
   .sideBar {
