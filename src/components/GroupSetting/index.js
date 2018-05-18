@@ -3,8 +3,9 @@ import $ from 'jquery'
 import React, { Component } from 'react'
 
 import { updatePicture, updateGroupSetting } from '../../redux/api'
-import { onUpdateGroupLists, onUpdateGroupSetting } from '../../redux/actions'
+import { onUpdateGroupLists, onUpdateGroupSetting, isShowGroupSetting } from '../../redux/actions'
 import { store } from '../../redux'
+import { Modal, Button } from 'react-bootstrap'
 
 function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -132,85 +133,79 @@ class GroupSetting extends React.Component {
 
     render = () => {
         return (
-            <div className="col-sm-8 conversation">
-                <div className="row heading">
-                    <a className="heading-name-meta">GROUP SETTING
-                    </a>
-                </div>
-                <div style={{ overflowY: 'scroll', background: 'rgb(251, 251, 251)' }}>
-                    <form onSubmit={this.saveProfile}>
-                        <div className="col-md-12">
-                            <div className="setting-profile">
-                                <div className="container">
-                                    <div className="profile-box">
-                                        <div className="profile-cover-image" >
-                                            <button type="button" className="btn btn-default" style={{ right: '5px',
-                                                position: 'absolute',
-                                                top: '5px',
-                                                backgroundColor: '#FFFD'}} 
-                                                onClick={() => {
-                                                    $('#cover-image').trigger('click')
-                                            }}>
-                                                    Change Cover Image
-                                            </button>
-                                            <img src={this.state.wall_pic_base64 || this.state.wall_pic_url} onClick={() => {
-                                                $('#cover-image').trigger('click')
-                                            }} />
-                                        </div>
-                                        <div className="profile-picture">
-                                            <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} onClick={() => {
-                                                $('#profile-image').trigger('click')
-                                            }} />
-                                        </div>
-                                        <div className="profile-content">
-                                            <h1 style={{ fontSize: '28px' }}>
-                                                {this.state.display_name}
-                                            </h1>  
-                                        </div>
+            <div className="static-modal">
+                <Modal show={this.state.isShowGroupSetting} onHide={() => {
+                        store.dispatch(isShowGroupSetting(false))
+                    }}>
+                    <Modal.Header style={{ backgroundColor: '#eee' }}>
+                        <Modal.Title>Group setting</Modal.Title>
+                    </Modal.Header>
+                    <div>
+                        <input id="profile-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
+                        <input id="cover-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
+                                    
+                        <div style={{ display: 'flex', backgroundColor: '#eee', backgroundImage: `url("${ this.state.wall_pic_base64 || this.state.wall_pic_url }")` }}>
+                            <div className='avatar-icon' style={{ width: '100px', margin: '20px' }} >
+                                <button type="button" className="btn btn-default" style={{ right: '5px',
+                                    position: 'absolute',
+                                    top: '5px',
+                                    backgroundColor: '#FFFD'}} 
+                                    onClick={() => {
+                                        $('#cover-image').trigger('click')
+                                    }}>
+                                        Change Cover Image
+                                </button>
+                                <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} style={{ width: '80px', height: '80px' }} onClick={() => {
+                                    $('#profile-image').trigger('click')
+                                }} />
+                            </div>
+                            <span style={{ fontSize: '19px', fontWeight: 'bold', padding: '20px', marginTop: '20px', backgroundColor: '#fff8', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
+                        </div>
+                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                            <div style={{ width: '200px', textAlign: 'center'  }}>
+                                <i className="fa fa-user fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                            </div>
+                            <div>
+                                <div className="form-group col-md-12">
+                                    <label>Display Name</label>
+                                    <input type="text" className="form-control" placeholder="Display Name" value={this.state.display_name}  onChange={(event) => this.setState({display_name: event.target.value})} />
+                                </div>
+                                <div style={{ borderBottom: '1px solid #dfdfdf', marginTop: '10px' }} />
+                            </div>
+                        </div>
+                        <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
+                            <div style={{ width: '200px', textAlign: 'center'  }}>
+                                <i className="fa fa-lock fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                            </div>
+                            <div>
+                                <div className={this.state.chat_room_type=='C'? 'form-row' : 'hide'}>
+                                    <div className="form-group col-md-12">
+                                        <label>Patient Name</label>
+                                        <input type="text" className="form-control" placeholder="Patient Name" value={this.state.patient_name}  onChange={(event) => this.setState({patient_name: event.target.value})} />
+                                    </div>
+                                    <div className="form-group col-md-12">
+                                        <label>HN</label>
+                                        <input type="text" className="form-control"  placeholder="HN" value={this.state.hn}  onChange={(event) => this.setState({hn: event.target.value})} />
+                                    </div>
+                                    <div className="form-group col-md-12">
+                                        <label>Description</label>
+                                        <input type="text" className="form-control"  placeholder="Description" value={this.state.description}  onChange={(event) => this.setState({description: event.target.value})} />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-12">
-                            <div className="col-md-6" style={{ marginBottom: '20px' }}>
-                                <div class="form-group">
-                                    <input id="profile-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
-                                </div>
-                            </div>
-                            <div className="col-md-6" style={{ marginBottom: '20px' }}>
-                                <div class="form-group">
-                                    <input id="cover-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="form-row">
-                            <div className="form-group col-md-12">
-                                <label>Display Name</label>
-                                <input type="text" className="form-control" placeholder="Display Name" value={this.state.display_name}  onChange={(event) => this.setState({display_name: event.target.value})} />
-                            </div>
-                        </div>
-                        <div className={this.state.chat_room_type=='C'? 'form-row' : 'hide'}>
-                            <div className="form-group col-md-6">
-                                <label>Patient Name</label>
-                                <input type="text" className="form-control" placeholder="Patient Name" value={this.state.patient_name}  onChange={(event) => this.setState({patient_name: event.target.value})} />
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label>HN</label>
-                                <input type="text" className="form-control"  placeholder="HN" value={this.state.hn}  onChange={(event) => this.setState({hn: event.target.value})} />
-                            </div>
-                            <div className="form-group col-md-6">
-                                <label>Description</label>
-                                <input type="text" className="form-control"  placeholder="Description" value={this.state.description}  onChange={(event) => this.setState({description: event.target.value})} />
-                            </div>
-                        </div>
-                        <div className="col-md-12" style={{ marginBottom: '10px' }}>
-                            <small  className="form-text text-muted" > { this.state.errorMessage || '' }</small>
-                        </div>
-                        <div className="col-md-6">
-                            <button type="submit" className="btn btn-primary" onClick={() => this.saveProfile()}>Save</button>
-                        </div>
-                    </form>
-                </div>
+                    </div>
+                    <Modal.Footer>
+                        <small  className="form-text text-muted" style={{ marginRight: '15px' }}> { this.state.errorMessage || '' }</small>
+                        
+                        <Button onClick={() => {
+                            store.dispatch(isShowGroupSetting(false))
+                        }}>Close</Button>
+                        <Button className="btn btn-primary" onClick={() => {
+                            this.saveProfile()
+                        }}>Save</Button>
+                    </Modal.Footer>
+                </Modal>
             </div>
         )
     }

@@ -416,3 +416,10 @@ export const signin = (username, password) => ({
         isShowUserProfile: _isShowUserProfile
       }
   })
+  
+  export const isShowGroupSetting = (_isShowGroupSetting) => ({
+      type: 'IS_SHOW_GROUP_SETTING',
+      payload: {
+        isShowGroupSetting: _isShowGroupSetting
+      }
+  })

@@ -63,6 +63,10 @@ const system = (state = {
             return Object.assign(state, {
                 isShowUserProfile: action.payload.isShowUserProfile
             })
+        case 'IS_SHOW_GROUP_SETTING':
+            return Object.assign(state, {
+                isShowGroupSetting: action.payload.isShowGroupSetting
+            })
         default:
             return state
     }
