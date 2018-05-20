@@ -436,6 +436,8 @@ class Content extends React.Component {
                     <div className="col-sm-5 col-md-5 col-xs-5 heading-name" onClick={() => {
                         this.setState({
                             showContactInfo: true
+                        }, () => {
+                            store.dispatch(onFetchInviteFriend())
                         })
                     }}>
                         <a className="heading-name-meta">{ _.get(this.state.chatInfo, 'display_name') }

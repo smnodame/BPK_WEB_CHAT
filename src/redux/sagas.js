@@ -683,11 +683,22 @@ function* removeFriendFromGroupSaga() {
             const chatInfo = yield select(getChatInfo)
 
             if(chatInfo.chat_room_type == 'G' || chatInfo.chat_room_type == 'C') {
-                const member = yield select(getMemberInGroup)
-                member.data = member.data.filter((friend) => {
-                    return friend.friend_user_id != friend_user_id
-                })
-                yield put(memberInGroup(member))
+                if (!is_from_member_modal) {
+                    const inviteFriendLists = yield select(getInviteFriendLists)
+                    inviteFriendLists.data.forEach((friend, index) => {
+                        if(inviteFriendLists.data[index].friend_user_id == friend_user_id) {
+                            inviteFriendLists.data[index].status_quote = 'Tap to invite'
+                            inviteFriendLists.data[index].invited = false
+                        }
+                    })
+                    yield put(inviteFriends(inviteFriendLists))
+                } else {
+                    const member = yield select(getMemberInGroup)
+                    member.data = member.data.filter((friend) => {
+                        return friend.friend_user_id != friend_user_id
+                    })
+                    yield put(memberInGroup(member))
+                }
 
                 // update own
                 // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
@@ -730,6 +741,22 @@ function* removeFriendFromGroupSaga() {
     }
 }
 
+function* onFetchInviteFriendSaga() {
+    while (true) {
+        const { payload: { inviteFriendSeachText } } = yield take('ON_FETCH_INVITE_FRIEND')
+        try {
+            const chatInfo = yield select(getChatInfo)
+            const userInfo = yield select(getUserInfo)
+
+            const resFetchInviteFriend = yield call(fetchInviteFriend, chatInfo.chat_room_id, userInfo.user_id, 0, 30, inviteFriendSeachText)
+
+            yield put(inviteFriends(_.get(resFetchInviteFriend, 'data.data', [])))
+        } catch (err) {
+            console.log('[onFetchInviteFriendSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -755,7 +782,8 @@ export default function* rootSaga() {
         onUpdateGroupListsSaga(),
         onExitTheGroupSaga(),
         onClickChatSaga(),
-        removeFriendFromGroupSaga()
+        removeFriendFromGroupSaga(),
+        onFetchInviteFriendSaga()
     ])
 }
 
