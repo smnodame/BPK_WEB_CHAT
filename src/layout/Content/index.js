@@ -3,6 +3,7 @@ import $ from 'jquery'
 import React from 'react'
 import moment from 'moment'
 import download from 'downloadjs'
+import Friend from '../../components/Friend'
 
 import { ReactMic } from 'react-mic'
 import { Modal, Button } from 'react-bootstrap'
@@ -46,7 +47,8 @@ class Content extends React.Component {
             currentTime: 0.0,
             roundRecording: 0,
             timer: 0,
-            member: []
+            member: [],
+            inviteFriends: []
         }
     }
 
@@ -113,6 +115,12 @@ class Content extends React.Component {
         if(_.get(this.props.data, 'chat.memberInGroup.data')) {
             this.setState({
                 member: _.get(this.props.data, 'chat.memberInGroup.data', []),
+            })
+        }
+
+        if(_.get(this.props.data, 'chat.inviteFriends.data')) {
+            this.setState({
+                inviteFriends: _.get(this.props.data, 'chat.inviteFriends.data', []),
             })
         }
     }
@@ -607,7 +615,12 @@ class Content extends React.Component {
                                         <i className="fa fa-user fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                     </div>
                                     <div>
-                                        <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Invite</p>
+                                        <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                            this.setState({
+                                                showContactInfo: false,
+                                                showInviteFriend: true
+                                            })
+                                        }}>Invite</p>
                                         <p className={ this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
                                         <p className={ this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
                                             store.dispatch(onExitTheGroup(_.get(this.state.chatInfo, 'chat_room_id')))
@@ -696,6 +709,33 @@ class Content extends React.Component {
                                     this.setState({
                                         showContactInfo: false
                                     })
+                                }}>Close</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </div>
+                </div>
+
+                <div className="height-auto">
+                    <div className="static-modal">
+                        <Modal show={this.state.showInviteFriend} onHide={() => {
+                                
+                            }}>
+                            <Modal.Header style={{ backgroundColor: '#eee' }}>
+                                <Modal.Title>Invite Friend</Modal.Title>
+                            </Modal.Header>
+                            <div>
+                                {
+                                    this.state.inviteFriends.map((friend, key) => {
+                                        return (
+                                            <div className="box" key={key}>
+                                                <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                            <Modal.Footer>
+                                <Button onClick={() => {
                                 }}>Close</Button>
                             </Modal.Footer>
                         </Modal>
