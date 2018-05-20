@@ -433,6 +433,11 @@ class Content extends React.Component {
         })
     }
 
+    onSearchInviteFriend = (e) => {
+        e.preventDefault()
+        store.dispatch(onFetchInviteFriend(this.state.inviteFilter))
+    }
+    
     render() {
         return (
             <div className="col-sm-8 conversation">
@@ -715,16 +720,28 @@ class Content extends React.Component {
                         </Modal>
                     </div>
                 </div>
-
+                
                 <div className="height-auto">
                     <div className="static-modal">
                         <Modal show={this.state.showInviteFriend} onHide={() => {
-                                
+                                this.setState({
+                                    inviteFilter: ''
+                                })
                             }}>
                             <Modal.Header style={{ backgroundColor: '#eee' }}>
                                 <Modal.Title>Invite Friend</Modal.Title>
                             </Modal.Header>
                             <div>
+                                <form onSubmit={this.onSearchInviteFriend}>
+                                    <div className="col-sm-12 searchBox-inner">
+                                        <div className="input-group">
+                                            <input type="text" style={{ height: '40px' }} className="form-control" placeholder="Search" value={this.state.inviteFilter} aria-describedby="basic-addon1" onChange={(event) => this.setState({inviteFilter: event.target.value})} />
+                                            <a className="input-group-addon" style={{ cursor: 'pointer' }} onClick={() =>  store.dispatch(onFetchInviteFriend(this.state.inviteFilter)) }>
+                                                <i className='fa fa-search' aria-hidden="true"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </form>
                                 {
                                     this.state.inviteFriends.map((friend, key) => {
                                         return (
