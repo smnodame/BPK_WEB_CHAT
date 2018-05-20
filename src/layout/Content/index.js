@@ -48,7 +48,8 @@ class Content extends React.Component {
             roundRecording: 0,
             timer: 0,
             member: [],
-            inviteFriends: []
+            inviteFriends: [],
+            inviteFilter: ''
         }
     }
 
@@ -733,6 +734,13 @@ class Content extends React.Component {
                                         )
                                     })
                                 }
+                                <div className="row message-previous">
+                                    <div className="col-sm-12 previous">
+                                        <a onClick={() => store.dispatch(loadMoreInviteFriends(0, this.state.inviteFilter))} >
+                                            Show more friends
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             <Modal.Footer>
                                 <Button onClick={() => {

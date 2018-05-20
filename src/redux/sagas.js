@@ -757,6 +757,23 @@ function* onFetchInviteFriendSaga() {
     }
 }
 
+function* loadMoreInviteFriendsSaga() {
+    while (true) {
+        const { payload : { page, inviteFriendSeachText } } = yield take('LOAD_MORE_INVITE_FRIENDS')
+        try {
+            const chatInfo = yield select(getChatInfo)
+            const userInfo = yield select(getUserInfo)
+            const inviteFriendsFromStore = yield select(getInviteFriendLists)
+            const resFetchInviteFriend = yield call(fetchInviteFriend, chatInfo.chat_room_id, userInfo.user_id, inviteFriendsFromStore.data.length, 30, inviteFriendSeachText)
+            const allInviteFriendLists = inviteFriendsFromStore.data.concat(_.get(resFetchInviteFriend, 'data.data.data', []))
+            inviteFriendsFromStore.data = allInviteFriendLists
+            yield put(inviteFriends(inviteFriendsFromStore))
+        } catch (err) {
+            console.log('[loadMoreInviteFriendsSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -783,7 +800,8 @@ export default function* rootSaga() {
         onExitTheGroupSaga(),
         onClickChatSaga(),
         removeFriendFromGroupSaga(),
-        onFetchInviteFriendSaga()
+        onFetchInviteFriendSaga(),
+        loadMoreInviteFriendsSaga()
     ])
 }
 
