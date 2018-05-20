@@ -437,7 +437,7 @@ class Content extends React.Component {
         e.preventDefault()
         store.dispatch(onFetchInviteFriend(this.state.inviteFilter))
     }
-    
+
     render() {
         return (
             <div className="col-sm-8 conversation">
@@ -725,7 +725,8 @@ class Content extends React.Component {
                     <div className="static-modal">
                         <Modal show={this.state.showInviteFriend} onHide={() => {
                                 this.setState({
-                                    inviteFilter: ''
+                                    inviteFilter: '',
+                                    showInviteFriend: false
                                 })
                             }}>
                             <Modal.Header style={{ backgroundColor: '#eee' }}>
@@ -761,6 +762,10 @@ class Content extends React.Component {
                             </div>
                             <Modal.Footer>
                                 <Button onClick={() => {
+                                    this.setState({
+                                        inviteFilter: '',
+                                        showInviteFriend: false
+                                    })
                                 }}>Close</Button>
                             </Modal.Footer>
                         </Modal>
