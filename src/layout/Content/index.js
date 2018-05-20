@@ -680,6 +680,10 @@ class Content extends React.Component {
                                                     <img src={ _.get(member, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
                                                 </div>
                                                 <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>{ member.display_name }</p>
+                                                <div style={{ flex: '1' }} />
+                                                <i className="fa fa-close fa-2x" aria-hidden="true" style={{ padding: '10px', marginRight: '20px', cursor: 'pointer' }} onClick={() => {
+                                                    store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, member.friend_user_id, false))
+                                                }}></i>
                                             </div>))
                                         }
                                     </div>

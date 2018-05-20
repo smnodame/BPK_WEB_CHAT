@@ -674,6 +674,62 @@ function* onClickChatSaga() {
     }
 }
 
+function* removeFriendFromGroupSaga() {
+    while (true) {
+        const { payload: { chat_room_id, friend_user_id, is_from_member_modal }} = yield take('REMOVE_FRIEND_FROM_GROUP')
+        try {
+            const resRemoveFriendFromGroup = yield call(removeFriendFromGroup, chat_room_id, friend_user_id)
+            const userInfo = yield select(getUserInfo)
+            const chatInfo = yield select(getChatInfo)
+
+            if(chatInfo.chat_room_type == 'G' || chatInfo.chat_room_type == 'C') {
+                const member = yield select(getMemberInGroup)
+                member.data = member.data.filter((friend) => {
+                    return friend.friend_user_id != friend_user_id
+                })
+                yield put(memberInGroup(member))
+
+                // update own
+                // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+                // update chat list
+                // emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
+
+                const split = chatInfo.friend_user_ids.split(',')
+                const filter = split.filter((id) => id != friend_user_id)
+                const join = filter.join(',')
+                const newFriendUserIds = join
+
+                chatInfo.friend_user_ids = newFriendUserIds
+                yield put(selectedChatInfo(chatInfo))
+
+                // update friend_user_ids in friend lists
+                const friendLists = yield select(getFriends)
+                friendLists.group = friendLists.group.map((friend) => {
+                    if(chatInfo.chat_room_id == friend.chat_room_id) {
+                        friend.friend_user_ids = newFriendUserIds
+                    }
+                    return friend
+                })
+
+                yield put(friends(friendLists))
+
+                // update friend_user_ids in chat lists
+                const chatListsFromStore = yield select(getChatLists)
+                const chatListsForSaveToStore = chatListsFromStore.map((chat) => {
+                    if(chatInfo.chat_room_id == chat.chat_room_id) {
+                        chat.friend_user_ids = newFriendUserIds
+                    }
+                    return chat
+                })
+
+                yield put(chatLists(chatListsForSaveToStore))
+            }
+        } catch (err) {
+            console.log('[removeFriendFromGroupSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -698,7 +754,8 @@ export default function* rootSaga() {
         onUnmuteChatSaga(),
         onUpdateGroupListsSaga(),
         onExitTheGroupSaga(),
-        onClickChatSaga()
+        onClickChatSaga(),
+        removeFriendFromGroupSaga()
     ])
 }
 
