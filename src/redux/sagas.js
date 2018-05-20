@@ -774,6 +774,92 @@ function* loadMoreInviteFriendsSaga() {
     }
 }
 
+function* inviteFriendToGroupSaga() {
+    while (true) {
+        const { payload: { chat_room_id, friend_user_id }} = yield take('ON_INVITE_FRIEND_TO_GROUP')
+        try {
+            const userInfo = yield select(getUserInfo)
+            const inviteFriendLists = yield select(getInviteFriendLists)
+
+            const resInviteFriendToGroup = yield call(inviteFriendToGroup, chat_room_id, friend_user_id)
+            const newChatRoomId = resInviteFriendToGroup.data.data.new_chat_room_id
+
+            const resFetchChatInfo = yield call(fetchChatInfo, newChatRoomId)
+
+            const chatInfo = yield select(getChatInfo)
+
+            if(chatInfo.chat_room_type == 'G' || chatInfo.chat_room_type == 'C') {
+                inviteFriendLists.data.forEach((friend, index) => {
+                    if(inviteFriendLists.data[index].friend_user_id == friend_user_id) {
+                        inviteFriendLists.data[index].status_quote = 'Invited. (Tap to remove)'
+                        inviteFriendLists.data[index].invited = true
+                    }
+                })
+                yield put(inviteFriends(inviteFriendLists))
+
+                // update own
+                // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+
+                // update chat list
+                // emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
+
+                const split = chatInfo.friend_user_ids.split(',')
+                split.push(`${friend_user_id}`)
+                const newFriendUserIds = split.join(',')
+
+                chatInfo.friend_user_ids = newFriendUserIds
+                yield put(selectedChatInfo(chatInfo))
+
+                // update friend_user_ids in friend lists
+                const friendLists = yield select(getFriends)
+                friendLists.group = friendLists.group.map((friend) => {
+                    if(chatInfo.chat_room_id == friend.chat_room_id) {
+                        friend.friend_user_ids = newFriendUserIds
+                    }
+                    return friend
+                })
+
+                yield put(friends(friendLists))
+
+                // update friend_user_ids in chat lists
+                const chatListsFromStore = yield select(getChatLists)
+                const chatListsForSaveToStore = chatListsFromStore.map((chat) => {
+                    if(chatInfo.chat_room_id == chat.chat_room_id) {
+                        chat.friend_user_ids = newFriendUserIds
+                    }
+                    return chat
+                })
+
+                yield put(chatLists(chatListsForSaveToStore))
+            } else {
+                const cInfo = resFetchChatInfo.data.data
+                cInfo.friend_user_ids = `${cInfo.friend_user_ids},${chatInfo.friend_user_id}`
+
+                // add owner friend to new group room
+                yield call(inviteFriendToGroup, newChatRoomId, chatInfo.friend_user_id)
+
+                // update own
+                // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+
+                // update chat list
+                // emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
+                // emit_update_friend_chat_list(userInfo.user_id, chatInfo.friend_user_id)
+
+                // update friend groups
+                yield put(onUpdateGroupLists())
+
+                // redirect to a created chat
+                const navigate = yield select(navigateSelector)
+                navigate.push('/chat/' + cInfo.chat_room_id)
+            }
+
+            continue
+        } catch (err) {
+            console.log('[inviteFriendToGroupSaga] ', err)
+        }
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -801,7 +887,8 @@ export default function* rootSaga() {
         onClickChatSaga(),
         removeFriendFromGroupSaga(),
         onFetchInviteFriendSaga(),
-        loadMoreInviteFriendsSaga()
+        loadMoreInviteFriendsSaga(),
+        inviteFriendToGroupSaga()
     ])
 }
 

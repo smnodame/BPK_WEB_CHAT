@@ -748,7 +748,24 @@ class Content extends React.Component {
                                 {
                                     this.state.inviteFriends.map((friend, key) => {
                                         return (
-                                            <div className="box" key={key}>
+                                            <div className="box" key={key} onClick={() => {
+                                                if(this.state.isOpenCase) {
+                                                    {/* this.setState({
+                                                        showOptionMessageModal: true,
+                                                        chat_room_id: this.state.chatInfo.chat_room_id,
+                                                        selected_invite_friend_user_id: item.friend_user_id
+                                                    })
+                                                    new Promise(() => {
+                                                        store.dispatch(onEnterOptionMessage())
+                                                    }) */}
+                                                } else {
+                                                    if(friend.invited) {
+                                                        store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, friend.friend_user_id, false))
+                                                    } else {
+                                                        store.dispatch(onInviteFriendToGroup(this.state.chatInfo.chat_room_id, friend.friend_user_id))
+                                                    }
+                                                }
+                                            }}>
                                                 <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
                                             </div>
                                         )
