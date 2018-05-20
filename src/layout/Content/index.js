@@ -49,7 +49,8 @@ class Content extends React.Component {
             timer: 0,
             member: [],
             inviteFriends: [],
-            inviteFilter: ''
+            inviteFilter: '',
+            inviteFriendsCount: 0
         }
     }
 
@@ -122,6 +123,7 @@ class Content extends React.Component {
         if(_.get(this.props.data, 'chat.inviteFriends.data')) {
             this.setState({
                 inviteFriends: _.get(this.props.data, 'chat.inviteFriends.data', []),
+                inviteFriendsCount: _.get(this.props.data, 'chat.inviteFriends.totalCount', 0),
             })
         }
     }
@@ -752,7 +754,7 @@ class Content extends React.Component {
                                         )
                                     })
                                 }
-                                <div className="row message-previous">
+                                <div className={ this.state.inviteFriendsCount > this.state.inviteFriends.length ?  'row message-previous' : 'hide' } >
                                     <div className="col-sm-12 previous">
                                         <a onClick={() => store.dispatch(loadMoreInviteFriends(0, this.state.inviteFilter))} >
                                             Show more friends
