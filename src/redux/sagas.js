@@ -860,6 +860,49 @@ function* inviteFriendToGroupSaga() {
     }
 }
 
+function* onInviteFriendToGroupWithOpenCaseSaga() {
+    while (true) {
+        const { payload: { chat_room_id, selected_invite_friend_user_id, selected_option_message_id }} = yield take('ON_INVITE_FRIEND_TO_GROUP_WITH_OPEN_CASE')
+        try {
+            const userInfo = yield select(getUserInfo)
+            const chatInfo = yield select(getChatInfo)
+
+            const resInviteFriendToGroup = yield call(inviteFriendToGroupWithOpenCase, {
+                chat_room_id: chat_room_id,
+                user_id: userInfo.user_id,
+                friend_user_id: chatInfo.friend_user_id,
+                chat_message_ids: selected_option_message_id
+            })
+            const newChatRoomId = resInviteFriendToGroup.data.new_chat_room_id
+            const displayName = resInviteFriendToGroup.data.room_name
+
+            // add owner friend to new group room
+            yield call(inviteFriendToGroup, newChatRoomId, selected_invite_friend_user_id)
+
+            const resFetchChatInfo = yield call(fetchChatInfo, newChatRoomId)
+            const cInfo = resFetchChatInfo.data.data
+
+            // redirect to a created chat
+            const navigate = yield select(navigateSelector)
+            navigate.push('/chat/' + cInfo.chat_room_id)
+
+            // update own
+            // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+
+            // update chat list
+            // emit_update_friend_chat_list(userInfo.user_id, selected_invite_friend_user_id)
+            // emit_update_friend_chat_list(userInfo.user_id, chatInfo.friend_user_id)
+
+            // update friend groups
+            yield put(onUpdateGroupLists())
+            continue
+        } catch (err) {
+            console.log('[onInviteFriendToGroupWithOpenCaseSaga] ', err)
+        }
+    }
+}
+
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -888,7 +931,8 @@ export default function* rootSaga() {
         removeFriendFromGroupSaga(),
         onFetchInviteFriendSaga(),
         loadMoreInviteFriendsSaga(),
-        inviteFriendToGroupSaga()
+        inviteFriendToGroupSaga(),
+        onInviteFriendToGroupWithOpenCaseSaga()
     ])
 }
 
