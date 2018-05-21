@@ -50,7 +50,8 @@ class Content extends React.Component {
             member: [],
             inviteFriends: [],
             inviteFilter: '',
-            inviteFriendsCount: 0
+            inviteFriendsCount: 0,
+            selectedOptionMessageId: {}
         }
     }
 
@@ -264,7 +265,14 @@ class Content extends React.Component {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }}>
                             
-                        <input type="checkbox" checked="" style={{ margin: '15px' }} />
+                        <input type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
+                            const selectedOptionMessageId = {
+                                [chat.chat_message_id]: event.target.checked
+                            }
+                            this.setState({
+                                selectedOptionMessageId: Object.assign(this.state.selectedOptionMessageId, selectedOptionMessageId, {})
+                            })
+                        }} />
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
