@@ -263,8 +263,10 @@ class Content extends React.Component {
             if(chat.message_type == '1') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }}>
-                       
+                            
+                        <input type="checkbox" checked="" style={{ margin: '15px' }} />
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
+                            
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
@@ -290,6 +292,7 @@ class Content extends React.Component {
             if(chat.message_type == '2') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
+                        <input type="checkbox" checked="" style={{ margin: '15px' }} />
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
@@ -314,6 +317,7 @@ class Content extends React.Component {
             if(chat.message_type == '3') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
+                        <input type="checkbox" checked="" style={{ margin: '15px' }} />
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
@@ -339,6 +343,7 @@ class Content extends React.Component {
             if(chat.message_type == '4') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
+                        <input type="checkbox" checked="" style={{ margin: '15px' }} />
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
@@ -363,6 +368,7 @@ class Content extends React.Component {
             if(chat.message_type == '5') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body">
+                        <input type="checkbox" checked="" style={{ margin: '15px' }} />
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />

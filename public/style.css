@@ -364,6 +364,7 @@ body {
   height: auto;
   margin-top: 15px !important;
   margin-bottom: 15px !important;
+  display: flex;
 }
 
 .message-main-receiver {
@@ -843,4 +844,8 @@ body {
 
 .height-auto div {
   height: auto !important
+}
+
+.message-body:hover {
+  background-color: #eee;
 }
