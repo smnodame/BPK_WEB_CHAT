@@ -626,10 +626,17 @@ class Content extends React.Component {
                                         <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
                                             this.setState({
                                                 showContactInfo: false,
-                                                showInviteFriend: true
+                                                showInviteFriend: true,
+                                                isOpenCase: false
                                             })
                                         }}>Invite</p>
-                                        <p className={ this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }}>Open case</p>
+                                        <p className={ !this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
+                                            this.setState({
+                                                showContactInfo: false,
+                                                showInviteFriend: true,
+                                                isOpenCase: true
+                                            })
+                                        }}>Open case</p>
                                         <p className={ this.is_group()? '' : 'hide' } style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
                                             store.dispatch(onExitTheGroup(_.get(this.state.chatInfo, 'chat_room_id')))
                                             this.props.history.push('/')
@@ -705,7 +712,7 @@ class Content extends React.Component {
                                                 <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>{ member.display_name }</p>
                                                 <div style={{ flex: '1' }} />
                                                 <i className="fa fa-close fa-2x" aria-hidden="true" style={{ padding: '10px', marginRight: '20px', cursor: 'pointer' }} onClick={() => {
-                                                    store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, member.friend_user_id, false))
+                                                    store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, member.friend_user_id, true))
                                                 }}></i>
                                             </div>))
                                         }
@@ -750,14 +757,10 @@ class Content extends React.Component {
                                         return (
                                             <div className="box" key={key} onClick={() => {
                                                 if(this.state.isOpenCase) {
-                                                    {/* this.setState({
-                                                        showOptionMessageModal: true,
-                                                        chat_room_id: this.state.chatInfo.chat_room_id,
-                                                        selected_invite_friend_user_id: item.friend_user_id
+                                                    this.setState({
+                                                        showInviteFriend: false,
+                                                        selected_invite_friend_user_id: friend.friend_user_id
                                                     })
-                                                    new Promise(() => {
-                                                        store.dispatch(onEnterOptionMessage())
-                                                    }) */}
                                                 } else {
                                                     if(friend.invited) {
                                                         store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, friend.friend_user_id, false))
