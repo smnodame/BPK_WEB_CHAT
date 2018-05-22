@@ -903,6 +903,37 @@ function* onInviteFriendToGroupWithOpenCaseSaga() {
 }
 
 
+function* signin() {
+    while (true) {
+        const { payload: { username, password } } = yield take('SIGNIN')
+        try {
+            yield put(isLoading(true))
+            if(username && password) {
+                const res_loginApi = yield call(loginApi, username, password)
+    
+                console.log(' finsihed sign in ')
+                console.log(res_loginApi)
+    
+                if(_.get(res_loginApi.data, 'error')) {
+                    yield put(signin_error(res_loginApi.data.error))
+                    yield put(isLoading(false))
+                    continue
+                }
+                const { data: { token, setting, user } } = res_loginApi
+                yield put(authenticated(token, setting))
+                yield put(signin_error(''))
+    
+                location.reload()
+            }
+            yield put(signin_error('กรุณาระบุ Username เเละ Password'))
+            yield put(isLoading(false))
+        } catch (err) {
+            console.log('[signin] ', err)
+        }
+        
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -932,7 +963,8 @@ export default function* rootSaga() {
         onFetchInviteFriendSaga(),
         loadMoreInviteFriendsSaga(),
         inviteFriendToGroupSaga(),
-        onInviteFriendToGroupWithOpenCaseSaga()
+        onInviteFriendToGroupWithOpenCaseSaga(),
+        signin()
     ])
 }
 

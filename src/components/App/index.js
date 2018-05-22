@@ -66,7 +66,7 @@ class App extends React.Component {
             )
         } else {
             return (
-                <Login />
+                <Login data={this.state.data} />
             )
         }
     }
