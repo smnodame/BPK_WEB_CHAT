@@ -30,7 +30,7 @@ class App extends React.Component {
         this.state = {
         }
 
-        this.isAuthorization = false
+        this.isAuthorization = localStorage.getItem('user_id')? true : false
     }
 
     componentDidMount() {

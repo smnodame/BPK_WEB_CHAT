@@ -922,7 +922,9 @@ function* signin() {
                 const { data: { token, setting, user } } = res_loginApi
                 yield put(authenticated(token, setting))
                 yield put(signin_error(''))
-    
+
+                localStorage.setItem('user_id', user.user_id)
+
                 location.reload()
             }
             yield put(signin_error('กรุณาระบุ Username เเละ Password'))
