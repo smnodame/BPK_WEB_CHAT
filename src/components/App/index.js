@@ -6,6 +6,7 @@ import SideBar from '../../layout/SideBar'
 import Content from '../../layout/Content'
 import UserProfile from '../UserProfile'
 import GroupSetting from '../GroupSetting'
+import Login from '../Login'
 
 import { store } from '../../redux'
 import { start_app  } from '../../redux/actions.js'
@@ -28,6 +29,8 @@ class App extends React.Component {
         super(props)
         this.state = {
         }
+
+        this.isAuthorization = false
     }
 
     componentDidMount() {
@@ -42,24 +45,30 @@ class App extends React.Component {
     }
     
     render = () => {
-        return (
-            <div className="container app">
-                <div className="row app-one">
-                    <div className="toast-custom">
-                        <ToastContainer autoClose={3000} />
+        if(this.isAuthorization ) {
+            return (
+                <div className="container app">
+                    <div className="row app-one">
+                        <div className="toast-custom">
+                            <ToastContainer autoClose={3000} />
+                        </div>
+                        <Switch>
+                            <Route path="/" render={routeProps => <SideBar {...routeProps} data={this.state.data}/>} />
+                        </Switch>
+                        <Switch>
+                            <Route path='/chat/:id' render={routeProps => <Content {...routeProps} data={this.state.data} />} />
+                            <Route exact path='/' component={DefaultPage} />
+                        </Switch>
                     </div>
-                    <Switch>
-                        <Route path="/" render={routeProps => <SideBar {...routeProps} data={this.state.data}/>} />
-                    </Switch>
-                    <Switch>
-                        <Route path='/chat/:id' render={routeProps => <Content {...routeProps} data={this.state.data} />} />
-                        <Route exact path='/' component={DefaultPage} />
-                    </Switch>
+                    <UserProfile data={this.state.data} />
+                    <GroupSetting  data={this.state.data} />
                 </div>
-                <UserProfile data={this.state.data} />
-                <GroupSetting  data={this.state.data} />
-            </div>
-        )
+            )
+        } else {
+            return (
+                <Login />
+            )
+        }
     }
 }
 
