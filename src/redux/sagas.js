@@ -937,6 +937,29 @@ function* signin() {
     }
 }
 
+function* signup() {
+    while (true) {
+        const { payload: { id, password, confirm_password, display_name, mobile_no, language_id } } = yield take('SIGNUP')
+        if(id && password && confirm_password && display_name && mobile_no && language_id) {
+            if(password != confirm_password) {
+                yield put(signupEror('Password and Confirm password is not match!'))
+                continue
+            }
+            const res_create_new_account = yield call(createNewAccount, id, password, display_name, mobile_no, language_id)
+
+            if(res_create_new_account.error) {
+                yield put(signupEror(res_create_new_account.error))
+                continue
+            }
+
+            // redirect to a created chat
+            location.href = '/'
+            continue
+        }
+        yield put(signupEror('กรุณาระบุรายละเอียดให้ครบทุกช่อง'))
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -967,7 +990,8 @@ export default function* rootSaga() {
         loadMoreInviteFriendsSaga(),
         inviteFriendToGroupSaga(),
         onInviteFriendToGroupWithOpenCaseSaga(),
-        signin()
+        signin(),
+        signup()
     ])
 }
 
