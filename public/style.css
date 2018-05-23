@@ -849,3 +849,11 @@ body {
 .message-body:hover {
   background-color: #eee;
 }
+
+.signup div {
+  overflow: auto
+}
+
+.signup {
+  overflow: auto
+}

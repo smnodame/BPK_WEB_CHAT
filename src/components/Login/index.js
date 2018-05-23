@@ -70,7 +70,7 @@ class Login extends React.Component {
                                     Don’t have an account?
                                 </span>
         
-                                <a className="txt2" href="#" style={{ marginLeft: '10px' }}>
+                                <a className="txt2" href="/register" style={{ marginLeft: '10px' }}>
                                     Sign Up
                                 </a>
                             </div>
