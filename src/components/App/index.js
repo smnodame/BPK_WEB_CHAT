@@ -6,6 +6,7 @@ import SideBar from '../../layout/SideBar'
 import Content from '../../layout/Content'
 import UserProfile from '../UserProfile'
 import GroupSetting from '../GroupSetting'
+import Register from '../Register'
 import Login from '../Login'
 
 import { store } from '../../redux'
@@ -66,7 +67,11 @@ class App extends React.Component {
             )
         } else {
             return (
-                <Login data={this.state.data} />
+                
+                <Switch>
+                    <Route path='/register' render={routeProps => <Register {...routeProps} data={this.state.data} />} />
+                    <Route render={routeProps => <Login {...routeProps} data={this.state.data} />} />
+                </Switch>
             )
         }
     }
