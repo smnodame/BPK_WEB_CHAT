@@ -39,12 +39,10 @@
   
   body, html {
       height: 100%;
-      font-family: Poppins-Regular, sans-serif;
   }
   
   /*---------------------------------------------*/
   a {
-      font-family: Poppins-Regular;
       font-size: 14px;
       line-height: 1.7;
       color: #666666;
@@ -74,7 +72,6 @@
   }
   
   p {
-      font-family: Poppins-Regular;
       font-size: 14px;
       line-height: 1.7;
       color: #666666;
@@ -201,7 +198,6 @@
   
   .login100-form-title {
     display: block;
-    font-family: Poppins-Bold;
     font-size: 30px;
     color: #333333;
     line-height: 1.2;
@@ -222,7 +218,6 @@
   }
   
   .input100 {
-    font-family: Poppins-Regular;
     font-size: 15px;
     color: #555555;
     line-height: 1.2;
@@ -267,7 +262,6 @@
   }
   
   .focus-input100::after {
-    font-family: Poppins-Regular;
     font-size: 15px;
     color: #999999;
     line-height: 1.2;
@@ -386,7 +380,6 @@
   }
   
   .login100-form-btn {
-    font-family: Poppins-Medium;
     font-size: 15px;
     color: #fff;
     line-height: 1.2;
@@ -444,7 +437,6 @@
     right: 0px;
     pointer-events: none;
   
-    font-family: Poppins-Regular;
     color: #c80000;
     font-size: 13px;
     line-height: 1.4;
@@ -461,7 +453,6 @@
   
   .alert-validate::after {
     content: "\f06a";
-    font-family: FontAwesome;
     font-size: 16px;
     color: #c80000;
   

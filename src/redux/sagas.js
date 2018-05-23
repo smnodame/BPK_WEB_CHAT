@@ -926,6 +926,7 @@ function* signin() {
                 localStorage.setItem('user_id', user.user_id)
 
                 location.reload()
+                continue
             }
             yield put(signin_error('กรุณาระบุ Username เเละ Password'))
             yield put(isLoading(false))
