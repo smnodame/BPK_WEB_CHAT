@@ -243,6 +243,15 @@ class Content extends React.Component {
         return _.get(this.state.chatInfo, 'chat_room_type') == 'G' || _.get(this.state.chatInfo, 'chat_room_type') == 'C'
     }
 
+    selected_chat_message = (chat_message_id) => {
+        if(!this.state.isSelectChatForOpenCase) {
+            this.setState({
+                selected_chat_message_is: chat_message_id,
+                show_selected_chat_message: true
+            })
+        }
+    }
+
     render_message = () => {
         return _.get(this.state, 'chat', []).map((chat) => {
             if(!this.state.user) {
@@ -265,7 +274,9 @@ class Content extends React.Component {
             /* text message */
             if(chat.message_type == '1') {
                 return (
-                    <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }}>
+                    <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }} onClick={() => {
+                        this.selected_chat_message(chat.chat_message_id)
+                    }}>
                             
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
@@ -301,7 +312,9 @@ class Content extends React.Component {
              /* image message */
             if(chat.message_type == '2') {
                 return (
-                    <div key={chat.chat_message_id} className="row message-body">
+                    <div key={chat.chat_message_id} className="row message-body" onClick={() => {
+                        this.selected_chat_message(chat.chat_message_id)
+                    }}>
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -333,7 +346,9 @@ class Content extends React.Component {
             /* audio player message */
             if(chat.message_type == '3') {
                 return (
-                    <div key={chat.chat_message_id} className="row message-body">
+                    <div key={chat.chat_message_id} className="row message-body" onClick={() => {
+                        this.selected_chat_message(chat.chat_message_id)
+                    }}>
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -366,7 +381,9 @@ class Content extends React.Component {
              /* sticker message */
             if(chat.message_type == '4') {
                 return (
-                    <div key={chat.chat_message_id} className="row message-body">
+                    <div key={chat.chat_message_id} className="row message-body" onClick={() => {
+                        this.selected_chat_message(chat.chat_message_id)
+                    }}>
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -398,7 +415,9 @@ class Content extends React.Component {
              /* file message */
             if(chat.message_type == '5') {
                 return (
-                    <div key={chat.chat_message_id} className="row message-body">
+                    <div key={chat.chat_message_id} className="row message-body" onClick={() => {
+                            this.selected_chat_message(chat.chat_message_id)
+                        }}>
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -537,7 +556,7 @@ class Content extends React.Component {
                 <input id="image-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._image_upload_handler} aria-describedby="fileHelp" />
                 <input id="file-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._file_upload_handler} aria-describedby="fileHelp" />
 
-                <div className={ this.state.isSelectChatForOpenCase? "hide" : "row reply" } >
+                <div className={ (this.state.isSelectChatForOpenCase || this.state.show_selected_chat_message)? "hide" : "row reply" } >
                     <div style={{ display: 'flex' }}>
                         <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
@@ -591,6 +610,20 @@ class Content extends React.Component {
                                 selectedOptionMessageId: {}
                             })
                         }} >Cancle</Button>
+                    </div>
+                </div>
+                <div className="row reply" className={ this.state.show_selected_chat_message? "row reply" : "hide" }>
+                    <div style={{ display: 'flex' }}>
+                        <div style={{ flex: '1' }} />
+                        <Button bsStyle="info" onClick={() => {
+                            }} >FORWARD</Button>
+                        <Button bsStyle="warning" style={{ marginLeft: '15px' }} onClick={() => {
+                            }} >DELETE</Button>
+                        <Button bsStyle="light" style={{ marginLeft: '15px', marginRight: '15px' }} onClick={() => {
+                                this.setState({
+                                    show_selected_chat_message: false
+                                })
+                            }} >CANCLE</Button>
                     </div>
                 </div>
                 <div style={{ height: '200px', backgroundColor: 'white' }}>
