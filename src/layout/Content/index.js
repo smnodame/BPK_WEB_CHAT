@@ -228,7 +228,8 @@ class Content extends React.Component {
         }
     }
 
-    download_file = () => {
+    download_file = (e) => {
+        e.stopPropagation()
         $.ajax({
             url: "http://smnodame.com/public/pictures/11.jpg", 
             type: 'GET',
@@ -296,7 +297,7 @@ class Content extends React.Component {
                                     { `${moment(chat.create_date).fromNow()}` }
                                     <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" }>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" } onClick={(e) => e.stopPropagation() }>
                                 <div className="message-text">
                                     { chat.content }
                                 </div>
@@ -335,7 +336,10 @@ class Content extends React.Component {
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender background-transparent": "receiver background-transparent" }>
-                                <img src={ chat.object_url } style={{ width: '200px' }} onClick={() => this.setState({ selected_image: chat.object_url })}  />
+                                <img src={ chat.object_url } style={{ width: '200px' }} onClick={(e) => {
+                                    e.stopPropagation()
+                                    this.setState({ selected_image: chat.object_url })
+                                }}  />
                             </div>
                             <span className={ this.state.user.username != chat.username ? "message-time" : "hide" } style={{ width: '75px', textAlign: 'left' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
@@ -399,15 +403,15 @@ class Content extends React.Component {
                                 selectedOptionMessageId: Object.assign(this.state.selectedOptionMessageId, selectedOptionMessageId, {})
                             })
                         }} />
-                        <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
-                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
+                        <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" } >
+                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }} onClick={(e) => e.stopPropagation() }>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
-                            <div className={ this.state.user.username == chat.username ? "sender background-transparent sticker-right": "receiver background-transparent sticker-left" }>
+                            <div className={ this.state.user.username == chat.username ? "sender background-transparent sticker-right": "receiver background-transparent sticker-left" } onClick={(e) => e.stopPropagation() }>
                                 <img src={ chat.object_url } style={{ width: '150px' }}  />
                             </div>
                             <span className={ this.state.user.username != chat.username ? "message-time" : "hide" } style={{ width: '75px', textAlign: 'left' }}>
@@ -443,7 +447,7 @@ class Content extends React.Component {
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }} onClick={() => this.download_file() }>
+                            <div className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }} onClick={(e) => this.download_file(e) }>
                                
                                 <div style={{ display: 'flex', cursor: 'pointer' }}>
                                     <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '11px', width: '69px', borderRadius: '50%' }}></i>
