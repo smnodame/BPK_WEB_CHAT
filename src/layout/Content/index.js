@@ -676,7 +676,7 @@ class Content extends React.Component {
                                 <Modal.Title>Contact info</Modal.Title>
                             </Modal.Header>
                             <div>
-                                <div style={{ display: 'flex', backgroundColor: '#eee' }}>
+                                <div style={{ display: 'flex', backgroundColor: '#eee', backgroundImage: `url("${ _.get(this.state.chatInfo, 'friend_wall_pic_url') }")` }}>
                                     <div className='avatar-icon' style={{ width: '100px', margin: '20px' }}>
                                         <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '80px', height: '80px' }} />
                                     </div>
