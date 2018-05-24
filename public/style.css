@@ -846,9 +846,9 @@ body {
   height: auto !important
 }
 
-.message-body:hover {
+/* .message-body:hover {
   background-color: #eee;
-}
+} */
 
 .signup div {
   overflow: auto
