@@ -861,3 +861,22 @@ body {
 .invite-friend-container .avatar-icon {
   padding: 10px;
 }
+
+.selected-message {
+  display: none;
+}
+
+.message-body:hover .selected-message {
+  display: inline;
+}
+
+.message-body:hover .disapear-selected-message {
+  display: none;
+}
+
+.disapear-selected-message {
+  display: inline;
+  height: 24px;
+  width: 24px;
+  margin-left: 15px;
+}
