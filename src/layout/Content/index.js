@@ -819,7 +819,7 @@ class Content extends React.Component {
                                 {
                                     this.state.inviteFriends.map((friend, key) => {
                                         return (
-                                            <div className="box" key={key} onClick={() => {
+                                            <div className="box invite-friend-container" key={key} onClick={() => {
                                                 if(this.state.isOpenCase) {
                                                     this.setState({
                                                         showInviteFriend: false,

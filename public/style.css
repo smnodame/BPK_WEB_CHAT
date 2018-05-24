@@ -857,3 +857,7 @@ body {
 .signup {
   overflow: auto
 }
+
+.invite-friend-container .avatar-icon {
+  padding: 10px;
+}
