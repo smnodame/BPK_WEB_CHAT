@@ -633,7 +633,10 @@ class Content extends React.Component {
                         <Button bsStyle="info" onClick={() => {
                             }} >FORWARD</Button>
                         <Button bsStyle="warning" style={{ marginLeft: '15px' }} onClick={() => {
-                                this.setState({ show_selected_chat_message: false })
+                                this.setState({ 
+                                    show_selected_chat_message: false,
+                                    selected_chat_message_id: ''
+                                })
                                 new Promise(() => {
                                     saveInKeep(this.state.selected_chat_message_id)
                                 })
