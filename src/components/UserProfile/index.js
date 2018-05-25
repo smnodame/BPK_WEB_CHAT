@@ -127,7 +127,8 @@ class UserProfile extends React.Component {
                     <input id="profile-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
                     <input id="cover-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
                     
-                        <div style={{ display: 'flex', backgroundColor: '#eee', backgroundImage: `url("${ this.state.wall_pic_base64 || this.state.wall_pic_url }")` }}>
+                    <div style={{ display: 'flex', backgroundColor: '#eee', backgroundImage: `url("${ this.state.wall_pic_base64 || this.state.wall_pic_url }")` }}>
+                        <div style={{ display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.25)' }}>
                             <div className='avatar-icon' style={{ width: '100px', margin: '20px' }} >
                                 <button type="button" className="btn btn-default" style={{ right: '5px',
                                     position: 'absolute',
@@ -142,7 +143,8 @@ class UserProfile extends React.Component {
                                     $('#profile-image').trigger('click')
                                 }} />
                             </div>
-                            <span style={{ fontSize: '19px', fontWeight: 'bold', padding: '20px', marginTop: '20px', backgroundColor: 'rgba(0, 0, 0, 0.25)', color: '#fff', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
+                            <span style={{ fontSize: '19px', fontWeight: 'bold', padding: '20px', marginTop: '20px', color: '#fff', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
+                        </div>
                     </div>    
                     <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                         <div style={{ width: '200px', textAlign: 'center'  }}>
