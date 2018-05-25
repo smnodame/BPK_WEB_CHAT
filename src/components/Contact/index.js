@@ -167,7 +167,12 @@ class Contact extends React.Component {
                         </div>
                     </div>
                     <div className="col-sm-6 col-xs-6 heading-name">
-                        <a className="heading-name-meta">{ _.get(this.state, 'user.display_name') }
+                        <a className="heading-name-meta" onClick={() => {
+                                this.setState({
+                                    selectedFriend: this.state.user,
+                                    isShowModal: true
+                                })
+                            }}>{ _.get(this.state, 'user.display_name') } 
                         </a>
                         <span className="heading-online">Online</span>
                     </div>
