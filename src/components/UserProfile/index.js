@@ -133,6 +133,7 @@ class UserProfile extends React.Component {
                                 <button type="button" className="btn btn-default" style={{ right: '5px',
                                     position: 'absolute',
                                     top: '5px',
+                                    marginTop: '5px',
                                     backgroundColor: '#FFFD'}} 
                                     onClick={() => {
                                         $('#cover-image').trigger('click')

@@ -149,21 +149,24 @@ class GroupSetting extends React.Component {
                         <input id="cover-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
                                     
                         <div style={{ display: 'flex', backgroundColor: '#eee', backgroundImage: `url("${ this.state.wall_pic_base64 || this.state.wall_pic_url }")` }}>
-                            <div className='avatar-icon' style={{ width: '100px', margin: '20px' }} >
-                                <button type="button" className="btn btn-default" style={{ right: '5px',
-                                    position: 'absolute',
-                                    top: '5px',
-                                    backgroundColor: '#FFFD'}} 
-                                    onClick={() => {
-                                        $('#cover-image').trigger('click')
-                                    }}>
-                                        Change Cover Image
-                                </button>
-                                <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} style={{ width: '80px', height: '80px' }} onClick={() => {
-                                    $('#profile-image').trigger('click')
-                                }} />
+                            <div style={{ display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.25)' }}>
+                                <div className='avatar-icon' style={{ width: '100px', margin: '20px' }} >
+                                    <button type="button" className="btn btn-default" style={{ right: '5px',
+                                        position: 'absolute',
+                                        top: '5px',
+                                        marginTop: '5px',
+                                        backgroundColor: '#FFFD'}} 
+                                        onClick={() => {
+                                            $('#cover-image').trigger('click')
+                                        }}>
+                                            Change Cover Image
+                                    </button>
+                                    <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} style={{ width: '80px', height: '80px' }} onClick={() => {
+                                        $('#profile-image').trigger('click')
+                                    }} />
+                                </div>
+                                <span style={{ fontSize: '19px', fontWeight: 'bold', padding: '20px', marginTop: '20px', color: 'white', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
                             </div>
-                            <span style={{ fontSize: '19px', fontWeight: 'bold', padding: '20px', marginTop: '20px', backgroundColor: '#fff8', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
                         </div>
                         <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                             <div style={{ width: '200px', textAlign: 'center'  }}>
