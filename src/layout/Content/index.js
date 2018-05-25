@@ -880,7 +880,7 @@ class Content extends React.Component {
                                     </div>
                                 </form>
                                 {
-                                    this.state.inviteFriends.map((friend, key) => {
+                                    this.state.inviteFriends.filter((friend) => friend.friend_user_id != this.state.chatInfo.friend_user_id).map((friend, key) => {
                                         return (
                                             <div className="box invite-friend-container" key={key} onClick={() => {
                                                 if(this.state.isOpenCase) {
@@ -897,7 +897,7 @@ class Content extends React.Component {
                                                     }
                                                 }
                                             }}>
-                                                <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
+                                                <Friend image={friend.profile_pic_url} name={friend.display_name} status={this.is_group()? friend.status_quote : 'Tap to invite'} />
                                             </div>
                                         )
                                     })
