@@ -528,11 +528,13 @@ class Content extends React.Component {
                         </div>
                     </div>
                     <div className="col-sm-5 col-md-5 col-xs-5 heading-name" onClick={() => {
-                        this.setState({
-                            showContactInfo: true
-                        }, () => {
-                            store.dispatch(onFetchInviteFriend())
-                        })
+                        if( _.get(this.state.chatInfo, 'display_name') != 'KEEP' ) {
+                            this.setState({
+                                showContactInfo: true
+                            }, () => {
+                                store.dispatch(onFetchInviteFriend())
+                            })
+                        }
                     }}>
                         <a className="heading-name-meta">{ _.get(this.state.chatInfo, 'display_name') }
                         </a>
@@ -632,7 +634,8 @@ class Content extends React.Component {
                         <div style={{ flex: '1' }} />
                         <Button bsStyle="info" onClick={() => {
                             }} >FORWARD</Button>
-                        <Button bsStyle="warning" style={{ marginLeft: '15px' }} onClick={() => {
+                        {
+                            _.get(this.state.chatInfo, 'display_name') != 'KEEP' && <Button bsStyle="warning" style={{ marginLeft: '15px' }} onClick={() => {
                                 this.setState({ 
                                     show_selected_chat_message: false,
                                     selected_chat_message_id: ''
@@ -641,6 +644,8 @@ class Content extends React.Component {
                                     saveInKeep(this.state.selected_chat_message_id)
                                 })
                             }} >SAVE IN KEEP</Button>
+                        }
+                        
                         <Button bsStyle="light" style={{ marginLeft: '15px', marginRight: '15px' }} onClick={() => {
                                 this.setState({
                                     show_selected_chat_message: false,
