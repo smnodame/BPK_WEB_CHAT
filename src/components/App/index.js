@@ -31,8 +31,8 @@ class App extends React.Component {
         this.state = {
         }
 
-        this.isAuthorization = localStorage.getItem('user_id')? true : false
-        // this.isAuthorization = true
+        // this.isAuthorization = localStorage.getItem('user_id')? true : false
+        this.isAuthorization = true
     }
 
     componentDidMount() {

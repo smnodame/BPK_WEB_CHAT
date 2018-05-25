@@ -63,7 +63,8 @@ class Content extends React.Component {
                 isSelectChatForOpenCase: false,
                 selectedOptionMessageId: {},
                 show_selected_chat_message: false,
-                selected_chat_message_id: ''
+                selected_chat_message_id: '',
+                showInviteFriend: false
             })
             store.dispatch(selectChat(res.data.data))
             store.dispatch(onFetchFriendInGroup(chat_id))            
