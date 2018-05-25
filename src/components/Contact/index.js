@@ -149,10 +149,6 @@ class Contact extends React.Component {
             isShowModal: false
         }, () => {
             store.dispatch(isShowGroupSetting(true))
-            // this.props.history.push({
-            //     pathname: '/group-setting/' + this.state.selectedFriend.chat_room_id,
-            //     state: { selectedFriend: this.state.selectedFriend }
-            // })
         })
     }
 
@@ -161,7 +157,12 @@ class Contact extends React.Component {
             <div>
                 <div className="row heading">
                     <div className="col-sm-2 col-xs-2 heading-avatar">
-                        <div className="heading-avatar-icon" onClick={() => store.dispatch(isShowUserProfile(true)) }>
+                        <div className="heading-avatar-icon" onClick={() => {
+                                this.setState({
+                                    selectedFriend: this.state.user,
+                                    isShowModal: true
+                                })
+                            }}>
                             <img src={ _.get(this.state, 'user.profile_pic_url') } />
                         </div>
                     </div>
@@ -222,11 +223,23 @@ class Contact extends React.Component {
                                         <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => {
                                             this.setState({
                                                 isShowModal: false
-                                            }, () => {
-                                                store.dispatch(onClickChat(_.get(this.state, 'selectedFriend')))
                                             })
+                                            if(_.get(this.state.user, 'user_id') == _.get(this.state.selectedFriend, 'user_id')) {
+                                                store.dispatch(onClickChat(this.props.data.user.keepProfile))
+                                            } else {
+                                                store.dispatch(onClickChat(_.get(this.state, 'selectedFriend')))
+                                            }
                                         }}></i></a><a>
-                                        <i className="fa fa-cog" style={{ fontSize: '35px' }} onClick={() => this._go_to_group_setting() }></i></a><a>
+                                        <i className="fa fa-cog" style={{ fontSize: '35px' }} onClick={() => {
+                                            this.setState({
+                                                isShowModal: false
+                                            })
+                                            if(_.get(this.state.user, 'user_id') == _.get(this.state.selectedFriend, 'user_id')) {
+                                                store.dispatch(isShowUserProfile(true))
+                                            } else {
+                                                this._go_to_group_setting()
+                                            }
+                                        }}></i></a><a>
                                     </a>
                                 </div>
                             </div>
