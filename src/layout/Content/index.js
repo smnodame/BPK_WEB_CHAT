@@ -281,7 +281,7 @@ class Content extends React.Component {
                         this.selected_chat_message(chat.chat_message_id)
                     }}>
                         <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
-                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle" : "fa fa-check-circle selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
+                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -320,7 +320,7 @@ class Content extends React.Component {
                         this.selected_chat_message(chat.chat_message_id)
                     }}>
                         <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
-                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle" : "fa fa-check-circle selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
+                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -359,7 +359,7 @@ class Content extends React.Component {
                         this.selected_chat_message(chat.chat_message_id)
                     }}>
                         <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
-                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle" : "fa fa-check-circle selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
+                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -396,7 +396,7 @@ class Content extends React.Component {
                         this.selected_chat_message(chat.chat_message_id)
                     }}>
                         <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
-                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle" : "fa fa-check-circle selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
+                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked
@@ -432,7 +432,7 @@ class Content extends React.Component {
                             this.selected_chat_message(chat.chat_message_id)
                         }}>
                         <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
-                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle" : "fa fa-check-circle selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
+                        <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>  
                         <input className={this.state.isSelectChatForOpenCase? '' : 'hide'} type="checkbox" checked="" style={{ margin: '15px' }} checked={_.get(this.state.selectedOptionMessageId, chat.chat_message_id, false)} onChange={(event) => {
                             const selectedOptionMessageId = {
                                 [chat.chat_message_id]: event.target.checked

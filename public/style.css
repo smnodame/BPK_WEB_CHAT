@@ -862,16 +862,20 @@ body {
   padding: 10px;
 }
 
-.selected-message {
+.draft-selected-message {
   display: none;
 }
 
-.message-body:hover .selected-message {
+.message-body:hover .draft-selected-message {
   display: inline;
 }
 
 .message-body:hover .disapear-selected-message {
   display: none;
+}
+
+.selected-message {
+  color: green !important
 }
 
 .disapear-selected-message {
