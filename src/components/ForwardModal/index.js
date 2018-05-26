@@ -85,7 +85,7 @@ class ForwardModal extends React.Component {
                     
                 }}>
                 <Modal.Header style={{ backgroundColor: '#eee' }}>
-                    <Modal.Title>Forward Message To</Modal.Title>
+                    <Modal.Title>FORWARD MESSAGE TO</Modal.Title>
                 </Modal.Header>
                 <div>
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
