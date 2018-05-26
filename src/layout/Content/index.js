@@ -957,7 +957,7 @@ class Content extends React.Component {
                             </Modal.Footer>
                         </Modal>
                         {
-                            <ForwardModal />
+                            <ForwardModal data={_.get(this.props, 'data.friend')}/>
                         }
                     </div>
                 </div>
