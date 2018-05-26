@@ -25,7 +25,9 @@ class ForwardModal extends React.Component {
                 other: 0,
                 group: 0,
                 department: 0,
-            }
+            },
+            is_show_favorite: true,
+            is_show_group: true
         }
     }
     
