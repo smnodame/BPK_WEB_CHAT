@@ -9,6 +9,7 @@ import { ReactMic } from 'react-mic'
 import { Modal, Button } from 'react-bootstrap'
 import AudioPlayer from '../../components/AudioPlayer'
 import Checkbox from '../../components/Checkbox'
+import ForwardModal from '../../components/ForwardModal'
 
 import { store } from '../../redux'
 
@@ -955,6 +956,9 @@ class Content extends React.Component {
                                 }}>Close</Button>
                             </Modal.Footer>
                         </Modal>
+                        {
+                            <ForwardModal />
+                        }
                     </div>
                 </div>
             </div>
