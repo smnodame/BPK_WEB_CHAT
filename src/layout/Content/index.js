@@ -670,6 +670,9 @@ class Content extends React.Component {
                     <div style={{ display: 'flex' }}>
                         <div style={{ flex: '1' }} />
                         <Button bsStyle="info" onClick={() => {
+                                this.setState({
+                                    isShowForwardModal: true
+                                })
                             }} >FORWARD</Button>
                         {
                             _.get(this.state.chatInfo, 'display_name') != 'KEEP' && <Button bsStyle="warning" style={{ marginLeft: '15px' }} onClick={() => {
@@ -957,7 +960,15 @@ class Content extends React.Component {
                             </Modal.Footer>
                         </Modal>
                         {
-                            <ForwardModal data={_.get(this.props, 'data.friend')}/>
+                            <ForwardModal data={_.get(this.props, 'data.friend')} show={this.state.isShowForwardModal} onClick={() => {
+
+                                }}
+                                onHide={() => {
+                                    this.setState({
+                                        isShowForwardModal: false
+                                    })
+                                }} 
+                            />
                         }
                     </div>
                 </div>

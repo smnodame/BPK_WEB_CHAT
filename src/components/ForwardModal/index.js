@@ -81,8 +81,8 @@ class ForwardModal extends React.Component {
     render = () => {
         return (
             <div className="static-modal">
-            <Modal show={true} onHide={() => {
-                    
+            <Modal show={this.props.show} onHide={() => {
+                    this.props.onHide()
                 }}>
                 <Modal.Header style={{ backgroundColor: '#eee' }}>
                     <Modal.Title>FORWARD MESSAGE TO</Modal.Title>
