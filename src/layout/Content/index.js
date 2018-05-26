@@ -960,9 +960,7 @@ class Content extends React.Component {
                             </Modal.Footer>
                         </Modal>
                         {
-                            <ForwardModal data={_.get(this.props, 'data.friend')} show={this.state.isShowForwardModal} onClick={() => {
-
-                                }}
+                            <ForwardModal data={_.get(this.props, 'data.friend')} show={this.state.isShowForwardModal} selectedMessageId={this.state.selected_chat_message_id}
                                 onHide={() => {
                                     this.setState({
                                         isShowForwardModal: false
