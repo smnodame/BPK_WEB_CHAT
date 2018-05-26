@@ -148,7 +148,7 @@ class GroupSetting extends React.Component {
                         <input id="profile-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.profileImageChangeHandler} aria-describedby="fileHelp" />
                         <input id="cover-image" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this.coverImageChangeHandler} aria-describedby="fileHelp" />
                                     
-                        <div style={{ display: 'flex', backgroundColor: '#eee', backgroundImage: `url("${ this.state.wall_pic_base64 || this.state.wall_pic_url }")` }}>
+                        <div style={{ display: 'flex', backgroundColor: '#eee', backgroundSize: 'cover', backgroundImage: `url("${ this.state.wall_pic_base64 || this.state.wall_pic_url }")` }}>
                             <div style={{ display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.25)' }}>
                                 <div className='avatar-icon' style={{ width: '100px', margin: '20px' }} >
                                     <button type="button" className="btn btn-default" style={{ right: '5px',
