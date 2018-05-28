@@ -683,22 +683,20 @@ function* removeFriendFromGroupSaga() {
             const chatInfo = yield select(getChatInfo)
 
             if(chatInfo.chat_room_type == 'G' || chatInfo.chat_room_type == 'C') {
-                if (!is_from_member_modal) {
-                    const inviteFriendLists = yield select(getInviteFriendLists)
-                    inviteFriendLists.data.forEach((friend, index) => {
-                        if(inviteFriendLists.data[index].friend_user_id == friend_user_id) {
-                            inviteFriendLists.data[index].status_quote = 'Tap to invite'
-                            inviteFriendLists.data[index].invited = false
-                        }
-                    })
-                    yield put(inviteFriends(inviteFriendLists))
-                } else {
-                    const member = yield select(getMemberInGroup)
-                    member.data = member.data.filter((friend) => {
-                        return friend.friend_user_id != friend_user_id
-                    })
-                    yield put(memberInGroup(member))
-                }
+                const inviteFriendLists = yield select(getInviteFriendLists)
+                inviteFriendLists.data.forEach((friend, index) => {
+                    if(inviteFriendLists.data[index].friend_user_id == friend_user_id) {
+                        inviteFriendLists.data[index].status_quote = 'Tap to invite'
+                        inviteFriendLists.data[index].invited = false
+                    }
+                })
+                yield put(inviteFriends(inviteFriendLists))
+
+                const member = yield select(getMemberInGroup)
+                member.data = member.data.filter((friend) => {
+                    return friend.friend_user_id != friend_user_id
+                })
+                yield put(memberInGroup(member))
 
                 // update own
                 // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
@@ -776,7 +774,7 @@ function* loadMoreInviteFriendsSaga() {
 
 function* inviteFriendToGroupSaga() {
     while (true) {
-        const { payload: { chat_room_id, friend_user_id }} = yield take('ON_INVITE_FRIEND_TO_GROUP')
+        const { payload: { chat_room_id, friend_user_id, friend_info }} = yield take('ON_INVITE_FRIEND_TO_GROUP')
         try {
             const userInfo = yield select(getUserInfo)
             const inviteFriendLists = yield select(getInviteFriendLists)
@@ -802,6 +800,10 @@ function* inviteFriendToGroupSaga() {
 
                 // update chat list
                 // emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
+
+                const member = yield select(getMemberInGroup)
+                member.data = [...member.data, friend_info]
+                yield put(memberInGroup(member))
 
                 const split = chatInfo.friend_user_ids.split(',')
                 split.push(`${friend_user_id}`)

@@ -933,7 +933,7 @@ class Content extends React.Component {
                                                     if(friend.invited) {
                                                         store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, friend.friend_user_id, false))
                                                     } else {
-                                                        store.dispatch(onInviteFriendToGroup(this.state.chatInfo.chat_room_id, friend.friend_user_id))
+                                                        store.dispatch(onInviteFriendToGroup(this.state.chatInfo.chat_room_id, friend.friend_user_id, friend))
                                                     }
                                                 }
                                             }}>

@@ -258,11 +258,12 @@ export const signin = (username, password) => ({
       }
   })
   
-  export const onInviteFriendToGroup = (chat_room_id, friend_user_id) => ({
+  export const onInviteFriendToGroup = (chat_room_id, friend_user_id, friend_info) => ({
       type: 'ON_INVITE_FRIEND_TO_GROUP',
       payload: {
           chat_room_id,
-          friend_user_id
+          friend_user_id,
+          friend_info
       }
   })
   
