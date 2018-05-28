@@ -89,8 +89,7 @@ class ForwardModal extends React.Component {
         }
 
         await sendTheMessage(chatInfo.chat_room_id, '', '', '', '', this.props.selectedMessageId)
-        this.props.onHide()
-
+        
         // update message for everyone in group
         // emit_message('forward the message', chatInfo.chat_room_id)
 
@@ -107,7 +106,12 @@ class ForwardModal extends React.Component {
         //     emit_update_friend_chat_list(this.state.user.user_id, chatInfo.friend_user_id)
         // }
 
-        // this._handlerAfterFinish()
+        this._handlerAfterFinish()
+    }
+
+    _handlerAfterFinish = () => {
+        this.props.onHide()
+        this.props.onSuccess()
     }
 
     render = () => {

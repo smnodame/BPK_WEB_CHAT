@@ -965,7 +965,14 @@ class Content extends React.Component {
                                     this.setState({
                                         isShowForwardModal: false
                                     })
-                                }} 
+                                }}
+
+                                onSuccess={() => {
+                                    this.setState({
+                                        show_selected_chat_message: false,
+                                        selected_chat_message_id: ''
+                                    })
+                                }}
                             />
                         }
                     </div>
