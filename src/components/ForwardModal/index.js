@@ -74,7 +74,7 @@ class ForwardModal extends React.Component {
     renderFriend = (friends) => {
         return friends.map((friend, key) => {
             return (
-                <div className="box" key={key} onClick={() => { this._pushMessage(friend) }}>
+                <div className="box invite-friend-container" key={key} onClick={() => { this._pushMessage(friend) }}>
                     <Friend image={friend.profile_pic_url} name={friend.display_name} status={friend.status_quote} />
                 </div>
             )
