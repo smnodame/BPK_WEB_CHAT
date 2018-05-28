@@ -291,14 +291,7 @@ export const updatePictureAuth = (data) => {
 }
 
 export const inviteFriendToGroupWithOpenCase = (data) => {
-    return fetch('http://itsmartone.com/bpk_connect/api/group/open_case?token=asdf1234aaa', {
-            method: 'post',
-            headers: {
-                'Accept': 'application/json, text/plain, */*',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-            }).then(res=>res.json())
+    return axios.post(`http://itsmartone.com/bpk_connect/api/group/open_case?token=asdf1234aaa`, data)
 }
 
 export const createNewRoom = (friend_user_id) => {
