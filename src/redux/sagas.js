@@ -413,7 +413,7 @@ function* selectChatSaga() {
             }
 
             const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, '', '', '')
-            const chatData = _.get(resFetchChat, 'data.data', []).reverse()
+            const chatData = _.get(resFetchChat, 'data.data', [])
 
             // store last id
             yield put(lastMessageID(chatData.length != 0? chatData[0].chat_message_id : '0'))
@@ -444,8 +444,8 @@ function* onFetchMessageListsSaga() {
 
             const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, '', '', filterMessage)
 
-            const chatData = _.get(resFetchChat, 'data.data', []).reverse()
-
+            const chatData = _.get(resFetchChat, 'data.data', [])
+            
             // store data in store redux
             yield put(chat(chatData))
         } catch (err) {
@@ -462,17 +462,13 @@ function* onLoadMoreMessageListsSaga() {
             const chatInfo = yield select(getChatInfo)
             const messageLists = yield select(getMessageLists)
 
-            const topChatMessageId = _.get(messageLists[0], 'chat_message_id', '0')
+            const topChatMessageId = _.get(messageLists[messageLists.length - 1], 'chat_message_id', '0')
 
             if(topChatMessageId != 0) {
-                console.log(topChatMessageId)
                 const resFetchChat = yield call(fetchChat, chatInfo.chat_room_id, topChatMessageId, '', filterMessage)
-                const chatData = _.get(resFetchChat, 'data.data', []).reverse()
+                const chatData = _.get(resFetchChat, 'data.data', [])
 
-                const newMessageLists = [
-                    ...chatData,
-                    ...messageLists
-                ]
+                const newMessageLists = messageLists.concat(chatData)
 
                 yield put(chat(newMessageLists))
             }
