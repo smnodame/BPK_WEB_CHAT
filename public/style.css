@@ -883,3 +883,11 @@ body {
   width: 1px;
   margin-left: 38px;
 }
+
+.content {
+  overflow: auto;
+}
+
+.content div {
+  height: auto !important;
+}

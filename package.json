@@ -12,6 +12,7 @@
     "moment": "^2.22.1",
     "react": "^15.6.1",
     "react-bootstrap": "^0.32.1",
+    "react-chatview": "^0.2.5",
     "react-dom": "^15.6.1",
     "react-mic": "^9.2.0",
     "react-redux": "^5.0.6",

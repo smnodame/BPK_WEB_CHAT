@@ -10,7 +10,7 @@ import { Modal, Button } from 'react-bootstrap'
 import AudioPlayer from '../../components/AudioPlayer'
 import Checkbox from '../../components/Checkbox'
 import ForwardModal from '../../components/ForwardModal'
-
+import ReactChatView from 'react-chatview'
 import { store } from '../../redux'
 
 import {
@@ -195,6 +195,10 @@ class Content extends React.Component {
         })
     }
     
+    loadMoreHistory = () => {
+        store.dispatch(onLoadMoreMessageLists(this.state.filter))
+    }
+
     render_addi_footer = () => {
         if(this.state.footer_selected == 'sticker') {
             return (
@@ -595,18 +599,18 @@ class Content extends React.Component {
                     </div>
                 </div>
 
-                <div onClick={() => this.setState({ footer_selected: '' })} className={!!this.state.footer_selected? 'row message message-small': 'row message' } ref={(el) => { this.messagesEnd = el }}>
-                    <div className="row message-previous">
+                <ReactChatView flipped={true}  onInfiniteLoad={this.loadMoreHistory.bind(this)} scrollLoadThreshold={50} onClick={() => this.setState({ footer_selected: '' })} className={!!this.state.footer_selected? 'row message message-small content': 'row message content' } ref={(el) => { this.messagesEnd = el }}>
+                    {/* <div className="row message-previous">
                         <div className="col-sm-12 previous">
                             <a onClick={() => store.dispatch(onLoadMoreMessageLists(this.state.filter))}>
                                 Show Previous Message!
                             </a>
                         </div>
-                    </div>
+                    </div> */}
                     {
                         this.render_message()
                     }
-                </div>
+                </ReactChatView>
                 <input id="image-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._image_upload_handler} aria-describedby="fileHelp" />
                 <input id="file-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._file_upload_handler} aria-describedby="fileHelp" />
 
