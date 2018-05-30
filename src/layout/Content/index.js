@@ -585,7 +585,13 @@ class Content extends React.Component {
             if(chat.message_type == '1') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }} onClick={() => {
-                        this.selected_chat_message(chat.chat_message_id)
+                        if(this.state.footer_selected) {
+                            this.setState({
+                                footer_selected: ''
+                            })
+                        } else {
+                            this.selected_chat_message(chat.chat_message_id)
+                        }
                     }}>
                         {
                             !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
@@ -630,7 +636,13 @@ class Content extends React.Component {
             if(chat.message_type == '2') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        this.selected_chat_message(chat.chat_message_id)
+                        if(this.state.footer_selected) {
+                            this.setState({
+                                footer_selected: ''
+                            })
+                        } else {
+                            this.selected_chat_message(chat.chat_message_id)
+                        }
                     }}>
                         {
                             !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
@@ -675,7 +687,13 @@ class Content extends React.Component {
             if(chat.message_type == '3') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        this.selected_chat_message(chat.chat_message_id)
+                        if(this.state.footer_selected) {
+                            this.setState({
+                                footer_selected: ''
+                            })
+                        } else {
+                            this.selected_chat_message(chat.chat_message_id)
+                        }
                     }}>
                         {
                             !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
@@ -718,7 +736,13 @@ class Content extends React.Component {
             if(chat.message_type == '4') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        this.selected_chat_message(chat.chat_message_id)
+                        if(this.state.footer_selected) {
+                            this.setState({
+                                footer_selected: ''
+                            })
+                        } else {
+                            this.selected_chat_message(chat.chat_message_id)
+                        }
                     }}>
                         {
                             !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
@@ -760,7 +784,13 @@ class Content extends React.Component {
             if(chat.message_type == '5') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        this.selected_chat_message(chat.chat_message_id)
+                        if(this.state.footer_selected) {
+                            this.setState({
+                                footer_selected: ''
+                            })
+                        } else {
+                            this.selected_chat_message(chat.chat_message_id)
+                        }
                     }}>
                         {
                             !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
