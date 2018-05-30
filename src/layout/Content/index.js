@@ -196,7 +196,10 @@ class Content extends React.Component {
     }
     
     loadMoreHistory = () => {
-        store.dispatch(onLoadMoreMessageLists(this.state.filter))
+        return new Promise((resolve) => {
+            store.dispatch(onLoadMoreMessageLists(this.state.filter))
+            resolve('done')
+        })
     }
 
     render_addi_footer = () => {
