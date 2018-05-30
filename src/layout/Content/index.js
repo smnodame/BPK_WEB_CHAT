@@ -435,14 +435,7 @@ class Content extends React.Component {
 
     download_file = (e) => {
         e.stopPropagation()
-        $.ajax({
-            url: "http://smnodame.com/public/pictures/11.jpg", 
-            type: 'GET',
-            headers: {  'Access-Control-Allow-Origin': 'http://localhost:3000' },
-            success: () => {
-                download.bind(true, "jpg", "file_name.html")
-            }
-        })
+        // window.location.href = 'http://smnodame.com/public/pictures/11.jpg'
     }
 
     is_group = () => {
@@ -949,6 +942,7 @@ class Content extends React.Component {
                             {
                                 this.state.alreadyTaken && <Button bsStyle="success" 
                                     onClick={() => {
+                                        this._pushPhoto(this.base64, this.base64)
                                         this.setState({
                                             alreadyTaken: false,
                                             showCamera: false
