@@ -249,6 +249,58 @@ class Content extends React.Component {
             return
         }
     }
+    
+    async _pushFile(file) {
+        const draft_message_id = this.generateID()
+        // send local message
+        const draftMessage = {
+            chat_message_id: draft_message_id,
+            draft_message_id: draft_message_id,
+            content: '',
+            username: this.state.user.username,
+            who_read: [],
+            create_date: new Date(),
+            profile_pic_url: this.state.user.profile_pic_url,
+            message_type: '5',
+            object_url: file,
+            file_name: file.name,
+            file_extension: file.type,
+            isError: false
+        }
+
+        const messageLists = _.get(this.state, 'chat', [])
+        const chatData = [draftMessage].concat(messageLists)
+        store.dispatch(chat(chatData))
+
+        try {
+            const resSendTheMessage = await sendFileMessage(this.state.chatInfo.chat_room_id, '5', file)
+            const chat_message_id = _.get(resSendTheMessage, 'new_chat_message.chat_message_id')
+
+            // update message for everyone in group
+            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+
+            // update our own
+            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+
+            // update every friends in group
+            const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
+            friend_user_ids.forEach((friend_user_id) => {
+                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+            })
+
+            this.setState({
+                message: ''
+            })
+        } catch(err) {
+            const indexLocal = chatData.findIndex((message) => {
+                return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
+            })
+
+            chatData[indexLocal].isError = true
+            store.dispatch(chat(chatData))
+            return
+        }
+    }
 
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
@@ -354,7 +406,8 @@ class Content extends React.Component {
     }
 
     _file_upload_handler = (e) => {
-        console.log(e)
+        this._pushFile(e.target.files[0])
+        // console.log(e.target.files[0])
     }
 
     startRecording = () => {
