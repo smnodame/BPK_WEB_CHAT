@@ -40,6 +40,20 @@ import {
 } from '../../redux/actions'
 import {sendTheMessage, fetchFriendProfile, saveInKeep, sendFileMessage, fetchChatInfo } from '../../redux/api'
 
+function getBase64(file) {
+    return new Promise((resolve, reject) => {
+        var reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = function () {
+            resolve(reader.result)
+        }
+        reader.onerror = function (error) {
+            resolve(error)
+        }
+    })
+    
+}
+
 class Content extends React.Component {
     constructor(props) {
         super(props)
@@ -183,6 +197,59 @@ class Content extends React.Component {
         }
     }
 
+    async _pushPhoto(base64, object_url) {
+        const draft_message_id = this.generateID()
+        // send local message
+        const draftMessage = {
+            chat_message_id: draft_message_id,
+            draft_message_id: draft_message_id,
+            content: '',
+            username: this.state.user.username,
+            who_read: [],
+            create_date: new Date(),
+            profile_pic_url: this.state.user.profile_pic_url,
+            message_type: '2',
+            object_url: object_url,
+            base64: base64,
+            isError: false
+        }
+
+        const messageLists = _.get(this.state, 'chat', [])
+        const chatData = [draftMessage].concat(messageLists)
+        store.dispatch(chat(chatData))
+
+        try {
+            const resSendTheMessage = await sendTheMessage(this.state.chatInfo.chat_room_id, '2', '', '', base64)
+            const chat_message_id = _.get(resSendTheMessage, 'data.new_chat_message.chat_message_id')
+            // update message for everyone in group
+            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+
+            // update our own
+            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+
+            // update every friends in group
+            const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
+            friend_user_ids.forEach((friend_user_id) => {
+                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+            })
+
+            this.setState({
+                message: ''
+            })
+
+            this._scroll(true)
+        } catch(err) {
+            const indexLocal = chatData.findIndex((message) => {
+                return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
+            })
+
+            chatData[indexLocal].isError = true
+            store.dispatch(chat(chatData))
+
+            return
+        }
+    }
+
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
         fetchChatInfo(chat_id).then((res) => {
@@ -281,7 +348,9 @@ class Content extends React.Component {
     }
 
     _image_upload_handler = (e) => {
-        console.log(e)
+        getBase64(e.target.files[0]).then(res => {
+            this._pushPhoto(res, res)
+        })
     }
 
     _file_upload_handler = (e) => {
