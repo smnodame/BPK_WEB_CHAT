@@ -125,6 +125,64 @@ class Content extends React.Component {
         }
     }
 
+    async _pushSticker(sticker_path, object_url) {
+        const draft_message_id = this.generateID()
+
+        // send local message
+        const draftMessage = {
+            chat_message_id: draft_message_id,
+            draft_message_id: draft_message_id,
+            content: '',
+            username: this.state.user.username,
+            who_read: [],
+            create_date: new Date(),
+            profile_pic_url: this.state.user.profile_pic_url,
+            message_type: '4',
+            object_url: object_url,
+            sticker_path: sticker_path,
+            isError: false
+        }
+
+        this.setState({
+            message: ''
+        })
+
+        const messageLists = _.get(this.state, 'chat', [])
+        const chatData = [draftMessage].concat(messageLists)
+        store.dispatch(chat(chatData))
+
+        try {
+            const resSendTheMessage = await sendTheMessage(this.state.chatInfo.chat_room_id, '4', '', sticker_path, '')
+            const chat_message_id = _.get(resSendTheMessage, 'data.new_chat_message.chat_message_id')
+            // update message for everyone in group
+            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+
+            // update our own
+            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+
+            // update every friends in group
+            const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
+            friend_user_ids.forEach((friend_user_id) => {
+                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+            })
+
+            this.setState({
+                message: ''
+            })
+
+            this._scroll(true)
+        } catch(err) {
+            const indexLocal = chatData.findIndex((message) => {
+                return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
+            })
+
+            chatData[indexLocal].isError = true
+            store.dispatch(chat(chatData))
+
+            return
+        }
+    }
+
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
         fetchChatInfo(chat_id).then((res) => {
@@ -153,10 +211,8 @@ class Content extends React.Component {
     }
 
     componentDidUpdate() {
-        // setTimeout(function(){ 
-        //     this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight
-        // }, 1000)
     }
+
     componentWillReceiveProps() {
         
     }
@@ -219,7 +275,7 @@ class Content extends React.Component {
     render_sticker = () => {
         return _.get(this.state.sticker, `${this.state.collectionKeySelected}.sticker_lists`, []).map((item) => {
             return (
-                <img src={item.url} style={{ width: '145px', padding: '15px', cursor: 'pointer' }}  />
+                <img src={item.url} style={{ width: '145px', padding: '15px', cursor: 'pointer' }} onClick={() => this._pushSticker(item.path, item.url)} />
             )
         })
     }
