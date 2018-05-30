@@ -302,6 +302,60 @@ class Content extends React.Component {
         }
     }
 
+    _pushAudio = async () => {
+        const draft_message_id = this.generateID()
+        // send local message
+        const draftMessage = {
+            chat_message_id: draft_message_id,
+            draft_message_id: draft_message_id,
+            content: '',
+            username: this.state.user.username,
+            who_read: [],
+            create_date: new Date(),
+            profile_pic_url: this.state.user.profile_pic_url,
+            message_type: '3',
+            object_url: this.soundRecord.blobURL,
+            file_name: `${draft_message_id}.wav`,
+            file_extension: "audio/wav"
+        }
+
+        const messageLists = _.get(this.state, 'chat', [])
+        const chatData = [draftMessage].concat(messageLists)
+        store.dispatch(chat(chatData))
+
+        try {
+            const file = new File([this.soundRecord], `${draft_message_id}.wav`)
+            const resSendTheMessage = await sendFileMessage(this.state.chatInfo.chat_room_id, '3', file)
+
+            const chat_message_id = _.get(resSendTheMessage, 'new_chat_message.chat_message_id')
+            // update message for everyone in group
+            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+
+            // update our own
+            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+
+            // update every friends in group
+            const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
+            friend_user_ids.forEach((friend_user_id) => {
+                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+            })
+
+            this.setState({
+                message: '',
+                roundRecording: 0
+            })
+        } catch(err) {
+            const indexLocal = chatData.findIndex((message) => {
+                return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
+            })
+
+            chatData[indexLocal].isError = true
+            store.dispatch(chat(chatData))
+
+            return
+        }
+    }
+
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
         fetchChatInfo(chat_id).then((res) => {
@@ -435,7 +489,7 @@ class Content extends React.Component {
     }
     
     onStop = (recordedBlob) => {
-        console.log('recordedBlob is: ', recordedBlob);
+        this.soundRecord = recordedBlob
         this.setState({
             roundRecording: this.state.roundRecording + 1
         })
@@ -479,7 +533,7 @@ class Content extends React.Component {
                         <button onClick={this.startRecording} style={{ backgroundColor: '#edb730', width: '100px', height: '100px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', margin: '10px'  }} type="button">
                             <i className="fa fa-undo" aria-hidden="true" style={{ fontSize: '30px' }}></i>
                         </button>
-                        <button onClick={this.stopRecording} style={{ backgroundColor: '#ff6666', width: '100px', height: '100px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', margin: '10px'  }} type="button">SEND</button>
+                        <button onClick={this._pushAudio} style={{ backgroundColor: '#ff6666', width: '100px', height: '100px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px', margin: '10px'  }} type="button">SEND</button>
                     </div>
                 </div>
             )
