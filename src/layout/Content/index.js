@@ -57,6 +57,74 @@ class Content extends React.Component {
         }
     }
 
+    generateID = () => {
+        return '_' + Math.random().toString(36).substr(2, 9)
+    }
+
+    async _pushMessage(message) {
+        if (!message)
+            return
+
+        const draft_message_id = this.generateID()
+        // send local message
+        const draftMessage = {
+            chat_message_id: draft_message_id,
+            draft_message_id: draft_message_id,
+            content: message,
+            username: this.state.user.username,
+            who_read: [],
+            create_date: new Date(),
+            profile_pic_url: this.state.user.profile_pic_url,
+            message_type: '1',
+            isError: false
+        }
+
+        this.setState({
+            message: ''
+        })
+
+        const messageLists = _.get(this.state, 'chat', [])
+        const chatData = [draftMessage].concat(messageLists)
+        store.dispatch(chat(chatData))
+
+        try {
+            const resSendTheMessage = await sendTheMessage(this.state.chatInfo.chat_room_id, '1', message, '', '')
+
+            const chat_message_id = _.get(resSendTheMessage, 'data.new_chat_message.chat_message_id')
+
+            // update message for everyone in group
+            // emit_message(message, this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+
+            // update our own
+            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+
+            // update every friends in group
+            if(this.state.chatInfo.chat_room_type == 'G' || this.state.chatInfo.chat_room_type == 'C') {
+                const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
+                friend_user_ids.forEach((friend_user_id) => {
+                    // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+                })
+            } else {
+                // emit_update_friend_chat_list(this.state.user.user_id, this.state.chatInfo.friend_user_id)
+            }
+
+            this.setState({
+                message: ''
+            })
+
+            this._scroll(true)
+        } catch(err) {
+            const indexLocal = chatData.findIndex((message) => {
+                return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
+            })
+
+            chatData[indexLocal].isError = true
+            store.dispatch(chat(chatData))
+
+            return;
+        }
+    }
+
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
         fetchChatInfo(chat_id).then((res) => {
@@ -643,13 +711,13 @@ class Content extends React.Component {
                                 })
                             }}
                         ></i>
-                        <textarea className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
+                        <textarea value={this.state.message} onChange={(event) => this.setState({message: event.target.value})} className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
                         <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
                                 footer_selected: 'record'
                             })
                         }}></i>
-                        <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }}></i>
+                        <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={ () => this._pushMessage(this.state.message) }></i>
                     </div>
                     
                 </div>
