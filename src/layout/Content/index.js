@@ -971,7 +971,12 @@ class Content extends React.Component {
                                 })
                             }}
                         ></i>
-                        <textarea value={this.state.message} onChange={(event) => this.setState({message: event.target.value})} className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
+                        <textarea onKeyDown={(e) => {
+                            if(e.keyCode == 13 && e.shiftKey == false) {
+                                e.preventDefault()
+                                this._pushMessage(this.state.message)
+                            }
+                        }} value={this.state.message} onChange={(event) => this.setState({message: event.target.value})} className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
                         <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
                                 footer_selected: 'record'
