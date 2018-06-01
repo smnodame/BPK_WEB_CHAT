@@ -21,7 +21,8 @@
     "react-scripts": "0.9.x",
     "react-toastify": "^4.0.1",
     "redux": "^3.7.2",
-    "redux-saga": "^0.15.6"
+    "redux-saga": "^0.15.6",
+    "socket.io": "^2.1.1"
   },
   "devDependencies": {},
   "scripts": {
