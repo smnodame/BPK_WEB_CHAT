@@ -619,7 +619,7 @@ class Content extends React.Component {
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
-                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
+                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
                                     { `${moment(chat.create_date).fromNow()}` }
                                     <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -669,7 +669,7 @@ class Content extends React.Component {
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
-                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
+                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -720,7 +720,7 @@ class Content extends React.Component {
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
-                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
+                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -769,7 +769,7 @@ class Content extends React.Component {
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }} onClick={(e) => e.stopPropagation() }>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
-                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
+                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -817,7 +817,7 @@ class Content extends React.Component {
                             <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
-                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } style={{ width: '75px' }}>
+                            <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -1296,7 +1296,7 @@ class Content extends React.Component {
                             </Modal.Footer>
                         </Modal>
                         {
-                            <ForwardModal data={_.get(this.props, 'data.friend')} show={this.state.isShowForwardModal} selectedMessageId={this.state.selected_chat_message_id}
+                            <ForwardModal data={_.get(this.props, 'data')} show={this.state.isShowForwardModal} selectedMessageId={this.state.selected_chat_message_id}
                                 onHide={() => {
                                     this.setState({
                                         isShowForwardModal: false

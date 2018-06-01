@@ -891,3 +891,7 @@ body {
 .content div {
   height: auto !important;
 }
+
+.message-time {
+  width: auto !important
+}

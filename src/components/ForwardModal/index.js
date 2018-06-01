@@ -63,10 +63,15 @@ class ForwardModal extends React.Component {
     }
 
     componentWillReceiveProps() {
-        if(_.get(this.props, 'data.friends')) {
+        if(_.get(this.props, 'data.friend.friends')) {
             this.setState({
-                friends: this.props.data.friends,
-                numberOfFriendLists: this.props.data.numberOfFriendLists
+                friends: this.props.data.friend.friends,
+                numberOfFriendLists: this.props.data.friend.numberOfFriendLists
+            })
+        }
+        if(_.get(this.props, 'data.user.user')) {
+            this.setState({
+                user: this.props.data.user.user
             })
         }
     }
