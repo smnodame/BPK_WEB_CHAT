@@ -8,7 +8,11 @@ import { sendTheMessage, createNewRoom } from '../../redux/api'
 import { enterContacts, removeFavorite, addFavorite, isShowGroupSetting, selectedFriend, showOrHideFriendLists, onLoadMore, isShowUserProfile, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
 import { store } from '../../redux'
 import { Modal, Button } from 'react-bootstrap'
-
+import {
+    emit_update_friend_chat_list,
+    emit_unsubscribe,
+    emit_message
+} from '../../redux/socket.js'
 
 class ForwardModal extends React.Component {
     constructor(props) {
@@ -91,20 +95,20 @@ class ForwardModal extends React.Component {
         await sendTheMessage(chatInfo.chat_room_id, '', '', '', '', this.props.selectedMessageId)
         
         // update message for everyone in group
-        // emit_message('forward the message', chatInfo.chat_room_id)
+        emit_message('forward the message', chatInfo.chat_room_id)
 
         // update our own
-        // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+        emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
 
         // update every friends in group
-        // if(chatInfo.chat_room_type == 'G' || chatInfo.chat_room_type == 'C') {
-        //     const friend_user_ids = chatInfo.friend_user_ids.split(',')
-        //     friend_user_ids.forEach((friend_user_id) => {
-        //         emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
-        //     })
-        // } else {
-        //     emit_update_friend_chat_list(this.state.user.user_id, chatInfo.friend_user_id)
-        // }
+        if(chatInfo.chat_room_type == 'G' || chatInfo.chat_room_type == 'C') {
+            const friend_user_ids = chatInfo.friend_user_ids.split(',')
+            friend_user_ids.forEach((friend_user_id) => {
+                emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+            })
+        } else {
+            emit_update_friend_chat_list(this.state.user.user_id, chatInfo.friend_user_id)
+        }
 
         this._handlerAfterFinish()
     }

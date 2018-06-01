@@ -90,6 +90,7 @@ import {
     getSharedMessage,
     getKeepProfile
 } from './selectors'
+import { start_socket, emit_subscribe, on_message, emit_message, emit_update_friend_chat_list, emit_as_seen } from './socket.js'
 
 function* start_app() {
     while (true) {
@@ -164,10 +165,8 @@ function* enterContactSaga() {
             const numberOfFriend = yield call(fetchNumberOfGroup, filter)
             yield put(numberOfFriendLists(numberOfFriend))
 
-            // const user_id = yield call(getAuth)
-
             // start socket after enter the contact
-            // start_socket(user_id)
+            start_socket(_.get(resFetchMyProfile, 'data.data.user.user_id'))
 
             const resFetchKeepProfile = yield call(fetchKeepProfile)
             yield put(keepProfile(_.get(resFetchKeepProfile, 'data.data', '')))
@@ -423,12 +422,12 @@ function* selectChatSaga() {
             yield put(chat(chatData))
 
             // subscribe socket io
-            // emit_subscribe(chatInfo.chat_room_id)
+            emit_subscribe(chatInfo.chat_room_id)
             
             // call set as setAsSeen
             if(chatData.length != 0) {
-                // yield call(setAsSeen, chatInfo.chat_room_id)
-                // emit_as_seen(chatInfo.chat_room_id)
+                yield call(setAsSeen, chatInfo.chat_room_id)
+                emit_as_seen(chatInfo.chat_room_id)
             }
         } catch (err) {
             console.log('[selectChatSaga] ', err)
@@ -695,9 +694,9 @@ function* removeFriendFromGroupSaga() {
                 yield put(memberInGroup(member))
 
                 // update own
-                // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+                emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
                 // update chat list
-                // emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
+                emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
 
                 const split = chatInfo.friend_user_ids.split(',')
                 const filter = split.filter((id) => id != friend_user_id)
@@ -792,10 +791,10 @@ function* inviteFriendToGroupSaga() {
                 yield put(inviteFriends(inviteFriendLists))
 
                 // update own
-                // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+                emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
 
                 // update chat list
-                // emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
+                emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
 
                 const member = yield select(getMemberInGroup)
                 member.data = [...member.data, friend_info]
@@ -837,11 +836,11 @@ function* inviteFriendToGroupSaga() {
                 yield call(inviteFriendToGroup, newChatRoomId, chatInfo.friend_user_id)
 
                 // update own
-                // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+                emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
 
                 // update chat list
-                // emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
-                // emit_update_friend_chat_list(userInfo.user_id, chatInfo.friend_user_id)
+                emit_update_friend_chat_list(userInfo.user_id, friend_user_id)
+                emit_update_friend_chat_list(userInfo.user_id, chatInfo.friend_user_id)
 
                 // update friend groups
                 yield put(onUpdateGroupLists())
@@ -886,11 +885,11 @@ function* onInviteFriendToGroupWithOpenCaseSaga() {
             navigate.push('/chat/' + newChatRoomId)
 
             // update own
-            // emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
+            emit_update_friend_chat_list(userInfo.user_id, userInfo.user_id)
 
             // update chat list
-            // emit_update_friend_chat_list(userInfo.user_id, selected_invite_friend_user_id)
-            // emit_update_friend_chat_list(userInfo.user_id, chatInfo.friend_user_id)
+            emit_update_friend_chat_list(userInfo.user_id, selected_invite_friend_user_id)
+            emit_update_friend_chat_list(userInfo.user_id, chatInfo.friend_user_id)
 
             // update friend groups
             yield put(onUpdateGroupLists())

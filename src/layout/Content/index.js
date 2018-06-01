@@ -39,6 +39,11 @@ import {
     onUnmuteChat
 } from '../../redux/actions'
 import {sendTheMessage, fetchFriendProfile, saveInKeep, sendFileMessage, fetchChatInfo } from '../../redux/api'
+import {
+    emit_update_friend_chat_list,
+    emit_unsubscribe,
+    emit_message
+} from '../../redux/socket.js'
 
 function getBase64(file) {
     return new Promise((resolve, reject) => {
@@ -107,19 +112,19 @@ class Content extends React.Component {
             const chat_message_id = _.get(resSendTheMessage, 'data.new_chat_message.chat_message_id')
 
             // update message for everyone in group
-            // emit_message(message, this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+            emit_message(message, this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
 
             // update our own
-            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+            emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
 
             // update every friends in group
             if(this.state.chatInfo.chat_room_type == 'G' || this.state.chatInfo.chat_room_type == 'C') {
                 const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
                 friend_user_ids.forEach((friend_user_id) => {
-                    // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+                    emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
                 })
             } else {
-                // emit_update_friend_chat_list(this.state.user.user_id, this.state.chatInfo.friend_user_id)
+                emit_update_friend_chat_list(this.state.user.user_id, this.state.chatInfo.friend_user_id)
             }
 
             this.setState({
@@ -169,15 +174,15 @@ class Content extends React.Component {
             const resSendTheMessage = await sendTheMessage(this.state.chatInfo.chat_room_id, '4', '', sticker_path, '')
             const chat_message_id = _.get(resSendTheMessage, 'data.new_chat_message.chat_message_id')
             // update message for everyone in group
-            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+            emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
 
             // update our own
-            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+            emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
 
             // update every friends in group
             const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
             friend_user_ids.forEach((friend_user_id) => {
-                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+                emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
             })
 
             this.setState({
@@ -222,15 +227,15 @@ class Content extends React.Component {
             const resSendTheMessage = await sendTheMessage(this.state.chatInfo.chat_room_id, '2', '', '', base64)
             const chat_message_id = _.get(resSendTheMessage, 'data.new_chat_message.chat_message_id')
             // update message for everyone in group
-            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+            emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
 
             // update our own
-            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+            emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
 
             // update every friends in group
             const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
             friend_user_ids.forEach((friend_user_id) => {
-                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+                emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
             })
 
             this.setState({
@@ -277,15 +282,15 @@ class Content extends React.Component {
             const chat_message_id = _.get(resSendTheMessage, 'new_chat_message.chat_message_id')
 
             // update message for everyone in group
-            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+            emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
 
             // update our own
-            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+            emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
 
             // update every friends in group
             const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
             friend_user_ids.forEach((friend_user_id) => {
-                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+                emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
             })
 
             this.setState({
@@ -329,15 +334,15 @@ class Content extends React.Component {
 
             const chat_message_id = _.get(resSendTheMessage, 'new_chat_message.chat_message_id')
             // update message for everyone in group
-            // emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
+            emit_message('', this.state.chatInfo.chat_room_id, this.state.user.user_id, chat_message_id, draft_message_id)
 
             // update our own
-            // emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
+            emit_update_friend_chat_list(this.state.user.user_id, this.state.user.user_id)
 
             // update every friends in group
             const friend_user_ids = this.state.chatInfo.friend_user_ids.split(',')
             friend_user_ids.forEach((friend_user_id) => {
-                // emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
+                emit_update_friend_chat_list(this.state.user.user_id, friend_user_id)
             })
 
             this.setState({
