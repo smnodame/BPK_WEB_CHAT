@@ -376,8 +376,8 @@ body {
 
 .message-main-sender {
   padding: 3px 20px !important;
-  margin-left: 40% !important;
-  max-width: 60%;
+  margin-left: 20% !important;
+  max-width: 80%;
   text-align: right;
   display: flex;
   justify-content: flex-end;
@@ -408,6 +408,7 @@ body {
 
 .receiver {
   width: auto !important;
+  max-width: 70% !important;
   padding: 4px 10px 7px !important;
   border-radius: 10px 10px 10px 0;
   background: #ffffff;
@@ -419,6 +420,7 @@ body {
 
 .sender {
   float: right;
+  max-width: 70% !important;
   width: auto !important;
   background: #ffffff;
   border-radius: 10px 10px 0 10px;
