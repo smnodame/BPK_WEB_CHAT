@@ -44,13 +44,13 @@ class ChatList extends React.Component {
                         </div>
                         <div className="col-sm-9 col-xs-9 sideBar-main">
                             <div className="row">
-                                <div className="col-sm-8 col-xs-8 sideBar-name">
+                                <div className="col-sm-6 col-xs-6 sideBar-name">
                                     <span className="name-meta"> { info.display_name }
                                     </span>
                                     <span className="status-meta"> { info.last_message }
                                     </span>
                                 </div>
-                                <div className="col-sm-4 col-xs-4 pull-right sideBar-time">
+                                <div className="col-sm-6 col-xs-6 pull-right sideBar-time">
                                     <span className="time-meta pull-right"> {moment(info.last_chat).fromNow()}
                                     </span>
                                 </div>
