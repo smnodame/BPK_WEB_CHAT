@@ -372,7 +372,8 @@ class Content extends React.Component {
                     selectedOptionMessageId: {},
                     show_selected_chat_message: false,
                     selected_chat_message_id: '',
-                    showInviteFriend: false
+                    showInviteFriend: false,
+                    footer_selected: ''
                 })
                 store.dispatch(selectChat(res.data.data))
                 store.dispatch(onFetchFriendInGroup(chat_id))         
@@ -643,13 +644,16 @@ class Content extends React.Component {
             if(chat.message_type == '1') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" style={{ marginRight: '10px' }} onClick={() => {
-                        if(this.state.footer_selected) {
-                            this.setState({
-                                footer_selected: ''
-                            })
-                        } else {
-                            this.selected_chat_message(chat.chat_message_id)
+                        if(!_.get(chat, 'isError', false)) {
+                            if(this.state.footer_selected) {
+                                this.setState({
+                                    footer_selected: ''
+                                })
+                            } else {
+                                this.selected_chat_message(chat.chat_message_id)
+                            }
                         }
+                        
                     }}>
                         {
                             !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
