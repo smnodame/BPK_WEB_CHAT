@@ -655,10 +655,10 @@ class Content extends React.Component {
                         }
                     }}>
                         {
-                            !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
                         }
                         {
-                            !this.state.isSelectChatForOpenCase && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
                         }
                         {
                             this.state.isSelectChatForOpenCase && <Checkbox onChange={(event) => {
@@ -718,10 +718,10 @@ class Content extends React.Component {
                         }
                     }}>
                         {
-                            !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
                         }
                         {
-                            !this.state.isSelectChatForOpenCase && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
                         }
                         {
                             this.state.isSelectChatForOpenCase && <Checkbox onChange={(event) => {
@@ -781,10 +781,10 @@ class Content extends React.Component {
                         }
                     }}>
                         {
-                            !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
                         }
                         {
-                            !this.state.isSelectChatForOpenCase && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
                         }
                         {
                             this.state.isSelectChatForOpenCase && <Checkbox onChange={(event) => {
@@ -842,10 +842,10 @@ class Content extends React.Component {
                         }
                     }}>
                         {
-                            !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
                         }
                         {
-                            !this.state.isSelectChatForOpenCase && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
                         }
                         {
                             this.state.isSelectChatForOpenCase && <Checkbox onChange={(event) => {
@@ -902,10 +902,10 @@ class Content extends React.Component {
                         }
                     }}>
                         {
-                            !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
                         }
                         {
-                            !this.state.isSelectChatForOpenCase && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
+                            !this.state.isSelectChatForOpenCase && !_.get(chat, 'isError', false) && <i className={ this.state.selected_chat_message_id == chat.chat_message_id ? "fa fa-check-circle selected-message" : "fa fa-check-circle draft-selected-message" } aria-hidden="true" style={{ fontSize: '28px', marginLeft: '15px', color: 'rgb(200, 200, 200)' }}></i>    
                         }
                         {
                             this.state.isSelectChatForOpenCase && <Checkbox onChange={(event) => {
