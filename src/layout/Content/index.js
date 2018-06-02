@@ -131,7 +131,7 @@ class Content extends React.Component {
                 message: ''
             })
 
-            this._scroll(true)
+            
         } catch(err) {
             const indexLocal = chatData.findIndex((message) => {
                 return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
@@ -189,7 +189,7 @@ class Content extends React.Component {
                 message: ''
             })
 
-            this._scroll(true)
+            
         } catch(err) {
             const indexLocal = chatData.findIndex((message) => {
                 return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
@@ -242,7 +242,7 @@ class Content extends React.Component {
                 message: ''
             })
 
-            this._scroll(true)
+            
         } catch(err) {
             const indexLocal = chatData.findIndex((message) => {
                 return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
