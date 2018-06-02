@@ -653,7 +653,6 @@ class Content extends React.Component {
                                 this.selected_chat_message(chat.chat_message_id)
                             }
                         }
-                        
                     }}>
                         {
                             !this.state.isSelectChatForOpenCase && <div className={ this.state.selected_chat_message_id == chat.chat_message_id ? "hide" : "disapear-selected-message" }/>
@@ -708,12 +707,14 @@ class Content extends React.Component {
             if(chat.message_type == '2') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        if(this.state.footer_selected) {
-                            this.setState({
-                                footer_selected: ''
-                            })
-                        } else {
-                            this.selected_chat_message(chat.chat_message_id)
+                        if(!_.get(chat, 'isError', false)) {
+                            if(this.state.footer_selected) {
+                                this.setState({
+                                    footer_selected: ''
+                                })
+                            } else {
+                                this.selected_chat_message(chat.chat_message_id)
+                            }
                         }
                     }}>
                         {
@@ -769,12 +770,14 @@ class Content extends React.Component {
             if(chat.message_type == '3') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        if(this.state.footer_selected) {
-                            this.setState({
-                                footer_selected: ''
-                            })
-                        } else {
-                            this.selected_chat_message(chat.chat_message_id)
+                        if(!_.get(chat, 'isError', false)) {
+                            if(this.state.footer_selected) {
+                                this.setState({
+                                    footer_selected: ''
+                                })
+                            } else {
+                                this.selected_chat_message(chat.chat_message_id)
+                            }
                         }
                     }}>
                         {
@@ -828,12 +831,14 @@ class Content extends React.Component {
             if(chat.message_type == '4') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        if(this.state.footer_selected) {
-                            this.setState({
-                                footer_selected: ''
-                            })
-                        } else {
-                            this.selected_chat_message(chat.chat_message_id)
+                        if(!_.get(chat, 'isError', false)) {
+                            if(this.state.footer_selected) {
+                                this.setState({
+                                    footer_selected: ''
+                                })
+                            } else {
+                                this.selected_chat_message(chat.chat_message_id)
+                            }
                         }
                     }}>
                         {
@@ -886,12 +891,14 @@ class Content extends React.Component {
             if(chat.message_type == '5') {
                 return (
                     <div key={chat.chat_message_id} className="row message-body" onClick={() => {
-                        if(this.state.footer_selected) {
-                            this.setState({
-                                footer_selected: ''
-                            })
-                        } else {
-                            this.selected_chat_message(chat.chat_message_id)
+                        if(!_.get(chat, 'isError', false)) {
+                            if(this.state.footer_selected) {
+                                this.setState({
+                                    footer_selected: ''
+                                })
+                            } else {
+                                this.selected_chat_message(chat.chat_message_id)
+                            }
                         }
                     }}>
                         {
