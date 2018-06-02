@@ -574,6 +574,52 @@ class Content extends React.Component {
 
     }
 
+    _resend = () => {
+        this.setState({
+            showHandleError: false
+        }, () => {
+            const {
+                message,
+                index
+            } = this.state.selectedMessageError
+
+            const messageLists = this.state.chat
+            messageLists.splice(index, 1)
+            store.dispatch(chat(messageLists))
+
+            if (message.message_type == '1') {
+                this._pushMessage(message.content)
+            } else if (message.message_type == '2') {
+                this._pushPhoto(message.base64, message.object_url)
+            } else if (message.message_type == '3') {
+                this._pushAudio()
+            } else if (message.message_type == '4') {
+                this._pushSticker(message.sticker_path, message.object_url)
+            } else if (message.message_type == '5') {
+                this._pushFile({
+                    uri: message.object_url,
+                    fileName: message.file_name,
+                    type: message.file_extension
+                })
+            }
+        })
+    }
+
+    _deleteErrorMessage = () => {
+        this.setState({
+            showHandleError: false
+        }, () => {
+            const {
+                message,
+                index
+            } = this.state.selectedMessageError
+
+            const messageLists = this.state.chat
+            messageLists.splice(index, 1)
+            store.dispatch(chat(messageLists))
+        })
+    }
+    
     render_message = () => {
         return _.get(this.state, 'chat', []).map((chat) => {
             if(!this.state.user) {
@@ -627,8 +673,9 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                    { `${moment(chat.create_date).fromNow()}` }
-                                    <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
+                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
+                                <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender": "receiver" } onClick={(e) => e.stopPropagation() }>
                                 <div className="message-text">
@@ -677,7 +724,8 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                { `${moment(chat.create_date).fromNow()}` }
+                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender background-transparent": "receiver background-transparent" }>
@@ -728,7 +776,8 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                { `${moment(chat.create_date).fromNow()}` }
+                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender background-transparent audio-right": "receiver background-transparent audio-left" }>
@@ -777,7 +826,8 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                { `${moment(chat.create_date).fromNow()}` }
+                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender background-transparent sticker-right": "receiver background-transparent sticker-left" } onClick={(e) => e.stopPropagation() }>
@@ -825,7 +875,8 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                { `${moment(chat.create_date).fromNow()}` }
+                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }} onClick={(e) => this.download_file(e) }>

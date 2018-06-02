@@ -25,14 +25,26 @@ const DefaultPage = () => {
     )
 }
 
+
+const ErrorPage = () => {
+    return (
+        <div className="col-sm-8 conversation">
+            <div className="row heading"></div>
+            <div>
+                <p style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)', textAlign: 'center', fontWeight: 'bold' }}>CAN NOT ACCESS TO THIS CHAT</p>
+            </div>
+        </div>
+    )
+}
+
 class App extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
         }
 
-        // this.isAuthorization = localStorage.getItem('user_id')? true : false
-        this.isAuthorization = true
+        this.isAuthorization = localStorage.getItem('user_id')? true : false
+        // this.isAuthorization = true
     }
 
     componentDidMount() {
@@ -59,6 +71,7 @@ class App extends React.Component {
                         </Switch>
                         <Switch>
                             <Route path='/chat/:id' render={routeProps => <Content {...routeProps} data={this.state.data} />} />
+                            <Route exact path='/error' component={ErrorPage} />
                             <Route exact path='/' component={DefaultPage} />
                         </Switch>
                     </div>
