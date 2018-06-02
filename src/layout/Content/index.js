@@ -363,6 +363,7 @@ class Content extends React.Component {
 
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
+        emit_unsubscribe(_.get(this.state.chatInfo, 'chat_room_id'))
         fetchChatInfo(chat_id).then((res) => {
             this.setState({
                 chatInfo: res.data.data,
