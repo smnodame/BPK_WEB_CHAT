@@ -365,16 +365,22 @@ class Content extends React.Component {
         const chat_id = location.pathname.replace('/chat/','')
         emit_unsubscribe(_.get(this.state.chatInfo, 'chat_room_id'))
         fetchChatInfo(chat_id).then((res) => {
-            this.setState({
-                chatInfo: res.data.data,
-                isSelectChatForOpenCase: false,
-                selectedOptionMessageId: {},
-                show_selected_chat_message: false,
-                selected_chat_message_id: '',
-                showInviteFriend: false
-            })
-            store.dispatch(selectChat(res.data.data))
-            store.dispatch(onFetchFriendInGroup(chat_id))            
+            if(_.get(res, 'data.data')) {
+                this.setState({
+                    chatInfo: res.data.data,
+                    isSelectChatForOpenCase: false,
+                    selectedOptionMessageId: {},
+                    show_selected_chat_message: false,
+                    selected_chat_message_id: '',
+                    showInviteFriend: false
+                })
+                store.dispatch(selectChat(res.data.data))
+                store.dispatch(onFetchFriendInGroup(chat_id))         
+            } else {
+                this.props.history.push('/error')
+            }
+        }, () => {
+
         })
     }
 
