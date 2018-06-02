@@ -621,7 +621,7 @@ class Content extends React.Component {
     }
     
     render_message = () => {
-        return _.get(this.state, 'chat', []).map((chat) => {
+        return _.get(this.state, 'chat', []).map((chat, index) => {
             if(!this.state.user) {
                 return
             }
@@ -673,7 +673,16 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <i className={ _.get(chat, 'isError', false)? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }} onClick={(e) => {
+                                    e.stopPropagation()
+                                    this.setState({
+                                        showHandleError: true,
+                                        selectedMessageError: {
+                                            message: chat,
+                                            index: index
+                                        }
+                                    })
+                                }}></i>
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -724,7 +733,16 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <i className={ _.get(chat, 'isError', false)? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }} onClick={(e) => {
+                                    e.stopPropagation()
+                                    this.setState({
+                                        showHandleError: true,
+                                        selectedMessageError: {
+                                            message: chat,
+                                            index: index
+                                        }
+                                    })
+                                }}></i>
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -776,7 +794,16 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <i className={ _.get(chat, 'isError', false)? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }} onClick={(e) => {
+                                    e.stopPropagation()
+                                    this.setState({
+                                        showHandleError: true,
+                                        selectedMessageError: {
+                                            message: chat,
+                                            index: index
+                                        }
+                                    })
+                                }}></i>
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -826,7 +853,16 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <i className={ _.get(chat, 'isError', false)? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }} onClick={(e) => {
+                                    e.stopPropagation()
+                                    this.setState({
+                                        showHandleError: true,
+                                        selectedMessageError: {
+                                            message: chat,
+                                            index: index
+                                        }
+                                    })
+                                }}></i>
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -875,7 +911,16 @@ class Content extends React.Component {
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
-                                <i className={ _.get(chat, 'isError')? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }}></i>
+                                <i className={ _.get(chat, 'isError', false)? 'fa fa-exclamation-circle' : 'hide' } aria-hidden="true" style={{ fontSize: '30px', cursor: 'pointer' }} onClick={(e) => {
+                                    e.stopPropagation()
+                                    this.setState({
+                                        showHandleError: true,
+                                        selectedMessageError: {
+                                            message: chat,
+                                            index: index
+                                        }
+                                    })
+                                }}></i>
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
@@ -1003,7 +1048,7 @@ class Content extends React.Component {
                 <input id="image-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._image_upload_handler} aria-describedby="fileHelp" />
                 <input id="file-upload" type="file" className="form-control-file" style={{ display: 'none' }} onChange={this._file_upload_handler} aria-describedby="fileHelp" />
 
-                <div className={ (this.state.isSelectChatForOpenCase || this.state.show_selected_chat_message)? "hide" : "row reply" } >
+                <div className={ (this.state.isSelectChatForOpenCase || this.state.show_selected_chat_message || this.state.showHandleError )? "hide" : "row reply" } >
                     <div style={{ display: 'flex' }}>
                         <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
@@ -1060,6 +1105,22 @@ class Content extends React.Component {
                             this.setState({
                                 isSelectChatForOpenCase: false,
                                 selectedOptionMessageId: {}
+                            })
+                        }} >Cancle</Button>
+                    </div>
+                </div>
+                <div className="row reply" className={ this.state.showHandleError? "row reply" : "hide" }>
+                    <div style={{ display: 'flex' }}>
+                        <div style={{ flex: '1' }} />
+                        <Button bsStyle="success" onClick={() => {
+                            this._resend()
+                        }} >Resend</Button>
+                        <Button bsStyle="warning" style={{ marginLeft: '15px' }} onClick={() => {
+                            this._deleteErrorMessage()
+                        }} >Delete</Button>
+                        <Button bsStyle="light" style={{ marginLeft: '15px', marginRight: '15px' }} onClick={() => {
+                            this.setState({
+                                showHandleError: false
                             })
                         }} >Cancle</Button>
                     </div>
