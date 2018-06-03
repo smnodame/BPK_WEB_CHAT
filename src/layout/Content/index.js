@@ -72,7 +72,8 @@ class Content extends React.Component {
             inviteFriends: [],
             inviteFilter: '',
             inviteFriendsCount: 0,
-            selectedOptionMessageId: {}
+            selectedOptionMessageId: {},
+            isLoading: true
         }
     }
 
@@ -1050,15 +1051,11 @@ class Content extends React.Component {
                         </form>
                     </div>
                 </div>
-
-                <ReactChatView flipped={true}  onInfiniteLoad={this.loadMoreHistory.bind(this)} scrollLoadThreshold={50} onClick={() => this.setState({ footer_selected: '' })} className={!!this.state.footer_selected? 'row message message-small content': 'row message content' } ref={(el) => { this.messagesEnd = el }}>
-                    {/* <div className="row message-previous">
-                        <div className="col-sm-12 previous">
-                            <a onClick={() => store.dispatch(onLoadMoreMessageLists(this.state.filter))}>
-                                Show Previous Message!
-                            </a>
-                        </div>
-                    </div> */}
+                <div className={ this.state.isLoading? '' : 'hide' } style={{ padding: '0', argin: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
+                    <img src ="http://backgroundcheckall.com/wp-content/uploads/2017/12/loading-animated-gif-transparent-background-11.gif"  style={{ marginBottom: '15px', width: '80px' }}/>
+                    <p style={{ textAlign: 'center', fontWeight: 'bold' }}>Loading ...</p>
+                </div>
+                <ReactChatView className={ this.state.isLoading? 'hide' : '' } flipped={true}  onInfiniteLoad={this.loadMoreHistory.bind(this)} scrollLoadThreshold={50} onClick={() => this.setState({ footer_selected: '' })} className={!!this.state.footer_selected? 'row message message-small content': 'row message content' } ref={(el) => { this.messagesEnd = el }}>
                     {
                         this.render_message()
                     }
