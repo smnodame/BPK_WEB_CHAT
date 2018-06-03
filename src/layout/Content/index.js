@@ -36,7 +36,8 @@ import {
     onBlockChat, 
     onDeleteChat, 
     onUnblockChat, 
-    onUnmuteChat
+    onUnmuteChat,
+    isLoading
 } from '../../redux/actions'
 import {sendTheMessage, fetchFriendProfile, saveInKeep, sendFileMessage, fetchChatInfo } from '../../redux/api'
 import {
@@ -364,6 +365,7 @@ class Content extends React.Component {
 
     load_chat = () => {
         const chat_id = location.pathname.replace('/chat/','')
+        store.dispatch(isLoading(true))
         emit_unsubscribe(_.get(this.state.chatInfo, 'chat_room_id'))
         fetchChatInfo(chat_id).then((res) => {
             if(_.get(res, 'data.data')) {
@@ -430,6 +432,12 @@ class Content extends React.Component {
         if(_.get(this.props.data, 'user.user')) {
             this.setState({
                 user: this.props.data.user.user
+            })
+        }
+
+        if(_.get(this.props.data, 'system')) {
+            this.setState({
+                isLoading: _.get(this.props.data, 'system.isLoading')
             })
         }
 
@@ -1052,7 +1060,6 @@ class Content extends React.Component {
                     </div>
                 </div>
                 <div className={ this.state.isLoading? '' : 'hide' } style={{ padding: '0', argin: '0', display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column' }}>
-                    <img src ="http://backgroundcheckall.com/wp-content/uploads/2017/12/loading-animated-gif-transparent-background-11.gif"  style={{ marginBottom: '15px', width: '80px' }}/>
                     <p style={{ textAlign: 'center', fontWeight: 'bold' }}>Loading ...</p>
                 </div>
                 <ReactChatView className={ this.state.isLoading? 'hide' : '' } flipped={true}  onInfiniteLoad={this.loadMoreHistory.bind(this)} scrollLoadThreshold={50} onClick={() => this.setState({ footer_selected: '' })} className={!!this.state.footer_selected? 'row message message-small content': 'row message content' } ref={(el) => { this.messagesEnd = el }}>

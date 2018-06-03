@@ -420,7 +420,8 @@ function* selectChatSaga() {
             // store data in store redux
             yield put(selectedChatInfo(chatInfo))
             yield put(chat(chatData))
-
+            
+            yield put(isLoading(false))
             // subscribe socket io
             emit_subscribe(chatInfo.chat_room_id)
             
