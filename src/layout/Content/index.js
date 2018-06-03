@@ -562,16 +562,8 @@ class Content extends React.Component {
         }
     }
 
-    download_file = (e, object_url) => {
+    download_file = (e) => {
         e.stopPropagation()
-        setTimeout(() => {
-            const response = {
-              file: object_url,
-            }
-            // server sent the url to the file!
-            // now, let's download:
-            window.open(response.file)
-          }, 100)
     }
 
     is_group = () => {
@@ -951,7 +943,7 @@ class Content extends React.Component {
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }} onClick={(e) => this.download_file(e, chat.object_url) }>
+                            <a className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }} href={chat.object_url} download onClick={(e) => this.download_file(e) }>
                                
                                 <div style={{ display: 'flex', cursor: 'pointer' }}>
                                     <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '11px', width: '69px', borderRadius: '50%' }}></i>
@@ -961,7 +953,7 @@ class Content extends React.Component {
                                     </div>
                                 </div>
                                 
-                            </div>
+                            </a>
                             <span className={ this.state.user.username != chat.username ? "message-time" : "hide" } style={{ width: '75px', textAlign: 'left' }}>
                                 { `${moment(chat.create_date).fromNow()}` }
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
