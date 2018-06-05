@@ -19,7 +19,7 @@ var pcPeers = {}
 var localStream
 
 function getLocalStream() {
-        navigator.getUserMedia({ "audio": true, "video": false }, function (stream) {
+    navigator.getUserMedia({ "audio": true, "video": false }, function (stream) {
         localStream = stream
     }, logError)
 }
@@ -59,14 +59,14 @@ function createPC(socketId, isOffer) {
     pc.onnegotiationneeded = function () {
         console.log('onnegotiationneeded');
         if (isOffer) {
-            createOffer();
+            createOffer()
         }
     }
 
     pc.oniceconnectionstatechange = function(event) {
         console.log('oniceconnectionstatechange', event)
         if (event.target.iceConnectionState === 'connected') {
-            createDataChannel();
+            createDataChannel()
         }
     }
 
@@ -83,6 +83,7 @@ function createPC(socketId, isOffer) {
     }
 
     pc.addStream(localStream)
+    
     function createDataChannel() {
         if (pc.textDataChannel) {
             return
@@ -181,6 +182,7 @@ class Calling extends React.Component {
         super(props)
         this.state = {
         }
+        press()
     }
 
     render() {
