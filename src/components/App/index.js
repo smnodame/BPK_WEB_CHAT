@@ -8,6 +8,7 @@ import UserProfile from '../UserProfile'
 import GroupSetting from '../GroupSetting'
 import Register from '../Register'
 import Login from '../Login'
+import Calling from '../Calling'
 
 import { store } from '../../redux'
 import { start_app  } from '../../redux/actions.js'
@@ -63,6 +64,7 @@ class App extends React.Component {
             return (
                 <div className="container app">
                     <div className="row app-one">
+                        <Calling />
                         <div className="toast-custom">
                             <ToastContainer autoClose={3000} />
                         </div>
