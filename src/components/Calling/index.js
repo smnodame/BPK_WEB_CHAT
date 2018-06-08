@@ -2,37 +2,36 @@ import React from 'react'
 import $ from 'jquery'
 import io from 'socket.io-client'
 
-let socket = io('http://122.155.210.29:4443/', {
+
+var socket = io('http://192.168.1.39:4443/', {
     transports: ['websocket']
 })
+
+var join_room = null
 
 var RTCPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection || window.msRTCPeerConnection
 var RTCSessionDescription = window.RTCSessionDescription || window.mozRTCSessionDescription || window.webkitRTCSessionDescription || window.msRTCSessionDescription
 navigator.getUserMedia = navigator.getUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia || navigator.msGetUserMedia
 
 var twilioIceServers = [
-    { url: 'stun:global.stun.twilio.com:3478?transport=udp' }
-];
+        { url: 'stun:global.stun.twilio.com:3478?transport=udp' }
+]
+
 var configuration = {"iceServers": [{"url": "stun:stun.l.google.com:19302"}]}
 
 var pcPeers = {}
-var localStream
+var selfView;
+var remoteViewContainer;
+var localStream;
 
 function getLocalStream() {
-    navigator.getUserMedia({ "audio": true, "video": false }, function (stream) {
+    selfView = document.getElementById("selfView")
+    remoteViewContainer = document.getElementById("remoteViewContainer")
+    navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
         localStream = stream
+        selfView.src = URL.createObjectURL(stream)
+        selfView.muted = true;
     }, logError)
-}
-
-
-function join(roomID) {
-    socket.emit('join', roomID, function(socketIds){
-        console.log('join', socketIds)
-        for (var i in socketIds) {
-            var socketId = socketIds[i]
-            createPC(socketId, true)
-        }
-    })
 }
 
 function createPC(socketId, isOffer) {
@@ -57,7 +56,7 @@ function createPC(socketId, isOffer) {
     }
 
     pc.onnegotiationneeded = function () {
-        console.log('onnegotiationneeded');
+        console.log('onnegotiationneeded')
         if (isOffer) {
             createOffer()
         }
@@ -80,37 +79,37 @@ function createPC(socketId, isOffer) {
         element.id = "remoteView" + socketId
         element.autoplay = 'autoplay'
         element.src = URL.createObjectURL(event.stream)
+        remoteViewContainer.appendChild(element)
     }
 
     pc.addStream(localStream)
-    
+
     function createDataChannel() {
-        if (pc.textDataChannel) {
-            return
-        }
+    if (pc.textDataChannel) {
+        return
+    }
+    var dataChannel = pc.createDataChannel("text")
 
-        var dataChannel = pc.createDataChannel("text")
+    dataChannel.onerror = function (error) {
+        console.log("dataChannel.onerror", error)
+    }
 
-        dataChannel.onerror = function (error) {
-            console.log("dataChannel.onerror", error)
-        };
+    dataChannel.onmessage = function (event) {
+        console.log("dataChannel.onmessage:", event.data)
+    }
 
-        dataChannel.onmessage = function (event) {
-        };
+    dataChannel.onopen = function () {
+        console.log('dataChannel.onopen')
+    }
 
-        dataChannel.onopen = function () {
-            console.log('dataChannel.onopen')
-        };
-
-        dataChannel.onclose = function () {
-            console.log("dataChannel.onclose")
-        }
+    dataChannel.onclose = function () {
+        console.log("dataChannel.onclose")
+    }
 
         pc.textDataChannel = dataChannel
     }
     return pc
 }
-
 
 function exchange(data) {
     var fromId = data.from
@@ -130,9 +129,9 @@ function exchange(data) {
                     pc.setLocalDescription(desc, function () {
                     console.log('setLocalDescription', pc.localDescription)
                     socket.emit('exchange', {'to': fromId, 'sdp': pc.localDescription })
+                    }, logError)
                 }, logError)
             }, logError)
-        }, logError)
     } else {
         console.log('exchange candidate', data)
         pc.addIceCandidate(new RTCIceCandidate(data.candidate))
@@ -144,37 +143,55 @@ function leave(socketId) {
     var pc = pcPeers[socketId]
     pc.close()
     delete pcPeers[socketId]
+    var video = document.getElementById("remoteView" + socketId)
+    if (video) video.remove()
+    stopCamera()
 }
-
-socket.on('exchange', function(data){
-    exchange(data)
-})
-
-socket.on('leave', function(socketId){
-    leave(socketId)
-})
-
-socket.on('connect', function(data) {
-    console.log('connect')
-    getLocalStream()
-})
-
-socket.on('error', (error) => {
-    console.log('error')
-    console.log(error)
-})
 
 function logError(error) {
     console.log("logError", error)
 }
 
-function press() {
-    var roomID = 'abc'
-    if (roomID == "") {
-        alert('Please enter room ID')
-    } else {
-        join(roomID);
+function stopCamera() {
+    const streams = localStream.getTracks() || []
+    streams.forEach((stream) => {
+        stream.stop()
+    })
+    socket.disconnect()
+}
+
+function start_calling() {
+    
+    join_room = function(roomID) {
+        socket.emit('join', roomID, function(socketIds){
+            console.log('join', socketIds)
+            for (var i in socketIds) {
+                var socketId = socketIds[i]
+                createPC(socketId, true)
+            }
+        })
     }
+    
+    socket.on('exchange', function(data){
+        exchange(data)
+    })
+    
+    socket.on('leave', function(socketId){
+        leave(socketId)
+    })
+    
+    socket.on('connect', function(data) {
+        console.log('connect')
+        getLocalStream()
+    })
+    
+    socket.on('exchange', function(data){
+        exchange(data)
+    });
+    
+    socket.on('leave', function(socketId){
+        leave(socketId)
+    })
 }
 
 class Calling extends React.Component {
@@ -182,13 +199,40 @@ class Calling extends React.Component {
         super(props)
         this.state = {
         }
-        press()
+    }
+
+    componentDidMount = () => {
+        start_calling()
+    }
+
+    join_room = () => {
+        socket.connect()
+        join_room('abc')
+    }
+
+    leave_room = () => {
+        socket.disconnect()
+        stopCamera()
     }
 
     render() {
         return (
             <div style={{ height: 'auto' }}>
+                <div>
+                    <input id="roomID" value="abc" />
+                    <button onClick={() => this.join_room()}>Join room</button>
+                    <button onClick={() => this.leave_room()}>Leave room</button>
+                </div>
+                <div id="textRoom">
+                    <div id="textRoomContent">
+                        <h3>Text Room</h3>
+                    </div>
+                    <input id="textRoomInput" / >
+                    <video id="selfView" autoplay></video>
+                <div id="remoteViewContainer"></div>
+                </div>
                
+                
             </div>
         )
     }
