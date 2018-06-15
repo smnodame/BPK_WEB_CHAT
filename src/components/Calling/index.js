@@ -5,6 +5,7 @@ import io from 'socket.io-client'
 
 import { store } from '../../redux'
 import { callDialog } from '../../redux/actions.js'
+import { emit_hangup } from '../../redux/socket.js'
 
 var socket = io('https://192.168.1.39:4443/', {
     transports: ['websocket']
@@ -229,7 +230,11 @@ export class Calling extends React.Component {
     }
 
     join_room = () => {
-        join_room('abc')
+        this.setState({
+            isRinging: false
+        }, () => {
+            join_room('abc')
+        })
     }
 
     leave_room = () => {
@@ -237,6 +242,7 @@ export class Calling extends React.Component {
         socket.disconnect()
         stopCamera()
 
+        emit_hangup(this.state.callData.sender, this.state.callData.receiver)
         store.dispatch(callDialog(false))
     }
 
@@ -249,7 +255,8 @@ export class Calling extends React.Component {
 
         if(_.get(this.props.data, 'system.callData')) {
             this.setState({
-                callData: this.props.data.system.callData
+                callData: this.props.data.system.callData,
+                isRinging: this.props.data.system.callData.isRinging
             })
         }
     }
@@ -286,7 +293,7 @@ export class Calling extends React.Component {
                                 <div className='socials' style={{ marginTop: '25px' }}>
                                     <div>
                                         <button
-                                            className={_.get(this.state, 'callData.isRinging')? 'hide' : ''}
+                                            className={_.get(this.state, 'isRinging')? 'hide' : ''}
                                             style={{
                                                 backgroundColor: !this.state.mute? '#D3D3D3' : '#edb730',
                                                 width: '70px',
@@ -299,7 +306,7 @@ export class Calling extends React.Component {
                                             <i className='fa fa-volume-up' style={{ color: 'white', fontSize: 25 }}/>
                                         </button>
                                         <button
-                                            className={_.get(this.state, 'callData.isRinging')? 'hide' : ''}
+                                            className={_.get(this.state, 'isRinging')? 'hide' : ''}
                                             style={{
                                                 backgroundColor: !this.state.mute? '#D3D3D3' : '#edb730',
                                                 width: '70px',
@@ -312,7 +319,7 @@ export class Calling extends React.Component {
                                             <i className='fa fa-microphone' style={{ color: 'white', fontSize: 25 }}/>
                                         </button>
                                         <button
-                                            className={_.get(this.state, 'callData.isRinging')? 'hide' : ''}
+                                            className={_.get(this.state, 'isRinging')? 'hide' : ''}
                                             onClick={() => this.leave_room()}
                                             style={{
                                                 backgroundColor: '#ff6666',
@@ -327,7 +334,7 @@ export class Calling extends React.Component {
                                         </button>
 
                                         <button
-                                            className={_.get(this.state, 'callData.isRinging')? '' : 'hide'}
+                                            className={_.get(this.state, 'isRinging')? '' : 'hide'}
                                             onClick={() => this.join_room()}
                                             style={{
                                                 backgroundColor: 'green',
@@ -342,7 +349,7 @@ export class Calling extends React.Component {
                                         </button>
 
                                         <button
-                                            className={_.get(this.state, 'callData.isRinging')? '' : 'hide'}
+                                            className={_.get(this.state, 'isRinging')? '' : 'hide'}
                                             onClick={() => this.leave_room()}
                                             style={{
                                                 backgroundColor: '#ff6666',

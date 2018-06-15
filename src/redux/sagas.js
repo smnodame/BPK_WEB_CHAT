@@ -964,6 +964,8 @@ function* signup() {
 function* hangupSaga() {
     while (true) {
         yield take('HANGUP')
+
+        yield put(callDialog(false))
     }
 }
 
