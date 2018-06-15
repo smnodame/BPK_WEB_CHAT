@@ -432,10 +432,15 @@ export const selectedFriend = (_selectedFriend) => ({
     }
 })
 
-export const callDialog = (isShowCallDialog) => ({
+export const callDialog = (isShowCallDialog, chat_id, sender, receiver, photo, name) => ({
     type: 'CALL_DIALOG',
     payload: {
-    isShowCallDialog
+        isShowCallDialog, 
+        chat_id,
+        sender, 
+        receiver, 
+        photo, 
+        name
     }
 })
 

@@ -961,40 +961,39 @@ function* signup() {
     }
 }
 
-// function* hangupSaga() {
-//     while (true) {
-//         yield take('HANGUP')
-
-//         ringback.stop()
-//         ringtone.stop()
-
-//         const navigate = yield select(navigateSelector)
-//         navigate.dispatch(NavigationActions.back())
-//     }
-// }
+function* hangupSaga() {
+    while (true) {
+        yield take('HANGUP')
+    }
+}
 
 function* incomingCallSaga() {
     while (true) {
         const { payload: { sender, receiver, sender_photo, sender_name }} = yield take('INCOMING_CALL')
-        console.log('===============')
-        console.log(sender)
-        console.log(receiver)
+
+        // const chat_id = `${sender}_${receiver}`
+        const chat_id = 'abc'
+
+        // open call dialog
+        yield put(callDialog(true, chat_id, sender, receiver, sender_photo, sender_name))
     }
 }
 
 function* startCallSaga() {
     while (true) {
         const { payload: { sender, receiver, user_photo, user_name } } = yield take('START_CALL')
-        // const chat_id = `${sender}_${receiver}`
+
+        // const chat_id = `${sender}_${receiver.friend_user_id}`
         const chat_id = 'abc'
+
         // open call dialog
-        yield put(callDialog(true))
+        yield put(callDialog(true, chat_id, sender, receiver.friend_user_id, receiver.profile_pic_url, receiver.display_name))
 
         // join room with RTC
         join_room(chat_id)
 
         // send signal to reciever
-        emit_call(sender, receiver, user_photo, user_name)
+        emit_call(sender, receiver.friend_user_id, user_photo, user_name)
     }
 }
 
@@ -1031,7 +1030,8 @@ export default function* rootSaga() {
         signin(),
         signup(),
         startCallSaga(),
-        incomingCallSaga()
+        incomingCallSaga(),
+        hangupSaga()
     ])
 }
 

@@ -232,6 +232,12 @@ export class Calling extends React.Component {
                 isShowModal: this.props.data.system.isShowCallDialog
             })
         }
+
+        if(_.get(this.props.data, 'system.callData')) {
+            this.setState({
+                callData: this.props.data.system.callData
+            })
+        }
     }
 
     protectParentOnclick = (e) => {
@@ -254,11 +260,11 @@ export class Calling extends React.Component {
                     <div className="container" onClick={this.protectParentOnclick}>
                         <div className="profile-box">
                             <div className="profile-picture" style={{ marginTop: '60px', position: 'initial', top: '0px', marginLeft: 'auto', textAlign: 'center' }}>
-                                <img src={ 'http://itsmartone.com/bpk_connect/profile_pic_folder/small/542_small.jpg' } />
+                                <img src={ _.get(this.state, 'callData.photo') } />
                             </div>
                             <div className="profile-content">
                                 <h1 style={{ fontSize: '28px' }}>
-                                   Boonprakit Chaikaew
+                                   { _.get(this.state, 'callData.name') }
                                 </h1>
                                 <p style={{ fontSize: '20px' }}>
                                     Connecting...

@@ -70,6 +70,14 @@ const system = (state = {
         case 'CALL_DIALOG':
             return Object.assign(state, {
                 isShowCallDialog: action.payload.isShowCallDialog
+            }, {
+                callData: {
+                    chat_id: action.payload.chat_id,
+                    sender: action.payload.sender, 
+                    receiver: action.payload.receiver, 
+                    photo: action.payload.photo, 
+                    name: action.payload.name
+                }
             })
         default:
             return state
