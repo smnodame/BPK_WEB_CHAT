@@ -431,3 +431,17 @@ export const signin = (username, password) => ({
         selectedFriend: _selectedFriend
       }
   })
+
+  export const callDialog = (isShowCallDialog) => ({
+      type: 'CALL_DIALOG',
+      payload: {
+        isShowCallDialog
+      }
+  })
+
+  export const startCall = (chat_id) => ({
+      type: 'START_CALL',
+      payload: {
+          chat_id
+      }
+  })

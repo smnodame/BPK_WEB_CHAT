@@ -67,6 +67,10 @@ const system = (state = {
             return Object.assign(state, {
                 isShowGroupSetting: action.payload.isShowGroupSetting
             })
+        case 'CALL_DIALOG':
+            return Object.assign(state, {
+                isShowCallDialog: action.payload.isShowCallDialog
+            })
         default:
             return state
     }

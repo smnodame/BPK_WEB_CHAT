@@ -35,7 +35,8 @@ import {
     lastMessageID,
     onFetchFriendInGroup,
     isShowUserProfile,
-    isShowGroupSetting
+    isShowGroupSetting,
+    callDialog
 } from './actions'
 import {
     fetchMyProfile,
@@ -91,6 +92,7 @@ import {
     getKeepProfile
 } from './selectors'
 import { start_socket, emit_subscribe, on_message, emit_message, emit_update_friend_chat_list, emit_as_seen } from './socket.js'
+import { join_room } from '../components/Calling'
 
 function* start_app() {
     while (true) {
@@ -959,6 +961,42 @@ function* signup() {
     }
 }
 
+// function* hangupSaga() {
+//     while (true) {
+//         yield take('HANGUP')
+
+//         ringback.stop()
+//         ringtone.stop()
+
+//         const navigate = yield select(navigateSelector)
+//         navigate.dispatch(NavigationActions.back())
+//     }
+// }
+
+// function* incomingCallSaga() {
+//     while (true) {
+//         const { payload: { sender, receiver, sender_photo, sender_name }} = yield take('INCOMING_CALL')
+//         // navigate to chat page
+//         const navigate = yield select(navigateSelector)
+//         navigate.navigate('Calling', {
+//             user_id: receiver,
+//             friend_user_id: sender,
+//             friend_pic_url: sender_photo,
+//             friend_name: sender_name,
+//             isInComing: true
+//         })
+//     }
+// }
+
+function* startCallSaga() {
+    while (true) {
+        const { payload: { chat_id } } = yield take('START_CALL')
+
+        yield put(callDialog(true))
+        join_room(chat_id)
+    }
+}
+
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
     yield all([
@@ -990,7 +1028,8 @@ export default function* rootSaga() {
         inviteFriendToGroupSaga(),
         onInviteFriendToGroupWithOpenCaseSaga(),
         signin(),
-        signup()
+        signup(),
+        startCallSaga()
     ])
 }
 

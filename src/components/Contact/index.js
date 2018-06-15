@@ -3,7 +3,7 @@ import React from 'react'
 import { Switch, Route, Redirect, Link } from 'react-router-dom'
 import Friend from '../Friend'
 
-import { enterContacts, removeFavorite, addFavorite, isShowGroupSetting, selectedFriend, showOrHideFriendLists, onLoadMore, isShowUserProfile, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
+import { enterContacts, removeFavorite, addFavorite, callDialog, isShowGroupSetting, startCall, selectedFriend, showOrHideFriendLists, onLoadMore, isShowUserProfile, onSearchFriend, selectChat, onSelectKeep, navigate, onClickChat } from '../../redux/actions.js'
 import { store } from '../../redux'
 
 class Contact extends React.Component {
@@ -219,7 +219,13 @@ class Contact extends React.Component {
                                                 store.dispatch(onClickChat(_.get(this.state, 'selectedFriend')))
                                             })
                                         }}></i></a><a>
-                                        <i className="fa fa-phone-square" style={{ fontSize: '35px' }}></i></a><a>
+                                        <i className="fa fa-phone-square" style={{ fontSize: '35px' }} onClick={() => {
+                                            this.setState({
+                                                isShowModal: false
+                                            }, () => {
+                                                store.dispatch(startCall('abc'))
+                                            })
+                                        }}></i></a><a>
                                         <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
                                     </a>
                                 </div>
