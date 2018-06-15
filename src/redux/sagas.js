@@ -91,7 +91,7 @@ import {
     getSharedMessage,
     getKeepProfile
 } from './selectors'
-import { start_socket, emit_subscribe, on_message, emit_message, emit_update_friend_chat_list, emit_as_seen } from './socket.js'
+import { start_socket, emit_subscribe, on_message, emit_message, emit_update_friend_chat_list, emit_as_seen, emit_call } from './socket.js'
 import { join_room } from '../components/Calling'
 
 function* start_app() {
@@ -973,27 +973,28 @@ function* signup() {
 //     }
 // }
 
-// function* incomingCallSaga() {
-//     while (true) {
-//         const { payload: { sender, receiver, sender_photo, sender_name }} = yield take('INCOMING_CALL')
-//         // navigate to chat page
-//         const navigate = yield select(navigateSelector)
-//         navigate.navigate('Calling', {
-//             user_id: receiver,
-//             friend_user_id: sender,
-//             friend_pic_url: sender_photo,
-//             friend_name: sender_name,
-//             isInComing: true
-//         })
-//     }
-// }
+function* incomingCallSaga() {
+    while (true) {
+        const { payload: { sender, receiver, sender_photo, sender_name }} = yield take('INCOMING_CALL')
+        console.log('===============')
+        console.log(sender)
+        console.log(receiver)
+    }
+}
 
 function* startCallSaga() {
     while (true) {
-        const { payload: { chat_id } } = yield take('START_CALL')
-
+        const { payload: { sender, receiver, user_photo, user_name } } = yield take('START_CALL')
+        // const chat_id = `${sender}_${receiver}`
+        const chat_id = 'abc'
+        // open call dialog
         yield put(callDialog(true))
+
+        // join room with RTC
         join_room(chat_id)
+
+        // send signal to reciever
+        emit_call(sender, receiver, user_photo, user_name)
     }
 }
 
@@ -1029,7 +1030,8 @@ export default function* rootSaga() {
         onInviteFriendToGroupWithOpenCaseSaga(),
         signin(),
         signup(),
-        startCallSaga()
+        startCallSaga(),
+        incomingCallSaga()
     ])
 }
 

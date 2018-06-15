@@ -223,7 +223,7 @@ class Contact extends React.Component {
                                             this.setState({
                                                 isShowModal: false
                                             }, () => {
-                                                store.dispatch(startCall('abc'))
+                                                store.dispatch(startCall(_.get(this.state, 'user.user_id'), _.get(this.state, 'selectedFriend.friend_user_id'), _.get(this.state, 'user.profile_pic_url'), _.get(this.state, 'user.display_name')))
                                             })
                                         }}></i></a><a>
                                         <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
