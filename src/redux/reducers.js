@@ -76,7 +76,8 @@ const system = (state = {
                     sender: action.payload.sender, 
                     receiver: action.payload.receiver, 
                     photo: action.payload.photo, 
-                    name: action.payload.name
+                    name: action.payload.name,
+                    isRinging: action.payload.isRinging
                 }
             })
         default:

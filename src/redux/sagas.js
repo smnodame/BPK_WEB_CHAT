@@ -975,7 +975,7 @@ function* incomingCallSaga() {
         const chat_id = 'abc'
 
         // open call dialog
-        yield put(callDialog(true, chat_id, sender, receiver, sender_photo, sender_name))
+        yield put(callDialog(true, chat_id, sender, receiver, sender_photo, sender_name, true))
     }
 }
 
@@ -987,7 +987,7 @@ function* startCallSaga() {
         const chat_id = 'abc'
 
         // open call dialog
-        yield put(callDialog(true, chat_id, sender, receiver.friend_user_id, receiver.profile_pic_url, receiver.display_name))
+        yield put(callDialog(true, chat_id, sender, receiver.friend_user_id, receiver.profile_pic_url, receiver.display_name, false))
 
         // join room with RTC
         join_room(chat_id)

@@ -28,7 +28,7 @@ var remoteViewContainer;
 var localStream;
 var can_start_rct = false
 
-function getLocalStream() {
+function getLocalStream(callback) {
     if(can_start_rct) {
         selfView = document.getElementById("selfView")
         remoteViewContainer = document.getElementById("remoteViewContainer")
@@ -36,6 +36,8 @@ function getLocalStream() {
             localStream = stream
             selfView.src = URL.createObjectURL(stream)
             selfView.muted = true;
+
+            callback()
         }, logError)
     }
 }
@@ -169,14 +171,19 @@ function stopCamera() {
 function start_calling() {
     
     join_room = function(roomID) {
+        socket.connect()
+
+        console.log('join room', roomID)
+
         can_start_rct = true
-        getLocalStream()
-        socket.emit('join', roomID, function(socketIds){
-            console.log('join', socketIds)
-            for (var i in socketIds) {
-                var socketId = socketIds[i]
-                createPC(socketId, true)
-            }
+        getLocalStream(() => {
+            socket.emit('join', roomID, function(socketIds){
+                console.log('join', socketIds)
+                for (var i in socketIds) {
+                    var socketId = socketIds[i]
+                    createPC(socketId, true)
+                }
+            })
         })
     }
     
@@ -198,6 +205,13 @@ function start_calling() {
     });
     
     socket.on('leave', function(socketId){
+        console.log(' going to leave ')
+        
+        stopCamera()
+
+        // hide call dialog
+        store.dispatch(callDialog(false))
+
         leave(socketId)
     })
 }
@@ -215,11 +229,11 @@ export class Calling extends React.Component {
     }
 
     join_room = () => {
-        socket.connect()
         join_room('abc')
     }
 
     leave_room = () => {
+        console.log(' leave room ')
         socket.disconnect()
         stopCamera()
 
@@ -272,6 +286,7 @@ export class Calling extends React.Component {
                                 <div className='socials' style={{ marginTop: '25px' }}>
                                     <div>
                                         <button
+                                            className={_.get(this.state, 'callData.isRinging')? 'hide' : ''}
                                             style={{
                                                 backgroundColor: !this.state.mute? '#D3D3D3' : '#edb730',
                                                 width: '70px',
@@ -284,6 +299,7 @@ export class Calling extends React.Component {
                                             <i className='fa fa-volume-up' style={{ color: 'white', fontSize: 25 }}/>
                                         </button>
                                         <button
+                                            className={_.get(this.state, 'callData.isRinging')? 'hide' : ''}
                                             style={{
                                                 backgroundColor: !this.state.mute? '#D3D3D3' : '#edb730',
                                                 width: '70px',
@@ -296,6 +312,8 @@ export class Calling extends React.Component {
                                             <i className='fa fa-microphone' style={{ color: 'white', fontSize: 25 }}/>
                                         </button>
                                         <button
+                                            className={_.get(this.state, 'callData.isRinging')? 'hide' : ''}
+                                            onClick={() => this.leave_room()}
                                             style={{
                                                 backgroundColor: '#ff6666',
                                                 width: '70px',
@@ -305,7 +323,37 @@ export class Calling extends React.Component {
                                                 alignItems: 'center',
                                                 margin: '10px'
                                             }}>
-                                            <i className='fa fa-phone' style={{ color: 'white', fontSize: 25 }} onClick={() => this.leave_room()} />
+                                            <i className='fa fa-phone-hangup' style={{ color: 'white', fontSize: 25 }}  />
+                                        </button>
+
+                                        <button
+                                            className={_.get(this.state, 'callData.isRinging')? '' : 'hide'}
+                                            onClick={() => this.join_room()}
+                                            style={{
+                                                backgroundColor: 'green',
+                                                width: '70px',
+                                                height: '70px',
+                                                borderRadius: '50%',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                margin: '10px'
+                                            }}>
+                                            <i className='fa fa-phone' style={{ color: 'white', fontSize: 25 }}  />
+                                        </button>
+
+                                        <button
+                                            className={_.get(this.state, 'callData.isRinging')? '' : 'hide'}
+                                            onClick={() => this.leave_room()}
+                                            style={{
+                                                backgroundColor: '#ff6666',
+                                                width: '70px',
+                                                height: '70px',
+                                                borderRadius: '50%',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                margin: '10px'
+                                            }}>
+                                            <i className='fa fa-phone-hangup' style={{ color: 'white', fontSize: 25 }}  />
                                         </button>
                                     </div>
                                 </div>
