@@ -237,6 +237,16 @@ function start_calling() {
     })
 }
 
+function onMute(kind) {
+    const streams = localStream.getTracks() || []
+    streams.forEach((stream) => {
+        if(stream.kind == kind) {
+            stream.enabled = !stream.enabled    
+            console.log(stream.enabled)        
+        }
+    })
+}
+
 export class Calling extends React.Component {
     constructor(props) {
         super(props)
@@ -330,6 +340,7 @@ export class Calling extends React.Component {
                                 <div className='socials' style={{ marginTop: '25px' }}>
                                     <div>
                                         <button
+                                            onClick={() => onMute('video')}
                                             className={_.get(this.state, 'isRinging')? 'hide' : ''}
                                             style={{
                                                 backgroundColor: !this.state.mute? '#D3D3D3' : '#edb730',
@@ -343,6 +354,7 @@ export class Calling extends React.Component {
                                             <i className='fa fa-volume-up' style={{ color: 'white', fontSize: 25 }}/>
                                         </button>
                                         <button
+                                            onClick={() => onMute('audio')}
                                             className={_.get(this.state, 'isRinging')? 'hide' : ''}
                                             style={{
                                                 backgroundColor: !this.state.mute? '#D3D3D3' : '#edb730',
