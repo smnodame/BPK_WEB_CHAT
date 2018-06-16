@@ -234,7 +234,8 @@ function start_calling() {
         clearInterval(countTimer)
         container.setState({
             timer: 0,
-            connected: false
+            connected: false,
+            mute: false
         })
         
         leave(socketId)
@@ -245,8 +246,10 @@ function onMute(kind) {
     const streams = localStream.getTracks() || []
     streams.forEach((stream) => {
         if(stream.kind == kind) {
-            stream.enabled = !stream.enabled    
-            console.log(stream.enabled)        
+            stream.enabled = !stream.enabled 
+            container.setState({
+                mute: !stream.enabled
+            })        
         }
     })
 }
@@ -260,7 +263,8 @@ export class Calling extends React.Component {
         this.state = {
             isShowModal: false,
             timer: 0,
-            connected: false
+            connected: false,
+            mute: false
         }
     }
 
@@ -290,7 +294,8 @@ export class Calling extends React.Component {
         clearInterval(countTimer)
         this.setState({
             timer: 0,
-            connected: false
+            connected: false,
+            mute: false
         })
     }
 
@@ -357,20 +362,6 @@ export class Calling extends React.Component {
                                 <div className='socials' style={{ marginTop: '25px' }}>
                                     <div>
                                         <button
-                                            onClick={() => onMute('video')}
-                                            className={_.get(this.state, 'isRinging')? 'hide' : ''}
-                                            style={{
-                                                backgroundColor: !this.state.mute? '#D3D3D3' : '#edb730',
-                                                width: '70px',
-                                                height: '70px',
-                                                borderRadius: '50%',
-                                                justifyContent: 'center',
-                                                alignItems: 'center',
-                                                margin: '10px'
-                                            }}>
-                                            <i className='fa fa-volume-up' style={{ color: 'white', fontSize: 25 }}/>
-                                        </button>
-                                        <button
                                             onClick={() => onMute('audio')}
                                             className={_.get(this.state, 'isRinging')? 'hide' : ''}
                                             style={{
@@ -382,7 +373,7 @@ export class Calling extends React.Component {
                                                 alignItems: 'center',
                                                 margin: '10px'
                                             }}>
-                                            <i className='fa fa-microphone' style={{ color: 'white', fontSize: 25 }}/>
+                                            <i className={this.state.mute? 'fa fa-microphone-slash' : 'fa fa-microphone'} style={{ color: 'white', fontSize: 25 }}/>
                                         </button>
                                         <button
                                             className={_.get(this.state, 'isRinging')? 'hide' : ''}
