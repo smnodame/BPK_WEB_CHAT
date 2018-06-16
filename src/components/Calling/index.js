@@ -379,7 +379,7 @@ export class Calling extends React.Component {
                                                 alignItems: 'center',
                                                 margin: '10px'
                                             }}>
-                                            <i className='fa fa-phone-hangup' style={{ color: 'white', fontSize: 25 }}  />
+                                            <i className='fa fa-phone hangup' style={{ transform: 'rotate(135deg)', color: 'white', fontSize: 25 }}  />
                                         </button>
 
                                         <button
@@ -409,7 +409,7 @@ export class Calling extends React.Component {
                                                 alignItems: 'center',
                                                 margin: '10px'
                                             }}>
-                                            <i className='fa fa-phone-hangup' style={{ color: 'white', fontSize: 25 }}  />
+                                            <i className='fa fa-phone hangup' style={{ transform: 'rotate(135deg)', color: 'white', fontSize: 25 }}  />
                                         </button>
                                     </div>
                                 </div>
