@@ -164,10 +164,12 @@ function logError(error) {
 }
 
 function stopCamera() {
-    const streams = localStream.getTracks() || []
-    streams.forEach((stream) => {
-        stream.stop()
-    })
+    if(_.get(localStream, 'getTracks')) {
+        const streams = localStream.getTracks() || []
+        streams.forEach((stream) => {
+            stream.stop()
+        })
+    }
     socket.disconnect()
 }
 
@@ -227,9 +229,10 @@ function start_calling() {
         // clear timer
         clearInterval(countTimer)
         container.setState({
-            timer: 0
+            timer: 0,
+            connected: false
         })
-
+        
         leave(socketId)
     })
 }
@@ -263,7 +266,7 @@ export class Calling extends React.Component {
         console.log(' leave room ')
         socket.disconnect()
         stopCamera()
-
+        
         emit_hangup(this.state.callData.sender, this.state.callData.receiver)
 
         // hide call dialog
@@ -272,7 +275,8 @@ export class Calling extends React.Component {
         // clear timer
         clearInterval(countTimer)
         this.setState({
-            timer: 0
+            timer: 0,
+            connected: false
         })
     }
 
