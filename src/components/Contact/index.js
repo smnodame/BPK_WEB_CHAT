@@ -210,7 +210,7 @@ class Contact extends React.Component {
                                         Description : { _.get(this.state, 'selectedFriend.c_description') || '-' }
                                     </p>
                                 </div>   
-                                <div className={ _.get(this.state, 'selectedFriend.chat_room_type') == 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
+                                <div className={ _.get(this.state, 'selectedFriend.chat_room_type') == 'N' || _.get(this.state, 'selectedFriend.chat_room_type') == null? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
                                         <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => {
                                             this.setState({
@@ -229,7 +229,7 @@ class Contact extends React.Component {
                                         <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
                                     </a>
                                 </div>
-                                <div className={ _.get(this.state, 'selectedFriend.chat_room_type') != 'N'? 'socials': 'hide' } style={{ marginTop: '20px' }}>
+                                <div className={ _.get(this.state, 'selectedFriend.chat_room_type') != 'N' && _.get(this.state, 'selectedFriend.chat_room_type') == null? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
                                         <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => {
                                             this.setState({
