@@ -28,6 +28,8 @@ var selfView;
 var remoteViewContainer;
 var localStream;
 var can_start_rct = false
+var container;
+var countTimer;
 
 function getLocalStream(callback) {
     if(can_start_rct) {
@@ -185,6 +187,12 @@ function start_calling() {
                     createPC(socketId, true)
                 }
             })
+
+            countTimer = setInterval(function(){ 
+                container.setState({
+                    timer: container.state.timer + 1
+                })
+            }, 1000)
         })
     }
     
@@ -198,12 +206,15 @@ function start_calling() {
     
     socket.on('connect', function(data) {
         console.log('connect')
-        // getLocalStream()
     })
     
     socket.on('exchange', function(data){
         exchange(data)
-    });
+
+        container.setState({
+            connected: true
+        })
+    })
     
     socket.on('leave', function(socketId){
         console.log(' going to leave ')
@@ -213,6 +224,12 @@ function start_calling() {
         // hide call dialog
         store.dispatch(callDialog(false))
 
+        // clear timer
+        clearInterval(countTimer)
+        container.setState({
+            timer: 0
+        })
+
         leave(socketId)
     })
 }
@@ -220,8 +237,13 @@ function start_calling() {
 export class Calling extends React.Component {
     constructor(props) {
         super(props)
+        // link container with this
+        container = this
+
         this.state = {
-            isShowModal: false
+            isShowModal: false,
+            timer: 0,
+            connected: false
         }
     }
 
@@ -243,7 +265,15 @@ export class Calling extends React.Component {
         stopCamera()
 
         emit_hangup(this.state.callData.sender, this.state.callData.receiver)
+
+        // hide call dialog
         store.dispatch(callDialog(false))
+
+        // clear timer
+        clearInterval(countTimer)
+        this.setState({
+            timer: 0
+        })
     }
 
     componentWillReceiveProps() {
@@ -287,8 +317,11 @@ export class Calling extends React.Component {
                                 <h1 style={{ fontSize: '28px' }}>
                                    { _.get(this.state, 'callData.name') }
                                 </h1>
-                                <p style={{ fontSize: '20px' }}>
-                                    Connecting...
+                                <p className={!this.state.connected? '': 'hide'} style={{ fontSize: '20px' }}>
+                                    { this.state.isRinging ? 'Ringing...' : 'Connecting...' }
+                                </p>
+                                <p className={this.state.connected? '': 'hide'} style={{ fontSize: '20px' }}>
+                                    Connected
                                 </p>
                                 <div className='socials' style={{ marginTop: '25px' }}>
                                     <div>
