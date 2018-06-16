@@ -973,8 +973,7 @@ function* incomingCallSaga() {
     while (true) {
         const { payload: { sender, receiver, sender_photo, sender_name }} = yield take('INCOMING_CALL')
 
-        // const chat_id = `${sender}_${receiver}`
-        const chat_id = 'abc'
+        const chat_id = `${sender}_${receiver}`
 
         // open call dialog
         yield put(callDialog(true, chat_id, sender, receiver, sender_photo, sender_name, true))
@@ -985,8 +984,7 @@ function* startCallSaga() {
     while (true) {
         const { payload: { sender, receiver, user_photo, user_name } } = yield take('START_CALL')
 
-        // const chat_id = `${sender}_${receiver.friend_user_id}`
-        const chat_id = 'abc'
+        const chat_id = `${sender}_${receiver.friend_user_id}`
 
         // open call dialog
         yield put(callDialog(true, chat_id, sender, receiver.friend_user_id, receiver.profile_pic_url, receiver.display_name, false))

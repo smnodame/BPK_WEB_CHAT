@@ -9,7 +9,7 @@ import { callDialog } from '../../redux/actions.js'
 import { emit_hangup } from '../../redux/socket.js'
 var Sound = require('react-sound').default
 
-var socket = io('https://192.168.1.39:4443/', {
+var socket = io('http://122.155.210.29:4443/', {
     transports: ['websocket']
 })
 
@@ -207,7 +207,6 @@ function start_calling() {
     socket.on('exchange', function(data){
         exchange(data)
         
-        
         if(!container.state.connected) {
 
             countTimer = setInterval(function(){ 
@@ -276,7 +275,8 @@ export class Calling extends React.Component {
         this.setState({
             isRinging: false
         }, () => {
-            join_room('abc')
+            const chat_id = `${this.state.callData.sender}_${this.state.callData.receiver}`
+            join_room(chat_id)
         })
     }
 
