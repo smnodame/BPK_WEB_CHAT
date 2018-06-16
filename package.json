@@ -19,6 +19,7 @@
     "react-router-dom": "^4.1.2",
     "react-script-loader": "0.0.1",
     "react-scripts": "0.9.x",
+    "react-sound": "^1.2.0",
     "react-toastify": "^4.0.1",
     "redux": "^3.7.2",
     "redux-saga": "^0.15.6",

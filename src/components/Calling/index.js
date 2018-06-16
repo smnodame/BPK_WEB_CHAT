@@ -6,6 +6,7 @@ import io from 'socket.io-client'
 import { store } from '../../redux'
 import { callDialog } from '../../redux/actions.js'
 import { emit_hangup } from '../../redux/socket.js'
+var Sound = require('react-sound').default
 
 var socket = io('https://192.168.1.39:4443/', {
     transports: ['websocket']
@@ -35,7 +36,7 @@ function getLocalStream(callback) {
     if(can_start_rct) {
         selfView = document.getElementById("selfView")
         remoteViewContainer = document.getElementById("remoteViewContainer")
-        navigator.getUserMedia({ "audio": true, "video": true }, function (stream) {
+        navigator.getUserMedia({ "audio": true, "video": false }, function (stream) {
             localStream = stream
             selfView.src = URL.createObjectURL(stream)
             selfView.muted = true;
@@ -337,6 +338,17 @@ export class Calling extends React.Component {
                                 <p className={this.state.connected? '': 'hide'} style={{ fontSize: '20px' }}>
                                     Connected
                                 </p>
+                                {
+                                    _.get(this.state, 'isRinging') && <Sound
+                                        url="http://www.largesound.com/ashborytour/sound/brobob.mp3"
+                                        playStatus={Sound.status.PLAYING}
+                                        playFromPosition={300 /* in milliseconds */}
+                                        onLoading={() => {}}
+                                        onPlaying={() => {}}
+                                        onFinishedPlaying={() => {}}
+                                    />
+                                }
+                                
                                 <div className='socials' style={{ marginTop: '25px' }}>
                                     <div>
                                         <button
