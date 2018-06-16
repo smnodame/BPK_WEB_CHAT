@@ -2,6 +2,7 @@ import _ from 'lodash'
 import React from 'react'
 import $ from 'jquery'
 import io from 'socket.io-client'
+import moment from 'moment'
 
 import { store } from '../../redux'
 import { callDialog } from '../../redux/actions.js'
@@ -191,18 +192,10 @@ function start_calling() {
                 }
             })
 
-            countTimer = setInterval(function(){ 
-                container.setState({
-                    timer: container.state.timer + 1
-                })
-            }, 1000)
+            
         })
     }
-    
-    socket.on('exchange', function(data){
-        exchange(data)
-    })
-    
+
     socket.on('leave', function(socketId){
         leave(socketId)
     })
@@ -213,10 +206,20 @@ function start_calling() {
     
     socket.on('exchange', function(data){
         exchange(data)
+        
+        
+        if(!container.state.connected) {
 
-        container.setState({
-            connected: true
-        })
+            countTimer = setInterval(function(){ 
+                container.setState({
+                    timer: container.state.timer + 1
+                })
+            }, 1000)
+
+            container.setState({
+                connected: true
+            })
+        }
     })
     
     socket.on('leave', function(socketId){
@@ -337,6 +340,8 @@ export class Calling extends React.Component {
                                 </p>
                                 <p className={this.state.connected? '': 'hide'} style={{ fontSize: '20px' }}>
                                     Connected
+                                    <br/>
+                                    {  moment.utc(this.state.timer*1000).format('mm:ss') }
                                 </p>
                                 {
                                     _.get(this.state, 'isRinging') && <Sound
