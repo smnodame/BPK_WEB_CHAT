@@ -155,7 +155,7 @@ class Contact extends React.Component {
     render = () => {
         return (
             <div>
-                <div className="row heading">
+                <div className="row heading" style={{ backgroundColor: '#3b5998' }}>
                     <div className="col-sm-2 col-xs-2 heading-avatar">
                         <div className="heading-avatar-icon" onClick={() => {
                                 this.setState({
@@ -163,11 +163,11 @@ class Contact extends React.Component {
                                     isShowModal: true
                                 })
                             }}>
-                            <img src={ _.get(this.state, 'user.profile_pic_url') } />
+                            <img src={ _.get(this.state, 'user.profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
                     </div>
                     <div className="col-sm-6 col-xs-6 heading-name">
-                        <a className="heading-name-meta" onClick={() => {
+                        <a style={{ color: 'white'}}  className="heading-name-meta" onClick={() => {
                                 this.setState({
                                     selectedFriend: this.state.user,
                                     isShowModal: true
@@ -177,10 +177,10 @@ class Contact extends React.Component {
                         <span className="heading-online">Online</span>
                     </div>
                     <div className="col-sm-1 col-xs-1  heading-dot  pull-right">
-                        <i className="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true"></i>
+                        <i className="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true" style={{ color: 'white'}}></i>
                     </div>
                     <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
-                        <i className="fa fa-comments fa-2x  pull-right" aria-hidden="true" onClick={() => this.navigateToChat()}></i>
+                        <i className="fa fa-comments fa-2x  pull-right" aria-hidden="true" style={{ color: 'white'}} onClick={() => this.navigateToChat()}></i>
                     </div>
                 </div>
                 <div className={this.state.isShowModal? 'modal-profile': 'hide'} onClick={() => this.setState({ isShowModal: false })}>

@@ -1015,10 +1015,10 @@ class Content extends React.Component {
     render() {
         return (
             <div className="col-sm-8 conversation">
-                <div className="row heading header-chat">
+                <div className="row heading header-chat" style={{ backgroundColor: '#3b5998' }}>
                     <div className="col-sm-1 col-md-1 col-xs-1 heading-avatar">
                         <div className="heading-avatar-icon">
-                            <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } />
+                            <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
                     </div>
                     <div className="col-sm-5 col-md-5 col-xs-5 heading-name" onClick={() => {
@@ -1030,22 +1030,22 @@ class Content extends React.Component {
                             })
                         }
                     }}>
-                        <a className="heading-name-meta">{ _.get(this.state.chatInfo, 'display_name') }
+                        <a className="heading-name-meta" style={{ color: 'white'}}>{ _.get(this.state.chatInfo, 'display_name') }
                         </a>
                         <span className="heading-online">Online</span>
                     </div>
                     <div className={ !this.state.show_search_input ? 'col-sm-1 col-xs-1 heading-dot pull-right' : 'hide' }>
-                        <i className="fa fa-search fa-2x  pull-right" aria-hidden="true" onClick={() => this.setState({ show_search_input: true }) }></i>
+                        <i className="fa fa-search fa-2x  pull-right" style={{ color: 'white'}} aria-hidden="true" onClick={() => this.setState({ show_search_input: true }) }></i>
                     </div>
                     <div className={ this.state.show_search_input ? 'col-sm-5 col-md-5 col-xs-5 pull-right' : 'hide' }>
                         <form onSubmit={this.onSearchMessage}>
                             <div className="input-group">
                                 <input type="text" style={{ height: '40px' }} className="form-control" placeholder="Search" value={this.state.filter} aria-describedby="basic-addon1" onChange={(event) => this.setState({filter: event.target.value})} />
                                 <a className="input-group-addon" style={{ cursor: 'pointer' }} onClick={() => this.onSearchMessage()}>
-                                    <i className='fa fa-search' aria-hidden="true"></i>
+                                    <i className='fa fa-search' aria-hidden="true" ></i>
                                 </a>
                                 <a className="input-group-addon" style={{ cursor: 'pointer' }} onClick={() => this.closeSearch()}>
-                                    <i className='fa fa-close' aria-hidden="true"></i>
+                                    <i className='fa fa-close' aria-hidden="true" ></i>
                                 </a>
                             </div>
                         </form>

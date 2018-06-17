@@ -83,7 +83,7 @@ class ChatList extends React.Component {
     render = () => {
         return (
             <div style={{ backgroundColor: 'white'}}>
-                <div className="row newMessage-heading">
+                <div className="row newMessage-heading" style={{ backgroundColor: '#3b5998' }}>
                     <div className="row newMessage-main">
                         <div className="col-sm-2 col-xs-2 newMessage-back">
                             <i className="fa fa-arrow-left" aria-hidden="true" onClick={() => this.navigateToChat()}></i>
