@@ -274,7 +274,7 @@ class Contact extends React.Component {
                 <div className="row sideBar">
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
                         <div className="col-sm-5 col-xs-5 heading-avatar">
-                            <a className="heading-name-meta">Favorites ({this.state.numberOfFriendLists.favorite})</a>                        
+                            <a className="heading-name-meta">Favorites ({ _.get(this.state.numberOfFriendLists, 'favorite', 0) })</a>                        
                         </div>
                         <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
                             <i className={!this.state.is_show_favorite? 'fa fa-toggle-down  pull-right': 'hide'} aria-hidden="true" onClick={() => this.toggleFavorite()}></i>
@@ -285,7 +285,7 @@ class Contact extends React.Component {
                         {
                             this.renderFriend(this.state.friends.favorite)
                         }
-                        <div onClick={() => this.loadmore('favorite')}  className={this.state.numberOfFriendLists.favorite > this.state.friends.favorite.length? 'row message-previous': 'hide'}>
+                        <div onClick={() => this.loadmore('favorite')}  className={_.get(this.state.numberOfFriendLists, 'favorite', 0) > this.state.friends.favorite.length? 'row message-previous': 'hide'}>
                             <div className="col-sm-12 previous">
                                 <a name="20">
                                     LOAD MORE
