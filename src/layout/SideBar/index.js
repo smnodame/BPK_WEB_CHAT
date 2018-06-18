@@ -7,7 +7,8 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            is_show_chat_list: false
+            is_show_chat_list: false,
+            page: 'contact'
         }
     }
 
@@ -17,8 +18,23 @@ class SideBar extends React.Component {
         })
     }
 
-    componentDidMount() {
+    check_path = () => {
+        if(this.props.history.location.pathname == '/') {
+            this.setState({
+                page: 'contact'
+            })
+        } else {
+            this.setState({
+                page: 'content'
+            })
+        }
+    }
 
+    componentDidMount() {
+        this.check_path()
+        this.props.history.listen((location, action) => {
+            this.check_path()
+        })
     }
 
     componentWillReceiveProps() {
@@ -27,7 +43,7 @@ class SideBar extends React.Component {
 
     render = () => {
         return (
-            <div className="col-sm-4 side">
+            <div className={ this.state.page == 'contact' ? 'col-sm-4 side' : 'col-sm-4 side mobile-hide' }>
                 <div className="side-one">
                     <Contact navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
                 </div>

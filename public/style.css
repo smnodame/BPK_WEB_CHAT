@@ -896,3 +896,9 @@ body {
 .message-time {
   width: auto !important
 }
+
+@media only screen and (max-width: 768px) {
+  .mobile-hide {
+      display: none;
+  }
+}
