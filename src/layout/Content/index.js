@@ -1016,7 +1016,7 @@ class Content extends React.Component {
         return (
             <div className="col-sm-8 conversation">
                 <div className="row heading header-chat" style={{ backgroundColor: '#3b5998' }}>
-                    <div className="col-sm-1 col-md-1 col-xs-1 heading-avatar">
+                    <div className="col-sm-2 col-md-1 col-xs-2 heading-avatar">
                         <div className="heading-avatar-icon">
                             <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
@@ -1034,7 +1034,7 @@ class Content extends React.Component {
                         </a>
                         <span className="heading-online">Online</span>
                     </div>
-                    <div className={ !this.state.show_search_input ? 'col-sm-1 col-xs-1 heading-dot pull-right' : 'hide' }>
+                    <div className={ !this.state.show_search_input ? 'col-sm-2 col-xs-2 heading-dot pull-right' : 'hide' }>
                         <i className="fa fa-search fa-2x  pull-right" style={{ color: 'white'}} aria-hidden="true" onClick={() => this.setState({ show_search_input: true }) }></i>
                     </div>
                     <div className={ this.state.show_search_input ? 'col-sm-5 col-md-5 col-xs-5 pull-right' : 'hide' }>
