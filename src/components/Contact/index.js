@@ -152,6 +152,11 @@ class Contact extends React.Component {
         })
     }
 
+    signout = () => {
+        localStorage.clear()
+        location.reload()
+    }
+
     render = () => {
         return (
             <div>
@@ -166,7 +171,7 @@ class Contact extends React.Component {
                             <img src={ _.get(this.state, 'user.profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
                     </div>
-                    <div className="col-sm-6 col-xs-6 heading-name">
+                    <div className="col-sm-6 col-xs-4 heading-name">
                         <a style={{ color: 'white'}}  className="heading-name-meta" onClick={() => {
                                 this.setState({
                                     selectedFriend: this.state.user,
@@ -176,10 +181,10 @@ class Contact extends React.Component {
                         </a>
                         <span className="heading-online">Online</span>
                     </div>
-                    <div className="col-sm-1 col-xs-1  heading-dot  pull-right">
-                        <i className="fa fa-ellipsis-v fa-2x  pull-right" aria-hidden="true" style={{ color: 'white'}}></i>
+                    <div className="col-sm-1 col-xs-2  heading-dot  pull-right">
+                        <i className="fa fa-sign-out fa-2x  pull-right" aria-hidden="true" onClick={() => this.signout()} style={{ color: 'white'}}></i>
                     </div>
-                    <div className="col-sm-2 col-xs-2 heading-compose  pull-right">
+                    <div className="col-sm-1 col-xs-2 heading-compose  pull-right">
                         <i className="fa fa-comments fa-2x  pull-right" aria-hidden="true" style={{ color: 'white'}} onClick={() => this.navigateToChat()}></i>
                     </div>
                 </div>
@@ -240,7 +245,9 @@ class Contact extends React.Component {
                                             } else {
                                                 store.dispatch(onClickChat(_.get(this.state, 'selectedFriend')))
                                             }
-                                        }}></i></a><a>
+                                        }}></i>
+                                    </a>
+                                    <a>
                                         <i className="fa fa-cog" style={{ fontSize: '35px' }} onClick={() => {
                                             this.setState({
                                                 isShowModal: false
@@ -250,7 +257,7 @@ class Contact extends React.Component {
                                             } else {
                                                 this._go_to_group_setting()
                                             }
-                                        }}></i></a><a>
+                                        }}></i>
                                     </a>
                                 </div>
                             </div>
