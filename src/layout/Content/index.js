@@ -1075,22 +1075,27 @@ class Content extends React.Component {
 
                 <div className={ (this.state.isSelectChatForOpenCase || this.state.show_selected_chat_message || this.state.showHandleError )? "hide" : "row reply" } >
                     <div style={{ display: 'flex' }}>
-                        <i className="fa fa-smile-o fa-2x" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
+                        <i className={ this.state.show_addi_item? "fa fa-chevron-circle-left fa-2x" : "fa fa-chevron-circle-right fa-2x" } style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }} onClick={() => {
+                            this.setState({
+                                show_addi_item: !this.state.show_addi_item
+                            })
+                        }}></i>
+                        <i className={ this.state.show_addi_item? "fa fa-smile-o fa-2x" : "hide" } style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
                                 footer_selected: 'sticker'
                             })
                         }}></i>
-                        <i className="fa fa-file-image-o fa-2x" style={{ padding: '10px', color: '#93918f' }} 
+                        <i className={ this.state.show_addi_item? "fa fa-file-image-o fa-2x" : "hide" }  style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }} 
                             onClick={() => {
                                 $('#image-upload').trigger('click')
                             }}
                         ></i>
-                        <i className="fa fa-file-o fa-2x" style={{ padding: '10px', color: '#93918f' }}
+                        <i className={ this.state.show_addi_item? "fa fa-file-o fa-2x" : "hide" }  style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }}
                             onClick={() => {
                                 $('#file-upload').trigger('click')
                             }}
                         ></i>
-                        <i className="fa fa-camera fa-2x" style={{ padding: '10px', color: '#93918f' }}
+                        <i className={ this.state.show_addi_item? "fa fa-camera fa-2x" : "hide" }  style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }}
                             onClick={() => {
                                 this.setState({
                                     showCamera: true
@@ -1099,7 +1104,7 @@ class Content extends React.Component {
                                 })
                             }}
                         ></i>
-                        <textarea onKeyDown={(e) => {
+                        <textarea onClick={() => this.setState({ show_addi_item: false })} onKeyDown={(e) => {
                             if(e.keyCode == 13 && e.shiftKey == false) {
                                 e.preventDefault()
                                 this._pushMessage(this.state.message)
