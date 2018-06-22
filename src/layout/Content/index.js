@@ -5,6 +5,7 @@ import moment from 'moment'
 import download from 'downloadjs'
 import Friend from '../../components/Friend'
 
+import Recorder from 'react-recorder'
 import { ReactMic } from 'react-mic'
 import { Modal, Button } from 'react-bootstrap'
 import AudioPlayer from '../../components/AudioPlayer'
@@ -488,7 +489,8 @@ class Content extends React.Component {
 
     startRecording = () => {
         this.setState({
-            record: true
+            record: true,
+            status_record: 'start'
         })
         this.timer = setInterval(() => { 
             this.setState({
@@ -500,7 +502,8 @@ class Content extends React.Component {
     stopRecording = () => {
         this.setState({
             record: false,
-            timer: 0
+            timer: 0,
+            status_record: 'stop'
         })
         clearInterval(this.timer)
         this.setState({stoppedRecording: true, recording: false, paused: false})
@@ -541,12 +544,7 @@ class Content extends React.Component {
         } else if(this.state.footer_selected == 'record') {
             return (
                 <div style={{ height: 'auto !important', textAlign: 'center', paddingTop: '40px', background: 'rgb(251, 251, 251)' }}>
-                    <ReactMic
-                        record={this.state.record}
-                        className="sound-wave"
-                        onStop={this.onStop}
-                        strokeColor="#000000"
-                        backgroundColor="#FF4081" />
+                    <Recorder command={this.state.status_record} onStop={this.onStop} onStart={() => console.log(' start record ')} />
                     <button className={ (!this.state.record && this.state.roundRecording == 0) ? 'show' : 'hide' } onClick={this.startRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px' }} type="button">START</button>
                     <button className={ this.state.record ? 'show' : 'hide' } onClick={this.stopRecording} style={{ backgroundColor: '#ff6666', width: '120px', height: '120px', borderRadius: '50%', color: 'white', border: '0px', fontSize: '19px' }} type="button">
                         STOP <br /> { this.state.timer }

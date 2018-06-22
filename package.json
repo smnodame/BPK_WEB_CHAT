@@ -15,6 +15,7 @@
     "react-chatview": "^0.2.5",
     "react-dom": "^15.6.1",
     "react-mic": "^9.2.0",
+    "react-recorder": "^1.0.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.1.2",
     "react-script-loader": "0.0.1",
