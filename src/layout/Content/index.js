@@ -1036,7 +1036,16 @@ class Content extends React.Component {
                         <a className="heading-name-meta" style={{ color: 'white'}}>{ _.get(this.state.chatInfo, 'display_name') }
                         </a>
                     </div>
-                    <div className={ !this.state.show_search_input ? 'col-sm-2 col-xs-2 heading-dot pull-right' : 'hide' }>
+                    <div className={ !this.state.show_search_input ? 'col-sm-3 col-xs-4 heading-dot pull-right' : 'hide' }>
+                        <i className="fa fa-cog fa-2x  pull-right" style={{ color: 'white'}} aria-hidden="true" onClick={() => {
+                            if( _.get(this.state.chatInfo, 'display_name') != 'KEEP' ) {
+                                this.setState({
+                                    showContactInfo: true
+                                }, () => {
+                                    store.dispatch(onFetchInviteFriend())
+                                })
+                            }
+                        }}></i>
                         <i className="fa fa-search fa-2x  pull-right" style={{ color: 'white'}} aria-hidden="true" onClick={() => this.setState({ show_search_input: true }) }></i>
                     </div>
                     <div className={ this.state.show_search_input ? 'col-sm-5 col-md-5 col-xs-7 pull-right' : 'hide' }>

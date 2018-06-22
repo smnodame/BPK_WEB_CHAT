@@ -46,7 +46,7 @@ class Login extends React.Component {
                             <span className="login100-form-title p-b-48">
                                 <i className="zmdi zmdi-font"></i>
                             </span>
-        
+                            
                             <div className="wrap-input100 validate-input" data-validate = "Valid email is: a@b.c" style={{ marginTop: '75px' }}>
                                 <input placeholder="Username" className="input100" type="text" name="email" value={this.state.username} onChange={(event) => this.setState({username: event.target.value})} />
                             </div>
