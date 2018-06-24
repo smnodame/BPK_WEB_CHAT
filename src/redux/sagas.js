@@ -2,6 +2,7 @@
 import _ from "lodash"
 import axios from 'axios'
 import { ToastContainer, toast } from 'react-toastify'
+import XORCipher from './hash'
 
 import { all, call, put, takeEvery, takeLatest, take, select, delay } from 'redux-saga/effects'
 import {
@@ -924,7 +925,7 @@ function* signin() {
                 yield put(authenticated(token, setting))
                 yield put(signin_error(''))
 
-                localStorage.setItem('user_id', user.user_id)
+                localStorage.setItem('user_id',  XORCipher.encode('user_id', user.user_id))
 
                 location.reload()
                 continue

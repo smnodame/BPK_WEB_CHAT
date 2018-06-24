@@ -1,6 +1,7 @@
 import axios from "axios"
 import React from 'react'
 import { ToastContainer, toast } from 'react-toastify'
+import XORCipher from './hash'
 
 // Add a request interceptor
 axios.interceptors.request.use(function (config) {
@@ -16,8 +17,8 @@ axios.interceptors.request.use(function (config) {
 
 export const getAuth = () => {
     return new Promise(function(resolve, reject) {
-        const user_id = localStorage.getItem("user_id") || '3963'
-        resolve(user_id)
+        const user_id = localStorage.getItem("user_id")
+        resolve(XORCipher.decode('user_id', user_id))
     })
 }
 
