@@ -39,17 +39,21 @@ class Login extends React.Component {
     render = () => {
         return (
             <div style={{ height: 'auto', paddingTop: '40px', paddingBottom: '40px' }}>
+                <nav className="navbar navbar-default" style={{ textAlign: 'center', backgroundColor: '#3b5998', border: '0px' }}>
+                    <div className="container-fluid">
+                    <h3 className="form-signin-heading" style={{ color: 'white' }}>Authentication</h3>
+                    </div>
+                </nav>
                 <div>
                     <form className="form-signin" onSubmit={this.onLogin}>
-                        <h3 className="form-signin-heading" style={{ color: 'white' }}>Authentication</h3>
-
+                        
                         <label for="inputEmail" className="sr-only">Username</label>
                         <input type="text" id="inputEmail" className="form-control" placeholder="Username" required="" autofocus="" style={{ marginBottom: '10px', border: '1px solid white' }} value={this.state.username} onChange={(event) => this.setState({username: event.target.value})} />
 
                         <label for="inputPassword" className="sr-only">Password</label>
                         <input type="password" id="inputPassword" className="form-control" placeholder="Password" required="" value={this.state.password} onChange={(event) => this.setState({password: event.target.value})} style={{ marginBottom: '20px', border: '1px solid white', borderRadius: '5px' }} />
 
-                        <p style={{ color: 'red', marginTop: '10px', textAlign: 'center', marginBottom: '10px' }}>{ _.get(this.props, 'data.user.error') }</p>
+                        <p style={{ color: 'white', marginTop: '10px', textAlign: 'center', marginBottom: '10px' }}>{ _.get(this.props, 'data.user.error') }</p>
                         <button className="btn btn-lg btn-primary btn-block" type="submit" style={{ backgroundColor: '#8e90c5', border: '1px solid #ccc' }}>Sign in</button>
                         <div style={{ paddingTop: '30px', textAlign: 'center' }}>
                             <span style={{ color: 'white' }}>
