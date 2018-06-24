@@ -78,7 +78,7 @@ class Register extends React.Component {
 
                         <p style={{ marginTop: '10px', textAlign: 'center', marginBottom: '10px' }}>{ _.get(this.props, 'data.user.signupError') }</p>
 
-                        <button className="btn btn-lg btn-primary btn-block" type="submit"  onClick={() => this.onSignup() } >REGISTER</button>
+                        <button className="btn btn-lg btn-primary btn-block" type="submit"  onClick={() => this.onSignup() } >Sign up</button>
                         <div style={{ paddingTop: '30px', textAlign: 'center' }}>
                             <span >
                                 Already have an account?
