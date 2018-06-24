@@ -46,7 +46,7 @@ class Login extends React.Component {
                 </nav>
                 <div>
                     <form className="form-signin" onSubmit={this.onLogin}>
-                        
+
                         <label for="inputEmail" className="sr-only">Username</label>
                         <input type="text" id="inputEmail" className="form-control" placeholder="Username" required="" autofocus="" style={{ marginBottom: '10px', border: '1px solid white' }} value={this.state.username} onChange={(event) => this.setState({username: event.target.value})} />
 
@@ -66,7 +66,7 @@ class Login extends React.Component {
                         </div>
                     </form>
                 </div>
-        </div>
+            </div>
         )
     }
 }
