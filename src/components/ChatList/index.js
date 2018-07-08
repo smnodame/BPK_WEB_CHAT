@@ -23,6 +23,12 @@ class ChatList extends React.Component {
         this.goToChatList = () => {
             props.goToChatList()
         }
+
+        this.openUserModel = () => {
+            props.openUserModel()
+            props.goToContact()
+        }
+        
     }
 
     componentDidMount() {
@@ -113,7 +119,7 @@ class ChatList extends React.Component {
                         <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CHAT LISTS</span>
                     </div>
                     <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
-                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '6px', fontSize: '25px !important', color: 'white'}} onClick={() => this.props.openUserModel()}></i>
+                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '6px', fontSize: '25px !important', color: 'white'}} onClick={() => this.openUserModel()}></i>
                         <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>USER</span>
                     </div>
                 </div>
