@@ -24,12 +24,14 @@ class SideBar extends React.Component {
         this.setState({
             is_show_chat_list: false
         })
+        this.child.hideUserModal()
     }
 
     goToChatList = () => {
         this.setState({
             is_show_chat_list: true
         })
+        this.child.hideUserModal()
     }
 
     check_path = () => {

@@ -165,6 +165,12 @@ class Contact extends React.Component {
         })
     }
 
+    hideUserModal = () => {
+        this.setState({
+            isShowModal: false
+        })
+    }
+
     render = () => {
         return (
             <div>
