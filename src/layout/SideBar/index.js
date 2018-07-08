@@ -10,6 +10,8 @@ class SideBar extends React.Component {
             is_show_chat_list: false,
             page: 'contact'
         }
+
+        // this.child = React.createRef()
     }
 
     navigateToChat = () => {
@@ -42,6 +44,10 @@ class SideBar extends React.Component {
         }
     }
 
+    openUserModel = () => {
+        console.log('=====')
+    }
+
     componentDidMount() {
         this.check_path()
         this.props.history.listen((location, action) => {
@@ -61,7 +67,7 @@ class SideBar extends React.Component {
                 </div>
 
                 <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>
-                    <ChatList navigateToChat={this.navigateToChat} goToContact={this.goToContact}  goToChatList={this.goToChatList} data={this.props.data} history={this.props.history} />
+                    <ChatList navigateToChat={this.navigateToChat} openUserModel={this.openUserModel} goToContact={this.goToContact}  goToChatList={this.goToChatList} data={this.props.data} history={this.props.history} />
                 </div>
             </div>
         )
