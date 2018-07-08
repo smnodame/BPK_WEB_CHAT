@@ -471,7 +471,7 @@ class Content extends React.Component {
     render_sticker = () => {
         return _.get(this.state.sticker, `${this.state.collectionKeySelected}.sticker_lists`, []).map((item) => {
             return (
-                <img src={item.url} style={{ width: '145px', padding: '15px', cursor: 'pointer' }} onClick={() => this._pushSticker(item.path, item.url)} />
+                <img src={item.url} className="sticker-collection" style={{ width: '145px', padding: '15px', cursor: 'pointer' }} onClick={() => this._pushSticker(item.path, item.url)} />
             )
         })
     }
@@ -881,8 +881,8 @@ class Content extends React.Component {
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
-                            <div className={ this.state.user.username == chat.username ? "sender background-transparent sticker-right": "receiver background-transparent sticker-left" } onClick={(e) => e.stopPropagation() }>
-                                <img src={ chat.object_url } style={{ width: '150px' }}  />
+                            <div className={ this.state.user.username == chat.username ? "sender background-transparent sticker-right ": " receiver background-transparent sticker-left" } onClick={(e) => e.stopPropagation() }>
+                                <img className="sticker" src={ chat.object_url } style={{ width: '150px' }} />
                             </div>
                             <span className={ this.state.user.username != chat.username ? "message-time" : "hide" } style={{ width: '75px', textAlign: 'left' }}>
                                 { `${moment(chat.create_date).fromNow()}` }

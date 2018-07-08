@@ -936,4 +936,12 @@ body {
   .modal-profile .displayname {
     font-size: 23px !important;
   }
+  
+  .sticker {
+    width: 80px !important
+  }
+
+  .sticker-collection {
+    width: 120px !important;
+  }
 }
