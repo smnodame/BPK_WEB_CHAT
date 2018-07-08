@@ -555,6 +555,9 @@ body {
   .sideBar {
     height: calc(100% - 130px);
   }
+  .sideBar-contact {
+    height: calc(100% - 200px);
+  }
   .sideBar-body {
     height: 80px;
   }

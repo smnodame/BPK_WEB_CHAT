@@ -301,7 +301,7 @@ class Contact extends React.Component {
                     </form>
                 </div>
 
-                <div className="row sideBar">
+                <div className="row sideBar sideBar-contact">
                     <div style={{ height: '46px', padding: '10px', borderBottom: '0.5px solid #ccc', backgroundColor: '#fbfbfb' }}>
                         <div className="col-sm-5 col-xs-5 heading-avatar">
                             <a className="heading-name-meta">Favorites ({ _.get(this.state.numberOfFriendLists, 'favorite', 0) })</a>                        
