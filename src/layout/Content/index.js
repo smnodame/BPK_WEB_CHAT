@@ -426,7 +426,7 @@ class Content extends React.Component {
             this.setState({
                 chat: this.props.data.chat.chat || []
             }, () => {
-                // this.messagesEnd.scrollTop = this.messagesEnd.scrollHeight
+                $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )    
             })
         }
 
