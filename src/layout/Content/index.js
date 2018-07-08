@@ -944,10 +944,11 @@ class Content extends React.Component {
                             <a className={ this.state.user.username == chat.username ? "sender": "receiver"} style={{ height: '64px', padding: '11px' }} href={chat.object_url} download onClick={(e) => this.download_file(e) }>
                                
                                 <div style={{ display: 'flex', cursor: 'pointer' }}>
-                                    <i className="fa fa-file" aria-hidden="true" style={{ fontSize: '28px', color: '#3a6d99', backgroundColor: 'rgba(218,228,234,.5)', padding: '5px', textAlign: 'center', paddingTop: '11px', width: '69px', borderRadius: '50%', height: '52px' }}></i>
+                                    <i className="fa fa-file" aria-hidden="true" 
+                                    style={{ fontSize: '25px', color: '#3a6d99', padding: '5px', textAlign: 'center'}}></i>
                                     <div style={{ paddingLeft: '12px' }}>
                                         <p style={{ margin: '0px', fontWeight: 'bold', color: '#3a6d99', whiteSpace: 'nowrap', textAlign: 'left' }}>{ chat.file_name }</p>
-                                        <p style={{ margin: '0px', color: '#3a6d99', textAlign: 'left' }}>Download</p>
+                                        <p style={{ margin: '0px', color: '#3a6d99', textAlign: 'left', textOverflow: 'ellipsis', whiteSpace: 'nowrap', overflowY: 'hidden' }}>Download</p>
                                     </div>
                                 </div>
                                 
