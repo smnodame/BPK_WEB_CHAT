@@ -678,7 +678,7 @@ class Content extends React.Component {
                         }
                         <div className={ this.state.user.username == chat.username ? "col-sm-12 message-main-sender": "col-sm-12 message-main-receiver" }>
                             
-                            <div className={ is_show_avatar? 'avatar-icon': 'hide' }  style={{ width: '40px' }}>
+                            <div className={ is_show_avatar? 'avatar-icon avatar-group': 'hide' }   style={{ width: '40px' }}>
                                 <img src={ chat.profile_pic_url } style={{ width: '30px', height: '30px' }} />
                             </div>
                             <span className={ this.state.user.username == chat.username ? "message-time" : "hide" } >
@@ -758,7 +758,7 @@ class Content extends React.Component {
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
                             <div className={ this.state.user.username == chat.username ? "sender background-transparent": "receiver background-transparent" }>
-                                <img src={ chat.object_url } style={{ width: '200px' }} onClick={(e) => {
+                                <img src={ chat.object_url } style={{ width: '200px',     height: '200px' }} onClick={(e) => {
                                     e.stopPropagation()
                                     this.setState({ selected_image: chat.object_url })
                                 }}  />
