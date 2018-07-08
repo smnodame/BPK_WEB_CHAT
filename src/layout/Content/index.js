@@ -1013,16 +1013,16 @@ class Content extends React.Component {
     render() {
         return (
             <div className="col-sm-8 conversation">
-                <div className="row heading header-chat" style={{ backgroundColor: '#3b5998' }}>
-                    <div className="col-sm-2 col-xs-2 pc-hide" style={{ marginRight: '10px' }}  onClick={() => this.props.history.push('/')}>
-                        <i className="fa fa-arrow-left" style={{ color: 'white', padding: '10px', fontSize: '20px' }}></i>
+                <div className="row heading header-chat" style={{ backgroundColor: '#3b5998', display: 'flex' }}>
+                    <div className="pc-hide" style={{ marginRight: '10px', width: 'auto', marginTop: '6px' }}  onClick={() => this.props.history.push('/')}>
+                        <i className="fa fa-arrow-left fa-lg " style={{ color: 'white', padding: '10px' }}></i>
                     </div>
-                    <div className="col-sm-2 col-md-1 col-xs-2 heading-avatar ">
+                    <div className="heading-avatar " style={{ width: 'auto' }}>
                         <div className="heading-avatar-icon">
                             <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
                     </div>
-                    <div className={ this.state.show_search_input? 'col-sm-5 col-md-5 col-xs-3 heading-name mobile-hide' : 'col-sm-5 col-md-5 col-xs-3 heading-name'} onClick={() => {
+                    <div className={ this.state.show_search_input? 'heading-name mobile-hide' : 'heading-name'} style={{ width: 'auto', flex: '1' }} onClick={() => {
                         if( _.get(this.state.chatInfo, 'display_name') != 'KEEP' ) {
                             this.setState({
                                 showContactInfo: true
@@ -1031,11 +1031,11 @@ class Content extends React.Component {
                             })
                         }
                     }}>
-                        <a className="heading-name-meta" style={{ color: 'white'}}>{ _.get(this.state.chatInfo, 'display_name') }
+                        <a className="heading-name-meta" style={{ color: 'white', padding: '15px', paddingTop: '12px' }}>{ _.get(this.state.chatInfo, 'display_name') }
                         </a>
                     </div>
-                    <div className={ !this.state.show_search_input ? 'col-sm-3 col-xs-4 heading-dot pull-right' : 'hide' }>
-                        <i className="fa fa-cog fa-2x  pull-right" style={{ color: 'white'}} aria-hidden="true" onClick={() => {
+                    <div className={ !this.state.show_search_input ? 'heading-dot pull-right' : 'hide' } style={{ width: 'auto' }}>
+                        <i className="fa fa-cog fa-lg  pull-right" style={{ color: 'white', padding: '15px', paddingRight: '5px' }} aria-hidden="true" onClick={() => {
                             if( _.get(this.state.chatInfo, 'display_name') != 'KEEP' ) {
                                 this.setState({
                                     showContactInfo: true
@@ -1044,9 +1044,9 @@ class Content extends React.Component {
                                 })
                             }
                         }}></i>
-                        <i className="fa fa-search fa-2x  pull-right" style={{ color: 'white'}} aria-hidden="true" onClick={() => this.setState({ show_search_input: true }) }></i>
+                        <i className="fa fa-search fa-lg  pull-right" style={{ color: 'white', padding: '15px', paddingRight: '5px' }} aria-hidden="true" onClick={() => this.setState({ show_search_input: true }) }></i>
                     </div>
-                    <div className={ this.state.show_search_input ? 'col-sm-5 col-md-5 col-xs-7 pull-right' : 'hide' }>
+                    <div className={ this.state.show_search_input ? 'pull-right' : 'hide' }>
                         <form onSubmit={this.onSearchMessage}>
                             <div className="input-group">
                                 <input type="text" style={{ height: '40px' }} className="form-control" placeholder="Search" value={this.state.filter} aria-describedby="basic-addon1" onChange={(event) => this.setState({filter: event.target.value})} />
