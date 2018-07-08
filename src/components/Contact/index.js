@@ -171,8 +171,8 @@ class Contact extends React.Component {
                             <img src={ _.get(this.state, 'user.profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
                     </div>
-                    <div className="" style={{ width: 'auto', flex: '1' }}>
-                        <a style={{ color: 'white', padding: '10px' }}  className="heading-name-meta" onClick={() => {
+                    <div className="" style={{ width: 'auto', flex: '1', marginLeft: '5px', display: 'inline-block', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                        <a style={{ color: 'white', padding: '10px', display: 'inline-block', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}  className="heading-name-meta" onClick={() => {
                                 this.setState({
                                     selectedFriend: this.state.user,
                                     isShowModal: true

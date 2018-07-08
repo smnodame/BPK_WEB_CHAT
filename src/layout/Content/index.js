@@ -1022,7 +1022,7 @@ class Content extends React.Component {
                             <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
                     </div>
-                    <div className={ this.state.show_search_input? 'heading-name mobile-hide' : 'heading-name'} style={{ width: 'auto', flex: '1' }} onClick={() => {
+                    <div className={ this.state.show_search_input? 'heading-name mobile-hide' : 'heading-name'} style={{ width: 'auto', flex: '1', display: 'inline-block', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }} onClick={() => {
                         if( _.get(this.state.chatInfo, 'display_name') != 'KEEP' ) {
                             this.setState({
                                 showContactInfo: true
@@ -1031,7 +1031,7 @@ class Content extends React.Component {
                             })
                         }
                     }}>
-                        <a className="heading-name-meta" style={{ color: 'white', padding: '15px', paddingTop: '12px' }}>{ _.get(this.state.chatInfo, 'display_name') }
+                        <a className="heading-name-meta" style={{ color: 'white', padding: '15px', paddingTop: '12px', display: 'inline-block', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ _.get(this.state.chatInfo, 'display_name') }
                         </a>
                     </div>
                     <div className={ !this.state.show_search_input ? 'heading-dot pull-right' : 'hide' } style={{ width: 'auto' }}>
@@ -1361,12 +1361,15 @@ class Content extends React.Component {
                                     <div>
                                         {
                                             this.state.member.map((member) => (<div style={{ paddingTop: '8px', paddingBottom: '8px', display: 'flex' }}>
-                                                <div className='avatar-icon'  style={{ width: '60px' }}>
-                                                    <img src={ _.get(member, 'profile_pic_url') } style={{ width: '50px', height: '50px' }} />
+                                                <div className='avatar-icon' style={{ width: 'auto' }} >
+                                                    <img src={ _.get(member, 'profile_pic_url') } style={{ width: '40px', height: '40px', marginTop: '5px'}} />
                                                 </div>
-                                                <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>{ member.display_name }</p>
-                                                <div style={{ flex: '1' }} />
-                                                <i className="fa fa-close fa-lg" aria-hidden="true" style={{ padding: '10px', marginRight: '20px', cursor: 'pointer' }} onClick={() => {
+                                                <div style={{ width: 'auto', flex: '1',  textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                                                    <p style={{ fontSize: '16px', padding: '10px', cursor: 'pointer', flex: '1', display: 'inline-block',  textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ member.display_name }</p>
+                                                    
+                                                </div>
+                                                
+                                                <i className="fa fa-close fa-lg" aria-hidden="true" style={{ padding: '10px', marginRight: '20px', marginTop: '8px', cursor: 'pointer' }} onClick={() => {
                                                     store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, member.friend_user_id, true))
                                                 }}></i>
                                             </div>))
