@@ -140,11 +140,11 @@ class UserProfile extends React.Component {
                                     }}>
                                         Change Cover Image
                                 </button>
-                                <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} style={{ width: '80px', height: '80px' }} onClick={() => {
+                                <img src={this.state.profile_pic_base64 || this.state.profile_pic_url} onClick={() => {
                                     $('#profile-image').trigger('click')
                                 }} />
                             </div>
-                            <span style={{ fontSize: '19px', fontWeight: 'bold', padding: '20px', marginTop: '20px', color: '#fff', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
+                            <span style={{ fontSize: '19px', fontWeight: 'bold', marginTop: '30px', color: '#fff', width: 'auto !important' }}>{ _.get(this.state, 'display_name') }</span>
                         </div>
                     </div>    
                     <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
