@@ -197,7 +197,7 @@ class Contact extends React.Component {
                                 <img src={ _.get(this.state, 'selectedFriend.profile_pic_url')} />
                             </div>
                             <div className="profile-content">
-                                <h1 style={{ fontSize: '28px' }}>
+                                <h1 style={{ fontSize: '28px'}} className="displayname">
                                     { _.get(this.state, 'selectedFriend.display_name')}
                                 </h1>
                                 <p style={{ fontSize: '20px' }}>
@@ -216,26 +216,26 @@ class Contact extends React.Component {
                                 </div>   
                                 <div className={ _.get(this.state, 'selectedFriend.chat_room_type', 'undifined') == 'N' || _.get(this.state, 'selectedFriend.chat_room_type', 'undifined') == null? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
-                                        <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => {
+                                        <i className="fa fa-comments fa-lg"  onClick={() => {
                                             this.setState({
                                                 isShowModal: false
                                             }, () => {
                                                 store.dispatch(onClickChat(_.get(this.state, 'selectedFriend')))
                                             })
                                         }}></i></a><a>
-                                        <i className="fa fa-phone-square" style={{ fontSize: '35px' }} onClick={() => {
+                                        <i className="fa fa-phone-square fa-lg"  onClick={() => {
                                             this.setState({
                                                 isShowModal: false
                                             }, () => {
                                                 store.dispatch(startCall(_.get(this.state, 'user.user_id'), _.get(this.state, 'selectedFriend'), _.get(this.state, 'user.profile_pic_url'), _.get(this.state, 'user.display_name')))
                                             })
                                         }}></i></a><a>
-                                        <i className="fa fa-heart" style={{ fontSize: '35px', color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
+                                        <i className="fa fa-heart" style={{  color: this.isInFavorite()? '#ff6666': '#d2d2d2' }} onClick={() => this._toggleFavorite() }></i>
                                     </a>
                                 </div>
                                 <div className={ _.get(this.state, 'selectedFriend.chat_room_type', 'undifined') != 'N' && _.get(this.state, 'selectedFriend.chat_room_type', 'undifined') != null? 'socials': 'hide' } style={{ marginTop: '20px' }}>
                                     <a>
-                                        <i className="fa fa-comments" style={{ fontSize: '35px' }} onClick={() => {
+                                        <i className="fa fa-comments fa-lg"  onClick={() => {
                                             this.setState({
                                                 isShowModal: false
                                             })
@@ -247,7 +247,7 @@ class Contact extends React.Component {
                                         }}></i>
                                     </a>
                                     <a>
-                                        <i className="fa fa-cog" style={{ fontSize: '35px' }} onClick={() => {
+                                        <i className="fa fa-cog fa-lg"  onClick={() => {
                                             this.setState({
                                                 isShowModal: false
                                             })

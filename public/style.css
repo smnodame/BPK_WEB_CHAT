@@ -908,3 +908,38 @@ body {
       display: none;
   }
 }
+
+@media only screen and (max-width: 768px) {
+  .mobile-hide {
+      display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .modal-profile .container {
+    margin: 50px auto;
+    height: auto;
+    width: 90%;
+    z-index: 1; /* Sit on top */
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .modal-profile .profile-cover-image img {
+    width: 100%;
+    height: 160px !important;
+  }
+
+  .modal-profile .profile-box .profile-picture {
+    position: absolute;
+    top: 90px;
+    left: 50%;
+    margin-left: -55px;
+  }
+
+  .modal-profile .displayname {
+    font-size: 23px !important;
+  }
+}
