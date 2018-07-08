@@ -25,8 +25,8 @@ class ChatList extends React.Component {
         }
 
         this.openUserModel = () => {
-            props.openUserModel()
             props.goToContact()
+            props.openUserModel()
         }
         
     }

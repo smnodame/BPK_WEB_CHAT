@@ -47,6 +47,8 @@ class SideBar extends React.Component {
     }
 
     openUserModel = () => {
+        console.log('========')
+        console.log(this.child)
         this.child.showUserModal()
     }
 
