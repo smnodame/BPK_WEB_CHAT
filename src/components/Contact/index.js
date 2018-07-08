@@ -160,8 +160,8 @@ class Contact extends React.Component {
     render = () => {
         return (
             <div>
-                <div className="row heading" style={{ backgroundColor: '#3b5998' }}>
-                    <div className="col-sm-2 col-xs-2 heading-avatar">
+                <div className="row heading" style={{ backgroundColor: '#3b5998', display: 'flex' }}>
+                    <div className="heading-avatar" style={{ width: 'auto' }}>
                         <div className="heading-avatar-icon" onClick={() => {
                                 this.setState({
                                     selectedFriend: this.state.user,
@@ -171,20 +171,19 @@ class Contact extends React.Component {
                             <img src={ _.get(this.state, 'user.profile_pic_url') } style={{ border: '0.5px solid black'}} />
                         </div>
                     </div>
-                    <div className="col-sm-6 col-xs-4 heading-name">
-                        <a style={{ color: 'white'}}  className="heading-name-meta" onClick={() => {
+                    <div className="" style={{ width: 'auto', flex: '1' }}>
+                        <a style={{ color: 'white', padding: '10px' }}  className="heading-name-meta" onClick={() => {
                                 this.setState({
                                     selectedFriend: this.state.user,
                                     isShowModal: true
                                 })
                             }}>{ _.get(this.state, 'user.display_name') } 
                         </a>
-                        <span className="heading-online">Online</span>
                     </div>
-                    <div className="col-sm-1 col-xs-2  heading-dot  pull-right">
+                    <div className="" style={{ width: 'auto', padding: '10px', paddingRight: '5px' }}>
                         <i className="fa fa-sign-out fa-2x  pull-right" aria-hidden="true" onClick={() => this.signout()} style={{ color: 'white'}}></i>
                     </div>
-                    <div className="col-sm-1 col-xs-2 heading-compose  pull-right">
+                    <div className="" style={{ width: 'auto', padding: '10px', paddingRight: '5px' }}>
                         <i className="fa fa-comments fa-2x  pull-right" aria-hidden="true" style={{ color: 'white'}} onClick={() => this.navigateToChat()}></i>
                     </div>
                 </div>
