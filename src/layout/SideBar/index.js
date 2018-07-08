@@ -7,7 +7,7 @@ class SideBar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            is_show_chat_list: false,
+            is_show_chat_list: true,
             page: 'contact'
         }
 
