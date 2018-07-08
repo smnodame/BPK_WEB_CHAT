@@ -911,21 +911,21 @@ function* signin() {
         try {
             yield put(isLoading(true))
             if(username && password) {
-                // const res_loginApi = yield call(loginApi, username, password)
+                const res_loginApi = yield call(loginApi, username, password)
     
-                // console.log(' finsihed sign in ')
-                // console.log(res_loginApi)
+                console.log(' finsihed sign in ')
+                console.log(res_loginApi)
     
-                // if(_.get(res_loginApi.data, 'error')) {
-                //     yield put(signin_error(res_loginApi.data.error))
-                //     yield put(isLoading(false))
-                //     continue
-                // }
-                // const { data: { token, setting, user } } = res_loginApi
-                // yield put(authenticated(token, setting))
-                // yield put(signin_error(''))
+                if(_.get(res_loginApi.data, 'error')) {
+                    yield put(signin_error(res_loginApi.data.error))
+                    yield put(isLoading(false))
+                    continue
+                }
+                const { data: { token, setting, user } } = res_loginApi
+                yield put(authenticated(token, setting))
+                yield put(signin_error(''))
 
-                localStorage.setItem('user_id',  XORCipher.encode('user_id', username))
+                localStorage.setItem('user_id',  XORCipher.encode('user_id', user.user_id ))
 
                 location.reload()
                 continue

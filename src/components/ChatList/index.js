@@ -114,12 +114,12 @@ class ChatList extends React.Component {
                         <i className="fa fa-users fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}}></i>
                         <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CONTACTS</span>
                     </div>
-                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
-                        <i className="fa fa-comments fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}} onClick={() => this.goToChatList()}></i>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => this.goToChatList()}>
+                        <i className="fa fa-comments fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}} ></i>
                         <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CHAT LISTS</span>
                     </div>
-                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
-                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '6px', fontSize: '25px !important', color: 'white'}} onClick={() => this.openUserModel()}></i>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => this.openUserModel()}>
+                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '6px', fontSize: '25px !important', color: 'white'}} ></i>
                         <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>USER</span>
                     </div>
                 </div>
