@@ -180,10 +180,10 @@ class Contact extends React.Component {
                             }}>{ _.get(this.state, 'user.display_name') } 
                         </a>
                     </div>
-                    <div className="" style={{ width: 'auto', padding: '15px', paddingRight: '2px' }}>
+                    <div className="" style={{ width: 'auto', padding: '15px', paddingRight: '2px', cursor: 'pointer' }}>
                         <i className="fa fa-sign-out fa-lg pull-right" aria-hidden="true" onClick={() => this.signout()} style={{ color: 'white'}}></i>
                     </div>
-                    <div className="" style={{ width: 'auto', padding: '15px', paddingRight: '2px' }}>
+                    <div className="" style={{ width: 'auto', padding: '15px', paddingRight: '2px', cursor: 'pointer' }}>
                         <i className="fa fa-comments fa-lg  pull-right" aria-hidden="true" style={{ color: 'white'}} onClick={() => this.navigateToChat()}></i>
                     </div>
                 </div>
