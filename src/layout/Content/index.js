@@ -1268,9 +1268,9 @@ class Content extends React.Component {
                                 <div style={{ display: 'flex', backgroundColor: '#eee', backgroundSize: 'cover', backgroundImage: `url("${ _.get(this.state.chatInfo, 'friend_wall_pic_url') }")` }}>
                                     <div style={{ display: 'flex', backgroundColor: 'rgba(0, 0, 0, 0.25)' }}>
                                         <div className='avatar-icon' style={{ width: '100px', margin: '20px' }}>
-                                            <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } style={{ width: '80px', height: '80px' }} />
+                                            <img src={ _.get(this.state.chatInfo, 'profile_pic_url') } />
                                         </div>
-                                        <span style={{ fontSize: '19px', fontWeight: '200', padding: '20px', marginTop: '20px', color: 'white' }}>{ _.get(this.state.chatInfo, 'display_name') }</span>
+                                        <span style={{ fontSize: '19px', fontWeight: '200', marginTop: '30px', color: 'white' }}>{ _.get(this.state.chatInfo, 'display_name') }</span>
                                     </div>
                                 </div>
                                 <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
