@@ -1046,8 +1046,8 @@ class Content extends React.Component {
                         }}></i>
                         <i className="fa fa-search fa-lg  pull-right" style={{ color: 'white', padding: '15px', paddingRight: '5px' }} aria-hidden="true" onClick={() => this.setState({ show_search_input: true }) }></i>
                     </div>
-                    <div className={ this.state.show_search_input ? 'pull-right' : 'hide' }>
-                        <form onSubmit={this.onSearchMessage}>
+                    <div className={ this.state.show_search_input ? 'pull-right' : 'hide' } style={{  width: 'auto', flex: '1' }}>
+                        <form onSubmit={this.onSearchMessage} style={{ marginLeft: '25px', marginTop: '5px' }}>
                             <div className="input-group">
                                 <input type="text" style={{ height: '40px' }} className="form-control" placeholder="Search" value={this.state.filter} aria-describedby="basic-addon1" onChange={(event) => this.setState({filter: event.target.value})} />
                                 <a className="input-group-addon" style={{ cursor: 'pointer' }} onClick={() => this.onSearchMessage()}>
