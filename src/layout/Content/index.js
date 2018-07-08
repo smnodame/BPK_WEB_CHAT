@@ -1073,27 +1073,27 @@ class Content extends React.Component {
 
                 <div className={ (this.state.isSelectChatForOpenCase || this.state.show_selected_chat_message || this.state.showHandleError )? "hide" : "row reply" } >
                     <div style={{ display: 'flex' }}>
-                        <i className={ this.state.show_addi_item? "fa fa-chevron-circle-left fa-2x" : "fa fa-chevron-circle-right fa-2x" } style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }} onClick={() => {
+                        <i className={ this.state.show_addi_item? "fa fa-chevron-circle-left fa-lg" : "fa fa-chevron-circle-right fa-lg" } style={{ marginTop: '7px', cursor: 'pointer', padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
                                 show_addi_item: !this.state.show_addi_item
                             })
                         }}></i>
-                        <i className={ this.state.show_addi_item? "fa fa-smile-o fa-2x" : "hide" } style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }} onClick={() => {
+                        <i className={ this.state.show_addi_item? "fa fa-smile-o fa-lg" : "hide" } style={{ marginTop: '7px', cursor: 'pointer', padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
                                 footer_selected: 'sticker'
                             })
                         }}></i>
-                        <i className={ this.state.show_addi_item? "fa fa-file-image-o fa-2x" : "hide" }  style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }} 
+                        <i className={ this.state.show_addi_item? "fa fa-file-image-o fa-lg" : "hide" }  style={{ marginTop: '7px', cursor: 'pointer', padding: '10px', color: '#93918f' }} 
                             onClick={() => {
                                 $('#image-upload').trigger('click')
                             }}
                         ></i>
-                        <i className={ this.state.show_addi_item? "fa fa-file-o fa-2x" : "hide" }  style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }}
+                        <i className={ this.state.show_addi_item? "fa fa-file-o fa-lg" : "hide" }  style={{ marginTop: '7px', cursor: 'pointer', padding: '10px', color: '#93918f' }}
                             onClick={() => {
                                 $('#file-upload').trigger('click')
                             }}
                         ></i>
-                        <i className={ this.state.show_addi_item? "fa fa-camera fa-2x" : "hide" }  style={{ cursor: 'pointer', padding: '10px', color: '#93918f' }}
+                        <i className={ this.state.show_addi_item? "fa fa-camera fa-lg" : "hide" }  style={{ marginTop: '7px', cursor: 'pointer', padding: '10px', color: '#93918f' }}
                             onClick={() => {
                                 this.setState({
                                     showCamera: true
@@ -1108,12 +1108,12 @@ class Content extends React.Component {
                                 this._pushMessage(this.state.message)
                             }
                         }} value={this.state.message} onChange={(event) => this.setState({message: event.target.value})} className="form-control" rows="1" id="comment" style={{ marginLeft: '10px', marginRight: '10px' }}></textarea>
-                        <i className="fa fa-microphone fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={() => {
+                        <i className="fa fa-microphone fa-lg" aria-hidden="true" style={{ marginTop: '7px', padding: '10px', color: '#93918f' }} onClick={() => {
                             this.setState({
                                 footer_selected: 'record'
                             })
                         }}></i>
-                        <i className="fa fa-send fa-2x" aria-hidden="true" style={{ padding: '10px', color: '#93918f' }} onClick={ () => this._pushMessage(this.state.message) }></i>
+                        <i className="fa fa-send fa-lg" aria-hidden="true" style={{ marginTop: '7px', padding: '10px', color: '#93918f' }} onClick={ () => this._pushMessage(this.state.message) }></i>
                     </div>
                     
                 </div>
@@ -1275,7 +1275,7 @@ class Content extends React.Component {
                                 </div>
                                 <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                                     <div style={{ width: '200px', textAlign: 'center'  }}>
-                                        <i className="fa fa-user fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                     </div>
                                     <div>
                                         <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
@@ -1301,7 +1301,7 @@ class Content extends React.Component {
                                 </div>
                                 <div style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                                     <div style={{ width: '200px', textAlign: 'center'  }}>
-                                        <i className="fa fa-bars fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                                        <i className="fa fa-bars fa-lg" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                     </div>
                                     <div>
                                         <p style={{ fontSize: '16px', padding: '5px', cursor: 'pointer' }} onClick={() => {
@@ -1356,7 +1356,7 @@ class Content extends React.Component {
                                 <div className={ this.is_group()? '' : 'hide' } style={{ borderTop: '1px solid #dfdfdf', minHeight: '12px', background: '#f5f5f5' }} />
                                 <div className={ this.is_group()? '' : 'hide' } style={{ display: 'flex', paddingTop: '15px', paddingBottom: '15px' }}>
                                     <div style={{ width: '200px', textAlign: 'center'  }}>
-                                        <i className="fa fa-users fa-2x" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
+                                        <i className="fa fa-users fa-lg" aria-hidden="true" style={{ padding: '10px', paddingLeft: '35px' }}></i>
                                     </div>
                                     <div>
                                         {
@@ -1366,7 +1366,7 @@ class Content extends React.Component {
                                                 </div>
                                                 <p style={{ fontSize: '16px', padding: '10px', fontWeight: 'bold', cursor: 'pointer' }}>{ member.display_name }</p>
                                                 <div style={{ flex: '1' }} />
-                                                <i className="fa fa-close fa-2x" aria-hidden="true" style={{ padding: '10px', marginRight: '20px', cursor: 'pointer' }} onClick={() => {
+                                                <i className="fa fa-close fa-lg" aria-hidden="true" style={{ padding: '10px', marginRight: '20px', cursor: 'pointer' }} onClick={() => {
                                                     store.dispatch(onRemoveFriendFromGroup(this.state.chatInfo.chat_room_id, member.friend_user_id, true))
                                                 }}></i>
                                             </div>))
