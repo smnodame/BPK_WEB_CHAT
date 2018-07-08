@@ -645,7 +645,7 @@ class Content extends React.Component {
                     seenMessage = ''
                 }
             }
-
+            const class_reciever = is_show_avatar? 'receiver receiver-message' : 'receiver'
             /* text message */
             if(chat.message_type == '1') {
                 return (
@@ -695,7 +695,7 @@ class Content extends React.Component {
                                 <span className={ _.get(chat, 'isError')? 'hide' : '' }>{ `${moment(chat.create_date).fromNow()}` }</span>
                                 <span className={ seenMessage? 'show': 'hide' }><br/>{ seenMessage }</span>
                             </span>
-                            <div className={ this.state.user.username == chat.username ? "sender": "receiver" } onClick={(e) => e.stopPropagation() }>
+                            <div className={ this.state.user.username == chat.username ? "sender": class_reciever } onClick={(e) => e.stopPropagation() }>
                                 <div className="message-text">
                                     { chat.content }
                                 </div>
