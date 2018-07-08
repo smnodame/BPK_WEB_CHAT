@@ -18,6 +18,18 @@ class SideBar extends React.Component {
         })
     }
 
+    goToContact = () => {
+        this.setState({
+            is_show_chat_list: false
+        })
+    }
+
+    goToChatList = () => {
+        this.setState({
+            is_show_chat_list: true
+        })
+    }
+
     check_path = () => {
         if(this.props.history.location.pathname == '/') {
             this.setState({
@@ -49,7 +61,7 @@ class SideBar extends React.Component {
                 </div>
 
                 <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>
-                    <ChatList navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
+                    <ChatList navigateToChat={this.navigateToChat} goToContact={this.goToContact}  goToChatList={this.goToChatList} data={this.props.data} history={this.props.history} />
                 </div>
             </div>
         )

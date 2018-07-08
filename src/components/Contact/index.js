@@ -183,10 +183,34 @@ class Contact extends React.Component {
                     <div className="" style={{ width: 'auto', padding: '15px', paddingRight: '2px', cursor: 'pointer' }}>
                         <i className="fa fa-sign-out fa-lg pull-right" aria-hidden="true" onClick={() => this.signout()} style={{ color: 'white'}}></i>
                     </div>
-                    <div className="" style={{ width: 'auto', padding: '15px', paddingRight: '2px', cursor: 'pointer' }}>
+                    <div className="hide-in-mobile" style={{ width: 'auto', padding: '15px', paddingRight: '2px', cursor: 'pointer' }}>
                         <i className="fa fa-comments fa-lg  pull-right" aria-hidden="true" style={{ color: 'white'}} onClick={() => this.navigateToChat()}></i>
                     </div>
                 </div>
+
+
+                {/* <div className="row heading hide-in-pc" style={{ backgroundColor: '#3b5998', display: 'flex', position: 'fixed', left: '0', bottom: '0', width: '100%' }}>
+                  
+                    <div className="" style={{ width: 'auto', textAlign: 'center',  flex: '1', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+                        <i className="fa fa-users fa-lg" aria-hidden="true" onClick={() => {}} style={{ padding: '6px',fontSize: '25px !important', color: 'white'}}></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CONTACTS</span>
+                    </div>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => this.navigateToChat()}>
+                        <i className="fa fa-comments fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}} ></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CHAT LISTS</span>
+                    </div>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => {
+                                this.setState({
+                                    selectedFriend: this.state.user,
+                                    isShowModal: true
+                                })
+                            }}>
+                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '6px', fontSize: '25px !important', color: 'white'}} ></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>USER</span>
+                    </div>
+                </div> */}
+
+
                 <div className={this.state.isShowModal? 'modal-profile': 'hide'} onClick={() => this.setState({ isShowModal: false })}>
                     <div className="container" onClick={this.protectParentOnclick}>
                         <div className="profile-box">

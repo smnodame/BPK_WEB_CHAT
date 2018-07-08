@@ -907,6 +907,10 @@ body {
   .pc-hide {
       display: none;
   }
+
+  .hide-in-pc {
+    display: none !important;
+  }
 }
 
 @media only screen and (max-width: 600px) {
@@ -960,4 +964,10 @@ body {
     word-wrap: break-word;
     display: inline-block;
   }
+
+  .hide-in-mobile {
+    display: none !important;
+  }
+
+  
 }

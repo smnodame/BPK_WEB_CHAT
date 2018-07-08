@@ -15,6 +15,14 @@ class ChatList extends React.Component {
         this.navigateToChat = () => {
             props.navigateToChat()
         }
+
+        this.goToContact = () => {
+            props.goToContact()
+        }
+
+        this.goToChatList = () => {
+            props.goToChatList()
+        }
     }
 
     componentDidMount() {
@@ -83,7 +91,7 @@ class ChatList extends React.Component {
     render = () => {
         return (
             <div style={{ backgroundColor: 'white'}}>
-                <div className="row newMessage-heading" style={{ backgroundColor: '#3b5998' }}>
+                <div className="row newMessage-heading hide-in-mobile" style={{ backgroundColor: '#3b5998' }}>
                     <div className="row newMessage-main">
                         <div className="col-sm-2 col-xs-2 newMessage-back">
                             <i className="fa fa-arrow-left" aria-hidden="true" onClick={() => this.navigateToChat()}></i>
@@ -91,6 +99,27 @@ class ChatList extends React.Component {
                         <div className="col-sm-10 col-xs-10 newMessage-title">
                             BACK TO CONTACT
                         </div>
+                    </div>
+                </div>
+
+                <div className="row heading hide-in-pc" style={{ backgroundColor: '#3b5998', display: 'flex', position: 'fixed', left: '0', bottom: '0', width: '100%' }}>
+                  
+                    <div className=""  onClick={() => this.goToContact()}  style={{ width: 'auto', textAlign: 'center',  flex: '1', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+                        <i className="fa fa-users fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}}></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CONTACTS</span>
+                    </div>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+                        <i className="fa fa-comments fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}} onClick={() => this.goToChatList()}></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CHAT LISTS</span>
+                    </div>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '6px', fontSize: '25px !important', color: 'white'}} onClick={() => {
+                                this.setState({
+                                    selectedFriend: this.state.user,
+                                    isShowModal: true
+                                })
+                            }}></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>USER</span>
                     </div>
                 </div>
 
