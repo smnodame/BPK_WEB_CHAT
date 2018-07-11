@@ -47,8 +47,6 @@ class SideBar extends React.Component {
     }
 
     openUserModel = () => {
-        console.log('========')
-        console.log(this.child)
         this.child.showUserModal()
     }
 
@@ -67,7 +65,7 @@ class SideBar extends React.Component {
         return (
             <div className={ this.state.page == 'contact' ? 'col-sm-4 side' : 'col-sm-4 side mobile-hide' }>
                 <div className="side-one">
-                    <Contact onRef={ref => (this.child = ref)} navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
+                    <Contact navigateToChat={this.navigateToChat} openUserModel={this.openUserModel} goToContact={this.goToContact} onRef={ref => (this.child = ref)} navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
                 </div>
 
                 <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>

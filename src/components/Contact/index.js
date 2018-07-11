@@ -202,7 +202,22 @@ class Contact extends React.Component {
                     </div>
                 </div>
 
-
+                <div className="row heading hide-in-pc" style={{ backgroundColor: '#3b5998', display: 'flex', position: 'fixed', left: '0', bottom: '0', width: '100%' }}>
+                  
+                    <div className=""  onClick={() => this.goToContact()}  style={{ width: 'auto', textAlign: 'center',  flex: '1', cursor: 'pointer', display: 'flex', flexDirection: 'column' }}>
+                        <i className="fa fa-users fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}}></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CONTACTS</span>
+                    </div>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => this.goToChatList()}>
+                        <i className="fa fa-comments fa-lg" aria-hidden="true" style={{ padding: '6px',fontSize: '25px !important', color: 'white'}} ></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>CHAT LISTS</span>
+                    </div>
+                    <div className="" style={{ width: 'auto', textAlign: 'center', flex: '1',  cursor: 'pointer', display: 'flex', flexDirection: 'column' }} onClick={() => this.openUserModel()}>
+                        <i className="fa fa-user fa-lg" aria-hidden="true" style={{ padding: '6px', fontSize: '25px !important', color: 'white'}} ></i>
+                        <span style={{ color: 'white', fontWeight: 'bold', height: 'auto', fontSize: '12px' }}>USER</span>
+                    </div>
+                </div>
+                
                 <div className={this.state.isShowModal? 'modal-profile': 'hide'} onClick={() => this.setState({ isShowModal: false })}>
                     <div className="container" onClick={this.protectParentOnclick}>
                         <div className="profile-box">
