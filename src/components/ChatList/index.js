@@ -97,15 +97,14 @@ class ChatList extends React.Component {
     render = () => {
         return (
             <div style={{ backgroundColor: 'white'}}>
-                <div className="row newMessage-heading hide-in-mobile" style={{ backgroundColor: '#3b5998' }}>
-                    <div className="row newMessage-main">
-                        <div className="col-sm-2 col-xs-2 newMessage-back">
-                            <i className="fa fa-arrow-left" aria-hidden="true" onClick={() => this.navigateToChat()}></i>
+                <div className="row heading hide-in-mobile" style={{ backgroundColor: '#3b5998' }}>
+                    
+                        <div className="col-sm-2 col-xs-2 newMessage-back" style={{ color: 'white' }} onClick={() => this.navigateToChat()}>
+                            <i className="fa fa-arrow-left" aria-hidden="true" ></i>
                         </div>
-                        <div className="col-sm-10 col-xs-10 newMessage-title">
-                            BACK TO CONTACT
+                        <div className="col-sm-10 col-xs-10 newMessage-title" style={{ color: 'white' }}>
+                            Chats
                         </div>
-                    </div>
                 </div>
 
                 <div className="row heading hide-in-pc" style={{ backgroundColor: '#3b5998', display: 'flex', position: 'fixed', left: '0', bottom: '0', width: '100%' }}>
