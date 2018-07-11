@@ -212,6 +212,21 @@ class Contact extends React.Component {
                             <div className="profile-picture">
                                 <img src={ _.get(this.state, 'selectedFriend.profile_pic_url')} />
                             </div>
+                            <button type="button" className="btn btn-default" style={{ right: '5px',
+                                    position: 'absolute',
+                                    top: '5px',
+                                    marginTop: '5px',
+                                    backgroundColor: '#FFFD'}} 
+                                    onClick={() => {
+                                        this.setState({
+                                            isShowModal: false
+                                        })
+                                    }}>
+                                        <a style={{ marginRight: '10px' }}>
+                                            <i className="fa fa-close fa-lg"></i>
+                                        </a>
+                                        CLOSE
+                                </button>
                             <div className="profile-content">
                                 <h1 style={{ fontSize: '28px'}} className="displayname">
                                     { _.get(this.state, 'selectedFriend.display_name')}
