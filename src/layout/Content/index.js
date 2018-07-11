@@ -134,7 +134,7 @@ class Content extends React.Component {
                 message: ''
             })
 
-            
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
         } catch(err) {
             const indexLocal = chatData.findIndex((message) => {
                 return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
@@ -143,7 +143,8 @@ class Content extends React.Component {
             chatData[indexLocal].isError = true
             store.dispatch(chat(chatData))
 
-            return;
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
+            return
         }
     }
 
@@ -192,7 +193,7 @@ class Content extends React.Component {
                 message: ''
             })
 
-            
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
         } catch(err) {
             const indexLocal = chatData.findIndex((message) => {
                 return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
@@ -200,7 +201,7 @@ class Content extends React.Component {
 
             chatData[indexLocal].isError = true
             store.dispatch(chat(chatData))
-
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
             return
         }
     }
@@ -245,7 +246,7 @@ class Content extends React.Component {
                 message: ''
             })
 
-            
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
         } catch(err) {
             const indexLocal = chatData.findIndex((message) => {
                 return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
@@ -254,6 +255,7 @@ class Content extends React.Component {
             chatData[indexLocal].isError = true
             store.dispatch(chat(chatData))
 
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
             return
         }
     }
@@ -299,6 +301,8 @@ class Content extends React.Component {
             this.setState({
                 message: ''
             })
+
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
         } catch(err) {
             const indexLocal = chatData.findIndex((message) => {
                 return _.get(message, 'draft_message_id', 'unknown') == draft_message_id
@@ -306,6 +310,8 @@ class Content extends React.Component {
 
             chatData[indexLocal].isError = true
             store.dispatch(chat(chatData))
+
+            $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )
             return
         }
     }
@@ -426,7 +432,7 @@ class Content extends React.Component {
             this.setState({
                 chat: this.props.data.chat.chat || []
             }, () => {
-                $( "div.row.message.content" ).scrollTop( this.messagesEnd.scrollHeight )    
+                   
             })
         }
 
