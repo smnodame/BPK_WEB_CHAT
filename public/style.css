@@ -914,6 +914,10 @@ body {
   .message-body:hover .draft-selected-message {
     display: inline;
   }
+
+  .nav-side-bar {
+    padding-left: 75px;
+  }
 }
 
 @media only screen and (max-width: 600px) {

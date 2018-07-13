@@ -95,11 +95,11 @@ class SideBar extends React.Component {
                     </ul>
                 </nav>
 
-                <div className="side-one" style={{ paddingLeft: '75px' }}>
+                <div className="side-one nav-side-bar">
                     <Contact navigateToChat={this.navigateToChat} openUserModel={this.openUserModel} goToContact={this.goToContact} onRef={ref => (this.child = ref)} navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
                 </div>
 
-                <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'} style={{ paddingLeft: '75px' }}>
+                <div className={this.state.is_show_chat_list ? 'side-two nav-side-bar chat-list-show': 'side-two nav-side-bar chat-list-hide'}>
                     <ChatList navigateToChat={this.navigateToChat} openUserModel={this.openUserModel} goToContact={this.goToContact}  goToChatList={this.goToChatList} data={this.props.data} history={this.props.history} />
                 </div>
             </div>
