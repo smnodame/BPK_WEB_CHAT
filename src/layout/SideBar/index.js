@@ -10,8 +10,6 @@ class SideBar extends React.Component {
             is_show_chat_list: true,
             page: 'contact'
         }
-
-        // this.child = React.createRef()
     }
 
     navigateToChat = () => {
@@ -74,14 +72,14 @@ class SideBar extends React.Component {
                                 </div>
                             </div>
                         </li>
-                        <li>
-                            <a href="http://justinfarrow.com" style={{ margin: '8px' }}>
-                                <i className="fa fa-side-bar fa-user fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
+                        <li onClick={() => this.goToContact() } style={{ cursor: 'pointer' }}>
+                            <a style={{ margin: '8px' }}>
+                                <i className="fa fa-side-bar fa-users fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
                             </a>
                         
                         </li>
-                        <li className="has-subnav">
-                            <a href="#" style={{ margin: '8px' }}>
+                        <li className="has-subnav" onClick={() => this.goToChatList() } style={{ cursor: 'pointer' }}>
+                            <a style={{ margin: '8px' }}>
                                 <i className="fa fa-side-bar fa-comments fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
                             </a>
                             
@@ -90,11 +88,8 @@ class SideBar extends React.Component {
 
                     <ul className="logout">
                         <li>
-                            <a href="#" style={{ margin: '8px' }}>
+                            <a style={{ margin: '8px' }}>
                                 <i className="fa fa-side-bar fa-sign-out fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
-                                {/* <span className="nav-text">
-                                    Logout
-                                </span> */}
                             </a>
                         </li>  
                     </ul>

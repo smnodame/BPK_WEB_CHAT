@@ -996,7 +996,7 @@ overflow:visible;
 } */
 
 .main-menu {
-background:#212121;
+background: rgb(59, 89, 152);
 border-right:1px solid #e5e5e5;
 position:absolute;
 top:0;

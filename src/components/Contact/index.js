@@ -174,7 +174,7 @@ class Contact extends React.Component {
     render = () => {
         return (
             <div>
-                <div className="row heading" style={{ backgroundColor: '#3b5998', display: 'flex' }}>
+                <div className="row heading hide-in-pc" style={{ backgroundColor: '#3b5998', display: 'flex' }}>
                     <div className="heading-avatar" style={{ width: 'auto' }}>
                         <div className="heading-avatar-icon" onClick={() => {
                                 this.setState({
@@ -199,6 +199,12 @@ class Contact extends React.Component {
                     </div>
                     <div className="hide-in-mobile" style={{ width: 'auto', padding: '15px', paddingRight: '2px', cursor: 'pointer' }}>
                         <i className="fa fa-comments fa-lg  pull-right" aria-hidden="true" style={{ color: 'white'}} onClick={() => this.navigateToChat()}></i>
+                    </div>
+                </div>
+
+                <div className="row heading hide-in-mobile" style={{ backgroundColor: '#3b5998' }}>
+                    <div className="newMessage-title" style={{ color: 'white' }}>
+                        Contacts
                     </div>
                 </div>
 
