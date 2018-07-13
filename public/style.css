@@ -972,5 +972,10 @@ body {
     display: none !important;
   }
 
-  
+  .disapear-selected-message {
+    display: inline;
+    height: 24px;
+    width: 1px;
+    margin-left: 0px;
+  }
 }
