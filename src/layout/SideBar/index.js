@@ -63,12 +63,48 @@ class SideBar extends React.Component {
 
     render = () => {
         return (
-            <div className={ this.state.page == 'contact' ? 'col-sm-4 side' : 'col-sm-4 side mobile-hide' }>
-                <div className="side-one">
+            <div className={ this.state.page == 'contact' ? 'col-sm-5 side' : 'col-sm-5 side mobile-hide' }>
+                <nav className="main-menu mobile-hide">
+                    <ul>
+                        <li>
+                            <div className="heading-avatar " style={{ width: 'auto' }}>
+                                <div className="heading-avatar-icon">
+                                    <img src='http://itsmartone.com/bpk_connect/profile_pic_folder/small/974_small.jpg' 
+                                    style={{ margin: '12px', border: '0.5px solid black', width: '50px', height: '50px' }} />
+                                </div>
+                            </div>
+                        </li>
+                        <li>
+                            <a href="http://justinfarrow.com" style={{ margin: '8px' }}>
+                                <i className="fa fa-side-bar fa-user fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
+                            </a>
+                        
+                        </li>
+                        <li className="has-subnav">
+                            <a href="#" style={{ margin: '8px' }}>
+                                <i className="fa fa-side-bar fa-comments fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
+                            </a>
+                            
+                        </li>
+                    </ul>
+
+                    <ul className="logout">
+                        <li>
+                            <a href="#" style={{ margin: '8px' }}>
+                                <i className="fa fa-side-bar fa-sign-out fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
+                                {/* <span className="nav-text">
+                                    Logout
+                                </span> */}
+                            </a>
+                        </li>  
+                    </ul>
+                </nav>
+
+                <div className="side-one" style={{ paddingLeft: '75px' }}>
                     <Contact navigateToChat={this.navigateToChat} openUserModel={this.openUserModel} goToContact={this.goToContact} onRef={ref => (this.child = ref)} navigateToChat={this.navigateToChat} data={this.props.data} history={this.props.history} />
                 </div>
 
-                <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'}>
+                <div className={this.state.is_show_chat_list ? 'side-two chat-list-show': 'side-two chat-list-hide'} style={{ paddingLeft: '75px' }}>
                     <ChatList navigateToChat={this.navigateToChat} openUserModel={this.openUserModel} goToContact={this.goToContact}  goToChatList={this.goToChatList} data={this.props.data} history={this.props.history} />
                 </div>
             </div>

@@ -1019,7 +1019,7 @@ class Content extends React.Component {
 
     render() {
         return (
-            <div className="col-sm-8 conversation">
+            <div className="col-sm-7 conversation">
                 <div className="row heading header-chat" style={{ backgroundColor: '#3b5998', display: 'flex' }}>
                     <div className="pc-hide" style={{ marginRight: '10px', width: 'auto', marginTop: '6px' }}  onClick={() => this.props.history.push('/')}>
                         <i className="fa fa-arrow-left fa-lg " style={{ color: 'white', padding: '10px' }}></i>

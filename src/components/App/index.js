@@ -17,7 +17,7 @@ import { ToastContainer, toast } from 'react-toastify'
 
 const DefaultPage = () => {
     return (
-        <div className="col-sm-8 conversation">
+        <div className="col-sm-7 conversation">
             <div className="row heading" style={{ backgroundColor: '#3b5998' }}></div>
             <div>
                 <p style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)', textAlign: 'center', fontWeight: 'bold' }}>Please select a chat to start messaging</p>
@@ -29,7 +29,7 @@ const DefaultPage = () => {
 
 const ErrorPage = () => {
     return (
-        <div className="col-sm-8 conversation">
+        <div className="col-sm-7 conversation">
             <div className="row heading" style={{ backgroundColor: '#3b5998' }}></div>
             <div>
                 <p style={{ position: 'relative', top: '50%', transform: 'translateY(-50%)', textAlign: 'center', fontWeight: 'bold' }}>CAN NOT ACCESS TO THIS CHAT</p>
