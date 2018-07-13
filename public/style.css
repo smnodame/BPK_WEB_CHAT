@@ -869,10 +869,6 @@ body {
   display: none;
 }
 
-.message-body:hover .draft-selected-message {
-  display: inline;
-}
-
 .message-body:hover .disapear-selected-message {
   display: none;
 }
@@ -913,6 +909,10 @@ body {
 
   .hide-in-pc {
     display: none !important;
+  }
+
+  .message-body:hover .draft-selected-message {
+    display: inline;
   }
 }
 
