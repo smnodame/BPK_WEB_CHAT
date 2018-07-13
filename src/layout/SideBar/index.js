@@ -1,7 +1,14 @@
+import _ from 'lodash'
 import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import Contact from '../../components/Contact'
 import ChatList from '../../components/ChatList'
+
+import { store } from '../../redux'
+import {
+    onClickChat,
+    isShowUserProfile
+} from '../../redux/actions'
 
 class SideBar extends React.Component {
     constructor(props) {
@@ -56,19 +63,29 @@ class SideBar extends React.Component {
     }
 
     componentWillReceiveProps() {
-        
+        if(_.get(this.props.data, 'user.user')) {
+            this.setState({
+                user: this.props.data.user.user
+            })
+        }
+    }
+
+    signout = () => {
+        localStorage.clear()
+        location.reload()
     }
 
     render = () => {
         return (
             <div className={ this.state.page == 'contact' ? 'col-sm-5 side' : 'col-sm-5 side mobile-hide' }>
+                {/* { this.props } */}
                 <nav className="main-menu mobile-hide">
                     <ul>
-                        <li>
+                        <li onClick={() => {}}>
                             <div className="heading-avatar " style={{ width: 'auto' }}>
                                 <div className="heading-avatar-icon">
-                                    <img src='http://itsmartone.com/bpk_connect/profile_pic_folder/small/974_small.jpg' 
-                                    style={{ margin: '12px', border: '0.5px solid black', width: '50px', height: '50px' }} />
+                                    <img src={_.get(this.state, 'user.profile_pic_url')}
+                                    style={{ margin: '12px', border: '1px solid white', width: '50px', height: '50px' }} />
                                 </div>
                             </div>
                         </li>
@@ -87,9 +104,19 @@ class SideBar extends React.Component {
                     </ul>
 
                     <ul className="logout">
-                        <li>
+                        <li style={{ cursor: 'pointer' }} onClick={() => store.dispatch(onClickChat(this.props.data.user.keepProfile))}>
                             <a style={{ margin: '8px' }}>
-                                <i className="fa fa-side-bar fa-sign-out fa-2x" style={{ fontSize: '25px', color: 'white' }}></i>
+                                <i className="fa fa-side-bar fa-cloud-download  fa-2x" style={{ fontSize: '25px', color: 'white' }} ></i>
+                            </a>
+                        </li>
+                        <li style={{ cursor: 'pointer' }} onClick={() => store.dispatch(isShowUserProfile(true))} style={{ cursor: 'pointer' }}>
+                            <a style={{ margin: '8px' }}>
+                                <i className="fa fa-side-bar fa-cog fa-2x" style={{ fontSize: '25px', color: 'white' }} ></i>
+                            </a>
+                        </li>  
+                        <li style={{ cursor: 'pointer' }} onClick={() => this.signout()}>
+                            <a style={{ margin: '8px' }}>
+                                <i className="fa fa-side-bar fa-sign-out fa-2x" style={{ fontSize: '25px', color: 'white' }} ></i>
                             </a>
                         </li>  
                     </ul>
